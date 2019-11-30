@@ -27,7 +27,7 @@ public class MyMainFrame extends JFrame {
 		Dimension ss = kit.getScreenSize();
 		
 		setTitle("Studentska služba");
-		setIconImage(new ImageIcon("C:\\Users\\Mile\\Desktop\\workspace\\studentskasluzba\\slike\\ikonice\\1800_Icon_Pack_20x20\\PNG2_black_icons\\naruto [#119].png").getImage());
+		setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG2_black_icons\\naruto [#119].png").getImage());
 		setLayout(new BorderLayout());
 		//setResizable(true);
 		
