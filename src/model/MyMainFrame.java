@@ -41,18 +41,7 @@ public class MyMainFrame extends JFrame {
 		
 		
 		// Sigurnosni Prozor za izlaz iz programa
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				int potvrda = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the program?\nMake sure that you saved changes.", "Exit program confirmation", JOptionPane.YES_NO_OPTION);
-				
-				if (potvrda == JOptionPane.YES_OPTION) {
-					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				}
-				else {
-					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-				}
-			}
-		});
+	//	izlazniProzor();		// izuzetno dosadna opcija pri testiranju aplikacije! Otkomentarisati pri kraju i dugme exit obavezno!
 		
 		JPanel panelSever = new JPanel();
 		JPanel panelCentar = new JPanel();
@@ -73,6 +62,22 @@ public class MyMainFrame extends JFrame {
 		} else {
 			return null;
 		}
+	}
+	
+	public void izlazniProzor() {
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				int potvrda = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the program?\nMake sure that you saved changes.", "Exit program confirmation", JOptionPane.YES_NO_OPTION);
+				
+				if (potvrda == JOptionPane.YES_OPTION) {
+					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					System.exit(0);
+				}
+				else {
+					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				}
+			}
+		});
 	}
 	
 

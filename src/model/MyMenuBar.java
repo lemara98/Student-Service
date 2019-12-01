@@ -9,13 +9,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
@@ -66,19 +72,22 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 		JMenuItem close = new JMenuItem("Close", ci);
 		close.setMnemonic(KeyEvent.VK_C);
 		close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
+		
+		// otkomentarisati JOptionPane
 		close.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-						int potvrda = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the program?\nThere may be some changes.\nDo you want to save it? ", "Exit program confirmation", JOptionPane.YES_NO_OPTION);
+					//	int potvrda = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the program?\nThere may be some changes.\nDo you want to save it? ", "Exit program confirmation", JOptionPane.YES_NO_OPTION);
 						
-						if (potvrda == JOptionPane.YES_OPTION) {
+					//	if (potvrda == JOptionPane.YES_OPTION) {
 							// Cuo sam povike , UBI GA UBI SVINJU
 							System.exit(0);
-						}
+					//	}
 					}
 				});
+	
 		
 		// Edit dugme
 		JMenuItem izmeni = new JMenuItem("Edit", ii);
@@ -167,18 +176,22 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 }
 
 /**
- * Klasa koja ce biti upotrebljena kad se pritisne dugme About
+ * Klasa Prozor koja ce biti upotrebljena kad se pritisne dugme About
  * @author Mile
  *
  */
 class Prozor extends JFrame {
 	
-	private static Prozor instance = null;
-	
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3652029260766755004L;
+	
+	private static Prozor instance = null;
+	
+	
 
 	private Prozor(ImageIcon ai) {
 		super();
@@ -188,8 +201,9 @@ class Prozor extends JFrame {
 		Dimension ss = kit.getScreenSize();
 		setTitle("About");
 		setIconImage(ai.getImage());
-		setSize(ss.width*5/9, ss.height*8/9);
+		setSize(ss.width*7/9, ss.height*8/9);
 		setResizable(true);
+		setMinimumSize(new Dimension(ss.width/2, ss.height/3));
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
@@ -198,16 +212,59 @@ class Prozor extends JFrame {
 		
 		
 		// Videcemo sta cemo sa ovim -- nije gotovo!
-		JTextArea txt = new JTextArea();
+		
+		File biografije = new File("Biografije.txt");
+		JTextArea txt = new JTextArea(readFromFile(biografije));
 		txt.setEditable(false);
-		JTextArea txt2 = new JTextArea("dadsjkda");
+		JScrollPane bioP = new JScrollPane(txt);
+		bioP.setMinimumSize(new Dimension(500,400));
+		
+
+		File aplikacije = new File("Aplikacija.txt");
+		JTextArea txt2 = new JTextArea(readFromFile(aplikacije));
 		txt2.setEditable(false);
-		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, txt, txt2);
+		JScrollPane appP = new JScrollPane(txt2);
+		appP.setMinimumSize(new Dimension(500,400));
+		
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, bioP, appP);
+		splitPane.setOneTouchExpandable(false);
+		splitPane.setMinimumSize(new Dimension(ss.width/2, ss.height/3));
+		splitPane.setMaximumSize(new Dimension(ss.width/2, ss.height/3));
 		
 		add(splitPane);
 		
 		}
 	
+	/**
+	 * Reading text from a file
+	 * @param fajl - File
+	 * @return String from a file
+	 */
+	private String readFromFile(File fajl) {
+		
+		StringBuilder sadrzaj = new StringBuilder();
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fajl.getPath()), "UTF-8"))) {
+			
+			String trenutni;
+			while ((trenutni = br.readLine()) != null) {
+				sadrzaj.append(trenutni).append("\n");
+			}	
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return sadrzaj.toString();
+	}
+	
+	/**
+	 * 
+	 * @param ai - ImageIcon (AboutIcon)
+	 * @return singleton JFrame
+	 */
 	public static Prozor getInstance(ImageIcon ai) {
 		if (instance == null)
 			instance = new Prozor(ai);
