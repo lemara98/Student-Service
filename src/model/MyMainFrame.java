@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
@@ -9,8 +10,12 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class MyMainFrame extends JFrame {
 
@@ -37,21 +42,54 @@ public class MyMainFrame extends JFrame {
 		setResizable(true);  // Sale podesi ovo kako ti odgovara!
 		
 		setSize(new Dimension(ss.width*3/4, ss.height*3/4));
+		setMinimumSize(new Dimension(ss.width*3/4, ss.height*3/4));
 		setLocationRelativeTo(null);
 		
 		
 		// Sigurnosni Prozor za izlaz iz programa
 	//	izlazniProzor();		// izuzetno dosadna opcija pri testiranju aplikacije! Otkomentarisati pri kraju i dugme exit obavezno!
 		
-		JPanel panelSever = new JPanel();
+		
+	// 	Odavde sam menjao tako da tu prilagodi. Od ove linije pa do 77
+		
 		JPanel panelCentar = new JPanel();
-		panelSever.setLayout(new FlowLayout());
+	
+		
+		// Centralni panel
+		
+		panelCentar.setLayout(new BorderLayout());
+		
+		JPanel panelToolBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelToolBar.setPreferredSize(new Dimension(300,30));
+		panelToolBar.setBackground(Color.gray);
+		
+		JTabbedPane panelSaKarticama = new JTabbedPane();
+		
+		JLabel l1  = new JLabel("Panel sa profesorima");
+		panelSaKarticama.addTab("Profesori", l1);
+		
+		JLabel l2  = new JLabel("Panel sa studentima");
+		panelSaKarticama.addTab("Studentima", l2);
 		
 		
+		// Dodavanje na centralni panel
+		panelCentar.add(panelToolBar, BorderLayout.NORTH);
+		panelCentar.add(panelSaKarticama, BorderLayout.CENTER);
+		
+		// Dodavanje na Mainframe
 		add(MyMenuBar.getInstance(), BorderLayout.NORTH);
 		add(MyStatusBar.getInstance(), BorderLayout.SOUTH);
 		add(panelCentar, BorderLayout.CENTER);
 		
+		// UIManager promenjen celokupan izgled aplikacije
+		try {
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
 		setVisible(true);
 	}
 	
@@ -64,6 +102,10 @@ public class MyMainFrame extends JFrame {
 		}
 	}
 	
+	/**
+	 * Sigurnosni prozor: Izbacuje YES_NO JOptionPane
+	 *
+	 */
 	public void izlazniProzor() {
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
