@@ -4,9 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MyMainFrame extends JFrame {
@@ -28,13 +31,17 @@ public class MyMainFrame extends JFrame {
 		
 		setTitle("Studentska služba");
 		setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG2_black_icons\\naruto [#119].png").getImage());
-		setLayout(new BorderLayout());
-		//setResizable(true);
 		
-		setSize(new Dimension(ss.width/2, ss.height/2));
+		
+		setLayout(new BorderLayout());
+		setResizable(true);  // Sale podesi ovo kako ti odgovara!
+		
+		setSize(new Dimension(ss.width*3/4, ss.height*3/4));
 		setLocationRelativeTo(null);
 		
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		// Sigurnosni Prozor za izlaz iz programa
+	//	izlazniProzor();		// izuzetno dosadna opcija pri testiranju aplikacije! Otkomentarisati pri kraju i dugme exit obavezno!
 		
 		JPanel panelSever = new JPanel();
 		JPanel panelCentar = new JPanel();
@@ -56,5 +63,22 @@ public class MyMainFrame extends JFrame {
 			return null;
 		}
 	}
+	
+	public void izlazniProzor() {
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				int potvrda = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the program?\nMake sure that you saved changes.", "Exit program confirmation", JOptionPane.YES_NO_OPTION);
+				
+				if (potvrda == JOptionPane.YES_OPTION) {
+					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					System.exit(0);
+				}
+				else {
+					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				}
+			}
+		});
+	}
+	
 
 }

@@ -18,6 +18,12 @@ import javax.swing.UIManager;
 
 public class MyStatusBar extends JPanel { // Milan Knezevic
 	
+	
+	/**
+	 * Privatna potklasa za pravilno racunanje vremena
+	 * @author Mile
+	 *
+	 */
 	private class MyCurrentTimeAndDate extends JPanel { // Milan Knezevic
 		
 		/**
@@ -28,7 +34,7 @@ public class MyStatusBar extends JPanel { // Milan Knezevic
 		private JLabel sat;
 
 		
-		public MyCurrentTimeAndDate() {	// Singleton
+		public MyCurrentTimeAndDate() {	
 			super(new BorderLayout());
 			sat = new JLabel();
 			pomeri();
@@ -36,15 +42,15 @@ public class MyStatusBar extends JPanel { // Milan Knezevic
 			this.add(sat, BorderLayout.CENTER);
 			
 			
-		
-		Timer timer = new Timer(1000, new ActionListener() { // proverava promenu vremena na svakih 1000 ms
+		// Timer koji proverava da li je doslo do promene vremena na svakih 1000 ms
+		Timer timer = new Timer(1000, new ActionListener() { 
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pomeri();
-				
+				pomeri();	
 			}
 		} );
+		
 		timer.setCoalesce(true);
 		timer.setInitialDelay(0);
 		timer.setRepeats(true);
@@ -52,10 +58,13 @@ public class MyStatusBar extends JPanel { // Milan Knezevic
 		
 		}
 		
+		/**
+		 *  Function which changes label text
+		 */
 		private void pomeri() {
-			DateFormat df = new SimpleDateFormat("dd.MM.YYYY HH:mm ");
+			// format zapisa vremena u labeli
+			DateFormat df = new SimpleDateFormat("dd.MM.YYYY. HH:mm "); 
 			sat.setText(df.format(new Date()));
-		//	sat.setText(DateFormat.getDateTimeInstance().format(new Date()));
 		}
 		
 
@@ -66,9 +75,7 @@ public class MyStatusBar extends JPanel { // Milan Knezevic
 	
 	
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -921271096182956691L;
 	
 	private static MyStatusBar instance = null;
