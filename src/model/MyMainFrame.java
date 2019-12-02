@@ -34,7 +34,7 @@ public class MyMainFrame extends JFrame {
 		
 		
 		setLayout(new BorderLayout());
-		setResizable(true);  // Sale podesi ovo kako ti odgovara!
+		setResizable(false);  // Sale podesi ovo kako ti odgovara!
 		
 		setSize(new Dimension(ss.width*3/4, ss.height*3/4));
 		setLocationRelativeTo(null);
@@ -51,6 +51,10 @@ public class MyMainFrame extends JFrame {
 		add(MyMenuBar.getInstance(), BorderLayout.NORTH);
 		add(MyStatusBar.getInstance(), BorderLayout.SOUTH);
 		add(panelCentar, BorderLayout.CENTER);
+		
+		panelCentar.setLayout(new BorderLayout());
+		MyToolBar myToolBar = new MyToolBar();
+		panelCentar.add(myToolBar,BorderLayout.NORTH);
 		
 		setVisible(true);
 	}
