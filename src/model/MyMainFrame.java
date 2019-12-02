@@ -39,7 +39,7 @@ public class MyMainFrame extends JFrame {
 		
 		
 		setLayout(new BorderLayout());
-		setResizable(true);  // Sale podesi ovo kako ti odgovara!
+		setResizable(false);  // Sale podesi ovo kako ti odgovara!
 		
 		setSize(new Dimension(ss.width*3/4, ss.height*3/4));
 		setMinimumSize(new Dimension(ss.width*3/4, ss.height*3/4));
@@ -81,6 +81,12 @@ public class MyMainFrame extends JFrame {
 		add(MyStatusBar.getInstance(), BorderLayout.SOUTH);
 		add(panelCentar, BorderLayout.CENTER);
 		
+
+		panelCentar.setLayout(new BorderLayout());
+		MyToolBar myToolBar = new MyToolBar();
+		panelCentar.add(myToolBar,BorderLayout.NORTH);
+		
+
 		// UIManager promenjen celokupan izgled aplikacije
 		try {
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
@@ -89,7 +95,7 @@ public class MyMainFrame extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-				
+
 		setVisible(true);
 	}
 	
