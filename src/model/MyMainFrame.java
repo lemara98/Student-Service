@@ -39,10 +39,11 @@ public class MyMainFrame extends JFrame {
 		
 		
 		setLayout(new BorderLayout());
-		setResizable(false);  // Sale podesi ovo kako ti odgovara!
+		setResizable(true);  // Sale podesi ovo kako ti odgovara! ##### Mile promenio na true! Da bi bio fenseraj
+							// ## Primetices da sam ogranicio minimumSize da ne bi
 		
 		setSize(new Dimension(ss.width*3/4, ss.height*3/4));
-		setMinimumSize(new Dimension(ss.width*3/4, ss.height*3/4));
+		setMinimumSize(new Dimension(ss.width*3/4 - 50, ss.height*3/4 - 50));
 		setLocationRelativeTo(null);
 		
 		
@@ -87,7 +88,7 @@ public class MyMainFrame extends JFrame {
 		panelCentar.add(myToolBar,BorderLayout.NORTH);
 		
 
-		// UIManager promenjen celokupan izgled aplikacije
+		// UIManager promenjen celokupan izgled aplikacije -- u ovom slucaju ne znacajno
 		try {
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
