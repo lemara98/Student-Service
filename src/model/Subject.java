@@ -4,6 +4,7 @@ import java.util.List;
 
 
 public class Subject {
+	private static int codeCnt = 0;
 	private String code;
 	private String name;
 	private int semester;
@@ -12,10 +13,11 @@ public class Subject {
 	private List<Student> students;
 	
 	
-	public Subject(String code, String name, int semester, int yearOfStuding, String professor,
+	public Subject(String name, int semester, int yearOfStuding, String professor,
 			List<Student> students) {
 		super();
-		this.code = code;
+		++codeCnt;
+		this.code = Integer.toString(codeCnt);
 		this.name = name;
 		this.semester = semester;
 		this.yearOfStuding = yearOfStuding;

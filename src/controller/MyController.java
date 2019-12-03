@@ -1,6 +1,8 @@
 package controller;
 
+import model.AddFrameSubject;
 import model.MyBase;
+import model.MyMainFrame;
 import model.Professor;
 
 public class MyController {
@@ -16,7 +18,10 @@ public class MyController {
 	private MyController() {}
 	
 	//////////////////////////////////////////////PREDMET/////////////////////////////////////////////////////
-	
+	public void addSubject() {
+		AddFrameSubject.getInstance().setVisible(true);
+		MyMainFrame.getInstance().azurirajPrikaz();
+	}
 	
 	
 	
@@ -26,6 +31,7 @@ public class MyController {
 		try {
 			Professor pr = MyBase.getInstance().getProfessorRow(rowSelected);
 			MyBase.getInstance().deleteProfessor(pr.getIdNumber());
+			MyMainFrame.getInstance().azurirajPrikaz();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
