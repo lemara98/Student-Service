@@ -6,6 +6,11 @@ import model.MyBase;
 
 public class AbstractTableModelProfessor extends AbstractTableModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7675477797470185997L;
+
 	@Override
 	public int getColumnCount() {
 		return MyBase.getInstance().getProfessorColumnCount();

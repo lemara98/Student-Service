@@ -10,7 +10,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,6 +18,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import view.ProfessorJTable;
+import view.StudentJTable;
 
 public class MyMainFrame extends JFrame {
 
@@ -76,11 +76,17 @@ public class MyMainFrame extends JFrame {
 		
 		JTabbedPane kartice = new JTabbedPane();
 		
+		
 		ProfessorJTable professorJTable = new ProfessorJTable();
 		JScrollPane professorPane = new JScrollPane(professorJTable);
 		professorJTable.setVisible(true);
 		
+		// Dodajemo karticu studenata
+		StudentJTable studentJTable = new StudentJTable();
+		JScrollPane studentPane = new JScrollPane(studentJTable);
+		
 		kartice.addTab("Professors", professorPane);
+		kartice.addTab("Students", studentPane);
 		panelCentar.add(kartice,BorderLayout.CENTER);
 		
 
