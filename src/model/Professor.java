@@ -18,10 +18,10 @@ public class Professor {
 	private long idNumber;
 	private String title;
 	private String rank;
-	private List<Subject> subjects;
+	//private List<Subject> subjects;
 	//SimpleDateFormat df;
 	public Professor(String firstName, String lastName, String date, String livingAdress, long number, String email,
-			String workAdress, long idNumber, String title, String rank, List<Subject> subjects) {
+			String workAdress, long idNumber, String title, String rank) {
 		super();
 		
 		this.firstName = firstName;
@@ -31,11 +31,10 @@ public class Professor {
 		this.livingAdress = livingAdress;
 		this.number = number;
 		this.email = email;
-		this.workAdress = workAdress;
 		this.idNumber = idNumber;
 		this.title = title;
 		this.rank = rank;
-		this.subjects = subjects;
+		//this.subjects = subjects2;
 	}
 	
 	
@@ -106,11 +105,11 @@ public class Professor {
 	public void setRank(String rank) {
 		this.rank = rank;
 	}
-	public List<Subject> getSubjects() {
-		return subjects;
-	}
-	public void setSubjects(List<Subject> subjects) {
-		this.subjects = subjects;
-	}
+//	public List<Subject> getSubjects() {
+//		return subjects;
+//	}
+//	public void setSubjects(List<Subject> subjects) {
+//		this.subjects = subjects;
+//	}
 
 }

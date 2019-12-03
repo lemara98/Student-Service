@@ -13,18 +13,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import view.ProfessorJTable;
+
 public class MyMainFrame extends JFrame {
 
-	
-	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -9032128792693493257L;
 	
 	private static MyMainFrame instance = null;
@@ -82,10 +79,19 @@ public class MyMainFrame extends JFrame {
 		add(MyStatusBar.getInstance(), BorderLayout.SOUTH);
 		add(panelCentar, BorderLayout.CENTER);
 		
-
+		// Dodajemo toolbar 
 		panelCentar.setLayout(new BorderLayout());
 		MyToolBar myToolBar = new MyToolBar();
 		panelCentar.add(myToolBar,BorderLayout.NORTH);
+		
+		JTabbedPane kartice = new JTabbedPane();
+		
+		ProfessorJTable professorJTable = new ProfessorJTable();
+		JScrollPane professorPane = new JScrollPane(professorJTable);
+		professorJTable.setVisible(true);
+		
+		kartice.addTab("Professors", professorPane);
+		panelCentar.add(kartice,BorderLayout.CENTER);
 		
 
 		// UIManager promenjen celokupan izgled aplikacije -- u ovom slucaju ne znacajno
