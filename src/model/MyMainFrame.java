@@ -20,7 +20,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import view.AbstractTableModelProfessor;
 import view.AbstractTableModelSubject;
 import view.ProfessorJTable;
+import view.StudentJTable;
 import view.SubjectJTable;
+
 
 public class MyMainFrame extends JFrame {
 
@@ -91,6 +93,13 @@ public class MyMainFrame extends JFrame {
 		
 		kartice.addTab("Professors", professorPane);
 		kartice.addTab("Subjects", subjectPane);
+		
+		// Dodajemo karticu studenata
+		StudentJTable studentJTable = new StudentJTable();
+		JScrollPane studentPane = new JScrollPane(studentJTable);
+		
+		kartice.addTab("Students", studentPane);
+
 		panelCentar.add(kartice,BorderLayout.CENTER);
 		
 

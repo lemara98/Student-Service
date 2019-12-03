@@ -1,12 +1,5 @@
 package model;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.security.auth.Subject;
-
 public class Professor {
 	private String firstName;
 	private String lastName;

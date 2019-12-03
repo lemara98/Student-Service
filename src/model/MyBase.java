@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MyBase {
@@ -23,7 +22,10 @@ public class MyBase {
 	
 	private MyBase() {
 		initProfessors();		//na Pocetku inicijalizujemo listu profesora
+
 		initSubjects();
+		initStudents();
+
 	}
 	
 	private void initProfessors() {
@@ -51,7 +53,6 @@ public class MyBase {
 		columnsProfessor.add("WorkPlace");
 		columnsProfessor.add("Title");
 		columnsProfessor.add("Rank");
-		
 	}
 	
 	public List<Professor> getProfessors(){
@@ -201,5 +202,89 @@ public class MyBase {
 	public void editSubject() {
 		
 	}
+
+	/////////////////	Studenti	/////////////////
+
 	
+	private void initStudents() {
+		students = new ArrayList<Student>();
+		columnsStudent = new ArrayList<String>();
+		
+		Subject s1 = new Subject("Algebra", 1, 1, "Rade Doros", students);
+		
+		ArrayList<Subject> sp = new ArrayList<Subject>();
+		sp.add(s1);
+		Student st1 = new Student("Ljuba", "Alicic", "01-04-1959", "Ilidza", "062431234", "ljuba.alicic@uns.ac.rs", "RA1/3019", "01-10-3019", 1, StatusStudenta.B, 6.00, sp);
+		students.add(st1);
+		
+		columnsStudent.add("Ime");
+		columnsStudent.add("Prezime");
+		columnsStudent.add("Datum rodjenja");
+		columnsStudent.add("Kontakt telefon");
+		columnsStudent.add("Email Adresa");
+		columnsStudent.add("Broj indeksa");
+		columnsStudent.add("Datum upisa");
+		columnsStudent.add("Trenutna godina studija");
+		columnsStudent.add("Prosecna ocena");
+		columnsStudent.add("Spisak predmeta koje student slusa");
+		
+		
+	}
+	
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+
+	public int getStudentsColumnCount() {
+		return columnsStudent.size(); 	//returns number of columns in the table	
+	}
+	public String getStudentsColumnName(int index) {
+		return columnsStudent.get(index);		//returns the name of a column
+	}
+	public Professor getStudentsRow(int rowIndex) {
+		return professors.get(rowIndex);		//returns one of my professors from the list
+	}
+	public String getStudentsValueAt(int row, int column) {		//returns the string of one table field
+			Student stud = this.students.get(row);
+			switch(column) {
+			case 0:
+				return stud.getIme();
+			case 1:
+				return stud.getPrezime();
+			case 2:
+				return stud.getDatumRodjenja().toString();
+			case 3:
+				return stud.getAdresaStanovanje();
+			case 4:
+				return stud.getEmailAdresa();
+			case 5:
+				return stud.getEmailAdresa();
+			case 6:
+				return stud.getBrojIndeksa();
+			case 7:
+				return stud.getDatumUpisa().toString();
+			case 8:
+				return Integer.toString(stud.getTrenutnaGodinaStudija());
+			case 9:
+				return Double.toString(stud.getProsecnaOcena());
+			case 10:	
+				return stud.getSpisakPredmetaKojeStudentSlusa().toString();
+			default:
+				return null;
+		}
+	}
 }
+	
+
+	
+	
+	
+	
+	
+	
+

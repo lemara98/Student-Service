@@ -4,19 +4,22 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
 
-public class SubjectJTable extends JTable {
+public class StudentJTable extends JTable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -729251922543511523L;
 
-	private static final long serialVersionUID = 1260863360238058355L;
-
-	public SubjectJTable() {
-		setRowSelectionAllowed(true);
+	public StudentJTable() {
+		super();
 		setColumnSelectionAllowed(true);
-		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		AbstractTableModelSubject abs = new AbstractTableModelSubject();
-		setModel(abs);
+		setRowSelectionAllowed(true);
+		AbstractTableModelStudent absStudent = new AbstractTableModelStudent();
+		setModel(absStudent);
+		
 	}
 	
 	@Override
@@ -28,5 +31,7 @@ public class SubjectJTable extends JTable {
 			c.setBackground(Color.WHITE);
 		}
 		return c;
+	
 	}
+
 }
