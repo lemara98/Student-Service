@@ -22,15 +22,19 @@ public class MyBase {
 	
 	private MyBase() {
 		initProfessors();		//na Pocetku inicijalizujemo listu profesora
+
+		initSubjects();
 		initStudents();
-	//	initSubjects();
+
 	}
 	
 	private void initProfessors() {
 		professors = new ArrayList<Professor>();
-		subjects = new ArrayList<Subject>();
-		Subject s1 = new Subject("111", "Bases of Data", 5, 3, "Ivana", students);
-		subjects.add(s1);
+		
+		Subject s1 = new Subject( "Bases of Data", 5, 3, "Ivana", students);
+		
+		List<Subject> subjects1 = new ArrayList<Subject>();
+		subjects1.add(s1);
 		
 		Professor p3 = new Professor("Milan","Vikakovic","03/02/56","Branimira Cosica",19223828,"vidakovic@gmail.com","FTN",122332134,"Professor","1.");
 		Professor p1 = new Professor("Pera","Peric","16/08/67","Branimira Cosica",061533466,"pera@gmail.com","FTN",12358701,"Profesor","Dr.");
@@ -113,14 +117,100 @@ public class MyBase {
 	public void editProfessor() {
 		
 	}
+	
+	//////////////////////////////////////////////////SUBJECT/////////////////////////////////////////////////
+	public void initSubjects() {
+		subjects = new ArrayList<Subject>();
+		
+		Subject s1 = new Subject("OISISI",5,3,null,null);
+		Subject s2 = new Subject("NANS",5,3,null,null);
+		Subject s3 = new Subject("PJISP",1,1,null,null);
+		subjects.add(s1);
+		subjects.add(s2);
+		subjects.add(s3);
+		
+		columnsSubject = new ArrayList<String>();
+		columnsSubject.add("Name");
+		columnsSubject.add("Semester");
+		columnsSubject.add("Year of study");
+		columnsSubject.add("Professor");
+		
+		
+	}
+
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
+	}
+
+	public List<String> getColumnsSubject() {
+		return columnsSubject;
+	}
+
+	public void setColumnsSubject(List<String> columnsSubject) {
+		this.columnsSubject = columnsSubject;
+	}
+	
+	public int getSubjectColumnCount() {
+		return columnsSubject.size();
+	}
+	
+	public String getSubjectColumnName(int index) {
+		return columnsSubject.get(index);
+	}
+	
+	public Subject getSubjectRow(int row) {
+		return subjects.get(row);
+	}
+	
+	public String getSubjectValueAt(int row, int column) {
+		Subject s = subjects.get(row);
+		switch(column) {
+		case 0:
+			return s.getName();
+		case 1:
+			return Integer.toString(s.getSemester());
+		case 2:
+			return Integer.toString(s.getYearOfStuding());
+		case 3:
+			return s.getProfessor();
+		default:
+			return null;
+		}
+	}
+	
+	public void addSubject(Subject s) {
+		subjects.add(s);
+		MyMainFrame.getInstance().azurirajPrikaz();	//moram ovde da stavim iz nekog razloga?
+	}
+	
+	public void deleteSubject(String code) {
+		List<Subject> temp = new ArrayList<Subject>();
+		
+		for(Subject s : subjects) {
+			if(s.getCode() == code) {	//ako se code podudara treba ga izbrisati
+				temp.add(s);
+			}
+		}
+		
+		subjects.removeAll(temp);
+	}
+	
+	public void editSubject() {
+		
+	}
 
 	/////////////////	Studenti	/////////////////
+
 	
 	private void initStudents() {
 		students = new ArrayList<Student>();
 		columnsStudent = new ArrayList<String>();
 		
-		Subject s1 = new Subject("E212", "Algebra", 1, 1, "Rade Doros", students);
+		Subject s1 = new Subject("Algebra", 1, 1, "Rade Doros", students);
 		
 		ArrayList<Subject> sp = new ArrayList<Subject>();
 		sp.add(s1);

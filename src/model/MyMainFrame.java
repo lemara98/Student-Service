@@ -17,14 +17,21 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import view.AbstractTableModelProfessor;
+import view.AbstractTableModelSubject;
 import view.ProfessorJTable;
 import view.StudentJTable;
+import view.SubjectJTable;
+
 
 public class MyMainFrame extends JFrame {
 
 	private static final long serialVersionUID = -9032128792693493257L;
 	
 	private static MyMainFrame instance = null;
+	private JTabbedPane kartice;
+	private ProfessorJTable professorJTable;
+	private SubjectJTable subjectJTable;
 	
 	private MyMainFrame() {
 		super();
@@ -74,19 +81,25 @@ public class MyMainFrame extends JFrame {
 		MyToolBar myToolBar = new MyToolBar();
 		panelCentar.add(myToolBar,BorderLayout.NORTH);
 		
-		JTabbedPane kartice = new JTabbedPane();
+		kartice = new JTabbedPane();
 		
-		
-		ProfessorJTable professorJTable = new ProfessorJTable();
+		professorJTable = new ProfessorJTable();
 		JScrollPane professorPane = new JScrollPane(professorJTable);
 		professorJTable.setVisible(true);
+		
+		subjectJTable = new SubjectJTable();
+		JScrollPane subjectPane = new JScrollPane(subjectJTable);
+		subjectJTable.setVisible(true);
+		
+		kartice.addTab("Professors", professorPane);
+		kartice.addTab("Subjects", subjectPane);
 		
 		// Dodajemo karticu studenata
 		StudentJTable studentJTable = new StudentJTable();
 		JScrollPane studentPane = new JScrollPane(studentJTable);
 		
-		kartice.addTab("Professors", professorPane);
 		kartice.addTab("Students", studentPane);
+
 		panelCentar.add(kartice,BorderLayout.CENTER);
 		
 
@@ -103,12 +116,25 @@ public class MyMainFrame extends JFrame {
 	}
 	
 	public static  MyMainFrame getInstance() {
-		if (instance == null) {
+		if (instance == null) 
 			instance = new MyMainFrame();
-			return instance;
-		} else {
-			return null;
-		}
+			
+		return instance;
+	}
+	
+	public int getSelectedTabbedPane() {
+		return kartice.getSelectedIndex();
+	}
+	
+	public ProfessorJTable getProfessorJTable() {
+		return professorJTable;
+	}
+	
+	public void azurirajPrikaz() {
+		AbstractTableModelProfessor modelProfessor = (AbstractTableModelProfessor)professorJTable.getModel();
+		AbstractTableModelSubject modelSubject = (AbstractTableModelSubject)subjectJTable.getModel();
+		modelProfessor.fireTableDataChanged();
+		modelSubject.fireTableDataChanged();
 	}
 	
 	/**

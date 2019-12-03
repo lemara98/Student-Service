@@ -10,13 +10,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+import javax.sound.midi.ControllerEventListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+
+import controller.MyController;
 
 public class MyToolBar extends JToolBar{
 
@@ -35,6 +39,19 @@ public class MyToolBar extends JToolBar{
 		JButton btnAdd = new JButton(icon);
 		btnAdd.setPreferredSize(new Dimension(30,30));
 		btnAdd.setToolTipText("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
+				if(selectedPane == 0) {
+					//professors
+				}else if(selectedPane == 1) {
+					//subjects
+					MyController.getInstance().addSubject();
+				}
+			}
+		});
 		
 		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\edit_cover [#1481].png");
 		JButton btnEdit = new JButton(icon);
@@ -50,7 +67,23 @@ public class MyToolBar extends JToolBar{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				int dialogButton = JOptionPane.showConfirmDialog(btnDelete, "Are you sure ?","Delete",JOptionPane.YES_NO_OPTION);
+				if(dialogButton == JOptionPane.YES_OPTION) {
+					System.out.println("Professor deleted");
+					System.out.println(MyMainFrame.getInstance().getSelectedTabbedPane());
+					if(MyMainFrame.getInstance().getSelectedTabbedPane() == 0) {
+						//index of selected row --> this gives us a professor
+						int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
+						if(idx != -1) {
+							MyController.getInstance().deleteProfessor(idx);
+						}
+						
+					}
+						
 				
+				}else {
+					System.out.println("Professor saved");
+				}
 			}
 		});
 		

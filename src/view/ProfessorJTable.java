@@ -9,9 +9,6 @@ import javax.swing.table.TableCellRenderer;
 
 public class ProfessorJTable extends JTable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6161298503549205515L;
 
 	public ProfessorJTable() {
