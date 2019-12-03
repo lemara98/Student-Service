@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -46,8 +49,29 @@ public class MyToolBar extends JToolBar{
 		btnSearch.setPreferredSize(new Dimension(30,30));
 		btnSearch.setToolTipText("Search");
 		
-		JTextField textField = new JTextField();
+		JTextField textField = new JTextField("Type here to search");
+		Font f1 = textField.getFont();
+		Font f = new Font("Verdana", Font.ITALIC, 12);
+		textField.setFont(f);
 		textField.setPreferredSize(new Dimension(150,20));
+		textField.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				textField.setText("Type here to search");
+				Font f = new Font("Verdana", Font.ITALIC, 12);
+				textField.setFont(f);
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				textField.setCaretColor(Color.BLACK);
+				textField.setText("");
+				textField.setFont(f1);
+			}
+		});
 		
 	//	setLayout(new FlowLayout(FlowLayout.LEFT)); // Saletova verzija
 		setLayout(new BorderLayout());  // Miletova verzija -- Dodao sam samo dugmice na panele da bi moglo lepse da izgleda.
