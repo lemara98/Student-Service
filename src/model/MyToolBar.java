@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -43,6 +45,14 @@ public class MyToolBar extends JToolBar{
 		JButton btnDelete = new JButton(icon);
 		btnDelete.setPreferredSize(new Dimension(30,30));
 		btnDelete.setToolTipText("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
 		
 		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\search_left [#1504].png");
 		JButton btnSearch= new JButton(icon);
@@ -76,6 +86,7 @@ public class MyToolBar extends JToolBar{
 	//	setLayout(new FlowLayout(FlowLayout.LEFT)); // Saletova verzija
 		setLayout(new BorderLayout());  // Miletova verzija -- Dodao sam samo dugmice na panele da bi moglo lepse da izgleda.
 										// Ako ti nije jasno zasto, pozovi me nocas u 3. Insomnia. Broj: 0631623155
+										//:'D Kidajj Milee
 		JPanel leviDeo = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		leviDeo.setBackground(Color.DARK_GRAY);
 		

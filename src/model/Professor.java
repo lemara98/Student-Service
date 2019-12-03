@@ -31,6 +31,7 @@ public class Professor {
 		this.livingAdress = livingAdress;
 		this.number = number;
 		this.email = email;
+		this.workAdress = workAdress;
 		this.idNumber = idNumber;
 		this.title = title;
 		this.rank = rank;

@@ -61,18 +61,8 @@ public class MyMainFrame extends JFrame {
 		panelToolBar.setPreferredSize(new Dimension(300,30));
 		panelToolBar.setBackground(Color.gray);
 		
-		JTabbedPane panelSaKarticama = new JTabbedPane();
-		
-		JLabel l1  = new JLabel("Panel sa profesorima");
-		panelSaKarticama.addTab("Profesori", l1);
-		
-		JLabel l2  = new JLabel("Panel sa studentima");
-		panelSaKarticama.addTab("Studentima", l2);
-		
-		
 		// Dodavanje na centralni panel
 		panelCentar.add(panelToolBar, BorderLayout.NORTH);
-		panelCentar.add(panelSaKarticama, BorderLayout.CENTER);
 		
 		// Dodavanje na Mainframe
 		add(MyMenuBar.getInstance(), BorderLayout.NORTH);
