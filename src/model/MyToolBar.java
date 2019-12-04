@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.sound.midi.ControllerEventListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -50,6 +49,9 @@ public class MyToolBar extends JToolBar{
 					//subjects
 					MyController.getInstance().addSubject();
 				}
+				else {
+					MyController.getInstance().addStudent();
+				}
 			}
 		});
 		
@@ -69,18 +71,24 @@ public class MyToolBar extends JToolBar{
 				
 				int dialogButton = JOptionPane.showConfirmDialog(btnDelete, "Are you sure ?","Delete",JOptionPane.YES_NO_OPTION);
 				if(dialogButton == JOptionPane.YES_OPTION) {
-					System.out.println("Professor deleted");
-					System.out.println(MyMainFrame.getInstance().getSelectedTabbedPane());
+	//				System.out.println("Professor deleted");
+	//				System.out.println(MyMainFrame.getInstance().getSelectedTabbedPane());
 					if(MyMainFrame.getInstance().getSelectedTabbedPane() == 0) {
 						//index of selected row --> this gives us a professor
 						int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
 						if(idx != -1) {
 							MyController.getInstance().deleteProfessor(idx);
-						}
+						}		
+					}
+					else if (MyMainFrame.getInstance().getSelectedTabbedPane() == 1) {
 						
 					}
-						
-				
+					else {
+						int idx = MyMainFrame.getInstance().getStudentJTable().getSelectedRow();
+						if(idx != -1) {
+							MyController.getInstance().deleteStudent(idx);
+						}	
+					}
 				}else {
 					System.out.println("Professor saved");
 				}

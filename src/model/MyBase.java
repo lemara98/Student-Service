@@ -214,17 +214,19 @@ public class MyBase {
 		
 		ArrayList<Subject> sp = new ArrayList<Subject>();
 		sp.add(s1);
-		Student st1 = new Student("Ljuba", "Alicic", "01-04-1959", "Ilidza", "062431234", "ljuba.alicic@uns.ac.rs", "RA1/3019", "01-10-3019", 1, StatusStudenta.B, 6.00, sp);
+		Student st1 = new Student("Ljuba", "Alicic", "01-04-1959", "Ilidza", "062431234", "ljuba.alicic@uns.ac.rs", "RA1/3019", "01-10-3019", 1, StatusStudenta.B, 6.34);
 		students.add(st1);
 		
 		columnsStudent.add("Ime");
 		columnsStudent.add("Prezime");
 		columnsStudent.add("Datum rodjenja");
+		columnsStudent.add("Adresa stanovanja");
 		columnsStudent.add("Kontakt telefon");
 		columnsStudent.add("Email Adresa");
 		columnsStudent.add("Broj indeksa");
 		columnsStudent.add("Datum upisa");
 		columnsStudent.add("Trenutna godina studija");
+		columnsStudent.add("Status");
 		columnsStudent.add("Prosecna ocena");
 		columnsStudent.add("Spisak predmeta koje student slusa");
 		
@@ -267,16 +269,39 @@ public class MyBase {
 			case 6:
 				return stud.getBrojIndeksa();
 			case 7:
-				return stud.getDatumUpisa().toString();
+				return stud.getDatumUpisa();
 			case 8:
 				return Integer.toString(stud.getTrenutnaGodinaStudija());
 			case 9:
+				if(stud.getStatus() == StatusStudenta.B)
+					return "Budzet";
+				return "Samofinansiranje";
+			case 10:
 				return Double.toString(stud.getProsecnaOcena());
-			case 10:	
-				return stud.getSpisakPredmetaKojeStudentSlusa().toString();
+			case 11:	
+				return 	" Prikazi ";	//stud.getSpisakPredmetaKojeStudentSlusa().toString();
 			default:
 				return null;
 		}
+	}
+	public void addStudent(Student s) {
+		students.add(s);
+		MyMainFrame.getInstance().azurirajPrikaz();
+	}
+	public Student getStudentRow(int rowIndex) {
+		return students.get(rowIndex);
+	}
+	
+	public void deleteStudent(String brInd) {  //this method deletes a professor from my table by idNumber
+		List<Student> temp = new ArrayList<Student>(); 
+		
+		for(Student st : students) {
+			if(st.getBrojIndeksa() == brInd) {
+				temp.add(st);
+			}
+		}
+		
+		students.removeAll(temp);
 	}
 }
 	

@@ -18,6 +18,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import view.AbstractTableModelProfessor;
+import view.AbstractTableModelStudent;
 import view.AbstractTableModelSubject;
 import view.ProfessorJTable;
 import view.StudentJTable;
@@ -32,6 +33,7 @@ public class MyMainFrame extends JFrame {
 	private JTabbedPane kartice;
 	private ProfessorJTable professorJTable;
 	private SubjectJTable subjectJTable;
+	private StudentJTable studentJTable;
 	
 	private MyMainFrame() {
 		super();
@@ -41,7 +43,7 @@ public class MyMainFrame extends JFrame {
 		setTitle("Studentska služba");
 		setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG2_black_icons\\naruto [#119].png").getImage());
 		
-		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setResizable(true);  // Sale podesi ovo kako ti odgovara! ##### Mile promenio na true! Da bi bio fenseraj
 							// ## Primetices da sam ogranicio minimumSize da ne bi
@@ -95,8 +97,9 @@ public class MyMainFrame extends JFrame {
 		kartice.addTab("Subjects", subjectPane);
 		
 		// Dodajemo karticu studenata
-		StudentJTable studentJTable = new StudentJTable();
+		studentJTable = new StudentJTable();
 		JScrollPane studentPane = new JScrollPane(studentJTable);
+		studentJTable.setVisible(true);
 		
 		kartice.addTab("Students", studentPane);
 
@@ -130,11 +133,17 @@ public class MyMainFrame extends JFrame {
 		return professorJTable;
 	}
 	
+	public StudentJTable getStudentJTable() {
+		return studentJTable;
+	}
+	
 	public void azurirajPrikaz() {
 		AbstractTableModelProfessor modelProfessor = (AbstractTableModelProfessor)professorJTable.getModel();
 		AbstractTableModelSubject modelSubject = (AbstractTableModelSubject)subjectJTable.getModel();
+		AbstractTableModelStudent modelStudent = (AbstractTableModelStudent)studentJTable.getModel();
 		modelProfessor.fireTableDataChanged();
 		modelSubject.fireTableDataChanged();
+		modelStudent.fireTableDataChanged();
 	}
 	
 	/**

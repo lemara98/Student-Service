@@ -14,6 +14,11 @@ import javax.swing.JTextField;
 
 public class AddFrameSubject extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5176543725768611200L;
+	
 	private static AddFrameSubject instance = null;
 	
 	public static AddFrameSubject getInstance() {

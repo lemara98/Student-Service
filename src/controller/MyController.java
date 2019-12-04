@@ -1,9 +1,11 @@
 package controller;
 
+import model.AddFrameStudent;
 import model.AddFrameSubject;
 import model.MyBase;
 import model.MyMainFrame;
 import model.Professor;
+import model.Student;
 
 public class MyController {
 	private static MyController instance = null;
@@ -36,4 +38,25 @@ public class MyController {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	////////////////////////////////////////////STUDENT/////////////////////////////////////////////////////
+	
+	public void addStudent() {
+		new AddFrameStudent().setVisible(true);
+		MyMainFrame.getInstance().azurirajPrikaz();
+		
+	}
+	
+	public void deleteStudent(int rowSelected) {
+		try {
+			Student st = MyBase.getInstance().getStudentRow(rowSelected);
+			MyBase.getInstance().deleteStudent(st.getBrojIndeksa());
+			MyMainFrame.getInstance().azurirajPrikaz();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 }

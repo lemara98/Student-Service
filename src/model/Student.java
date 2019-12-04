@@ -1,11 +1,11 @@
 package model;
 
-import java.util.List;
-
 enum StatusStudenta {B, S}
 
 public class Student {
 	
+
+
 	private String ime;
 	private String prezime;
 	private String datumRodjenja;
@@ -17,12 +17,11 @@ public class Student {
 	private int trenutnaGodinaStudija;
 	private StatusStudenta status;
 	private Double prosecnaOcena;
-	private List<Subject> spisakPredmetaKojeStudentSlusa;
+//	private ArrayList<Subject> spisakPredmetaKojeStudentSlusa;
 	
 	
 	public Student(String ime, String prezime, String datumRodjenja, String adresaStanovanje, String kontaktTelefon,
-			String emailAdresa, String brojIndeksa, String datumUpisa, int trenutnaGodinaStudija, StatusStudenta status, Double prosecnaOcena,
-			List<Subject> spisakPredmetaKojeStudentSlusa) {
+			String emailAdresa, String brojIndeksa, String datumUpisa, int trenutnaGodinaStudija, StatusStudenta status, Double prosecnaOcena) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;
@@ -35,7 +34,7 @@ public class Student {
 		this.trenutnaGodinaStudija = trenutnaGodinaStudija;
 		this.status = status;
 		this.prosecnaOcena = prosecnaOcena;
-		this.spisakPredmetaKojeStudentSlusa = spisakPredmetaKojeStudentSlusa;
+	//	this.spisakPredmetaKojeStudentSlusa = spisakPredmetaKojeStudentSlusa;	!!!!!
 	}
 
 
@@ -148,14 +147,16 @@ public class Student {
 	}
 
 
-	public List<Subject> getSpisakPredmetaKojeStudentSlusa() {
-		return spisakPredmetaKojeStudentSlusa;
+	@Override
+	public String toString() {
+		return "Student [ime=" + ime + ", prezime=" + prezime + ", datumRodjenja=" + datumRodjenja
+				+ ", adresaStanovanje=" + adresaStanovanje + ", kontaktTelefon=" + kontaktTelefon + ", emailAdresa="
+				+ emailAdresa + ", brojIndeksa=" + brojIndeksa + ", datumUpisa=" + datumUpisa
+				+ ", trenutnaGodinaStudija=" + trenutnaGodinaStudija + ", status=" + status + ", prosecnaOcena="
+				+ prosecnaOcena + "]";
 	}
 
 
-	public void setSpisakPredmetaKojeStudentSlusa(List<Subject> spisakPredmetaKojeStudentSlusa) {
-		this.spisakPredmetaKojeStudentSlusa = spisakPredmetaKojeStudentSlusa;
-	}
 
 }
 
