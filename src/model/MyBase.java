@@ -28,6 +28,8 @@ public class MyBase {
 
 	}
 	
+	///////////////////////////////////////////////PROFESSOR////////////////////////////////////////////////
+	
 	private void initProfessors() {
 		professors = new ArrayList<Professor>();
 		

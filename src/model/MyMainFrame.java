@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import view.AbstractTableModelProfessor;
 import view.AbstractTableModelStudent;
@@ -95,6 +97,19 @@ public class MyMainFrame extends JFrame {
 		
 		kartice.addTab("Professors", professorPane);
 		kartice.addTab("Subjects", subjectPane);
+		//Listener that sets addProfessor button depending of selected tab in tabbed pane
+		kartice.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if(kartice.getSelectedIndex() == 0 || kartice.getSelectedIndex() == 1) {
+					myToolBar.getBtnAddProfessor().setVisible(true);
+				}else {
+					myToolBar.getBtnAddProfessor().setVisible(false);
+				}
+				
+			}
+		});
 		
 		// Dodajemo karticu studenata
 		studentJTable = new StudentJTable();
@@ -135,6 +150,10 @@ public class MyMainFrame extends JFrame {
 	
 	public StudentJTable getStudentJTable() {
 		return studentJTable;
+	}
+	
+	public SubjectJTable getSubjectJTable() {
+		return subjectJTable;
 	}
 	
 	public void azurirajPrikaz() {

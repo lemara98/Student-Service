@@ -8,11 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class AddFrameSubject extends JFrame {
+public class AddFrameSubject extends JDialog {
 
 	/**
 	 * 
@@ -37,6 +37,7 @@ public class AddFrameSubject extends JFrame {
 		setSize(new Dimension(width/4, height/4));
 		this.setTitle("Add new element");
 		setVisible(true);
+		setModal(true);
 		
 		this.setLocationRelativeTo(null);
 		setBackground(java.awt.Color.LIGHT_GRAY);
@@ -143,8 +144,20 @@ public class AddFrameSubject extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String name = nameTextField.getText();
 				//baca error ako nista ne unesemo zbog parseInt
-				int semester = Integer.parseInt(semesterTextField.getText());
-				int year = Integer.parseInt(yearTextField.getText());
+				int semester = 0;
+				int year = 0;
+				try {
+					semester = Integer.parseInt(semesterTextField.getText());
+					year = Integer.parseInt(yearTextField.getText());
+				}catch(NumberFormatException ex) {
+					ex.printStackTrace();
+				}
+				
+				if(semester == 0) {
+					semesterTextField.setFocusable(true);
+				}
+					
+				
 				Subject s = new Subject(name, semester, year, null, null);
 				//Potrebno dodati opadajuci meni za listu studenata na predmetu, takodje za profesora dugme!
 				MyBase.getInstance().addSubject(s);

@@ -6,6 +6,7 @@ import model.MyBase;
 import model.MyMainFrame;
 import model.Professor;
 import model.Student;
+import model.Subject;
 
 public class MyController {
 	private static MyController instance = null;
@@ -25,6 +26,15 @@ public class MyController {
 		MyMainFrame.getInstance().azurirajPrikaz();
 	}
 	
+	public void deleteSubject(int rowSelected) {
+		try {
+			Subject s = MyBase.getInstance().getSubjectRow(rowSelected);
+			MyBase.getInstance().deleteSubject(s.getCode());
+			MyMainFrame.getInstance().azurirajPrikaz();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	//////////////////////////////////////////////PROFESOR/////////////////////////////////////////////////////

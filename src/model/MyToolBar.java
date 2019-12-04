@@ -23,9 +23,15 @@ import controller.MyController;
 
 public class MyToolBar extends JToolBar{
 
-
+	
 	private static final long serialVersionUID = 2933819767532950350L;
 
+	private JButton btnAddProfessor;
+	
+	public JButton getBtnAddProfessor() {
+		return btnAddProfessor;
+	}
+	
 	public MyToolBar() {
 		super(SwingConstants.HORIZONTAL);
 		
@@ -81,7 +87,10 @@ public class MyToolBar extends JToolBar{
 						}		
 					}
 					else if (MyMainFrame.getInstance().getSelectedTabbedPane() == 1) {
-						
+						int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
+						if(idx != -1) {
+							MyController.getInstance().deleteSubject(idx);
+						}
 					}
 					else {
 						int idx = MyMainFrame.getInstance().getStudentJTable().getSelectedRow();
@@ -99,6 +108,11 @@ public class MyToolBar extends JToolBar{
 		JButton btnSearch= new JButton(icon);
 		btnSearch.setPreferredSize(new Dimension(30,30));
 		btnSearch.setToolTipText("Search");
+		
+		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_image_favorite_round [#1331].png");
+		btnAddProfessor = new JButton(icon);
+		btnAddProfessor.setPreferredSize(new Dimension(30,30));
+		btnAddProfessor.setToolTipText("Add Professor");
 		
 		JTextField textField = new JTextField("Type here to search");
 		Font f1 = textField.getFont();
@@ -137,7 +151,7 @@ public class MyToolBar extends JToolBar{
 		leviDeo.add(btnAdd);
 		leviDeo.add(btnEdit);
 		leviDeo.add(btnDelete);
-	//	add(Box.createHorizontalStrut(720));
+		leviDeo.add(btnAddProfessor);
 		desniDeo.add(textField);
 		desniDeo.add(btnSearch);
 		
