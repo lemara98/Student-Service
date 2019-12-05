@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,10 @@ public class MyBase {
 		
 		return instance;
 	}
+	
+	private File profesori = new File("\\src\\podaci\\Profesori.txt");
+	private File studenti = new File("\\src\\podaci\\Studenti.txt");
+	private File predmeti = new File("\\src\\podaci\\Predmeti.txt");
 	
 	private List<Professor> professors;		//Ove liste nam sluze kao baza podataka za tabelu
 	private List<String> columnsProfessor;
@@ -309,6 +314,11 @@ public class MyBase {
 	public void editStudent(int rowSelected) {
 			Student temp = students.get(rowSelected);
 			new EditFrameStudent(temp).setVisible(true);
+		
+	}
+	
+	public void uvoz() {
+	
 		
 	}
 	

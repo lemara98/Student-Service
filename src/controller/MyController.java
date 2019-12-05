@@ -74,7 +74,6 @@ public class MyController {
 	//		Student st = MyBase.getInstance().getStudentRow(rowSelected);
 	//		new EditFrameStudent(st).setVisible(true);
 		try {
-			System.out.println("row selected = " + rowSelected);
 			MyBase.getInstance().editStudent(rowSelected);
 			MyMainFrame.getInstance().azurirajPrikaz();
 		}

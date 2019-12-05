@@ -90,7 +90,6 @@ public class MyToolBar extends JToolBar{
 				else {
 					//students
 					int idx = MyMainFrame.getInstance().getStudentJTable().getSelectedRow();
-					System.out.println(idx);
 					MyController.getInstance().editStudent(idx);
 				}
 				
