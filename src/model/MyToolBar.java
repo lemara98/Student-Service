@@ -5,12 +5,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.image.BufferedImage;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -27,9 +29,14 @@ public class MyToolBar extends JToolBar{
 	private static final long serialVersionUID = 2933819767532950350L;
 
 	private JButton btnAddProfessor;
+	private JButton btnAddStudent;
 	
 	public JButton getBtnAddProfessor() {
 		return btnAddProfessor;
+	}
+	
+	public JButton getBtnAddStudent() {
+		return btnAddStudent;
 	}
 	
 	public MyToolBar() {
@@ -39,8 +46,8 @@ public class MyToolBar extends JToolBar{
 		//setPreferredSize(new Dimension(tbWidth,tbHeight));
 
 		// Dodao sam svoje ikonice(20x20) posto tvoje nisu stavljene u repozitorijum i podesio velicinu dugmeta na 30x30
-		
-		Icon icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_plus [#1357].png");
+		// Unosi novi podatak bez obzira na karticu
+		ImageIcon icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\inbox_plus [#1554].png");
 		JButton btnAdd = new JButton(icon);
 		btnAdd.setPreferredSize(new Dimension(30,30));
 		btnAdd.setToolTipText("Add");
@@ -56,17 +63,43 @@ public class MyToolBar extends JToolBar{
 					MyController.getInstance().addSubject();
 				}
 				else {
+					//students
 					MyController.getInstance().addStudent();
 				}
 			}
 		});
 		
-		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\edit_cover [#1481].png");
+		// Menja datu torku bez obzira na karticu
+		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG2_black_icons\\pen [#1319].png");
+		icon = resizeIcon(icon);
 		JButton btnEdit = new JButton(icon);
 		btnEdit.setPreferredSize(new Dimension(30,30));
 		btnEdit.setToolTipText("Edit");
+		btnEdit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
+				if(selectedPane == 0) {
+					//professors
+				}else if(selectedPane == 1) {
+					//subjects
+					MyController.getInstance().addSubject();
+				}
+				else {
+					//students
+					int idx = MyMainFrame.getInstance().getStudentJTable().getSelectedRow();
+					System.out.println(idx);
+					MyController.getInstance().editStudent(idx);
+				}
+				
+			}
+		});
 		
-		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_close [#1358].png");
+		// Brise odabranu torku bez obzira na karticu
+		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG2_black_icons\\delete [#1487].png");
+		icon = resizeIcon(icon);
 		JButton btnDelete = new JButton(icon);
 		btnDelete.setPreferredSize(new Dimension(30,30));
 		btnDelete.setToolTipText("Delete");
@@ -104,15 +137,23 @@ public class MyToolBar extends JToolBar{
 			}
 		});
 		
+		// Button Search treba da highlightuje sve pronadjene na stringove u bazi
 		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\search_left [#1504].png");
 		JButton btnSearch= new JButton(icon);
 		btnSearch.setPreferredSize(new Dimension(30,30));
 		btnSearch.setToolTipText("Search");
 		
+		// Button addStudent treba da doda studente na predmet!
+		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_plus [#1357].png");
+		btnAddStudent = new JButton(icon);
+		btnAddStudent.setPreferredSize(new Dimension(30,30));
+		btnAddStudent.setToolTipText("Add Student to subject");
+		
+		// Button proffesor treba da doda predmetnog profesora predmetu
 		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_image_favorite_round [#1331].png");
 		btnAddProfessor = new JButton(icon);
 		btnAddProfessor.setPreferredSize(new Dimension(30,30));
-		btnAddProfessor.setToolTipText("Add Professor");
+		btnAddProfessor.setToolTipText("Add Professor to subject");
 		
 		JTextField textField = new JTextField("Type here to search");
 		Font f1 = textField.getFont();
@@ -151,6 +192,7 @@ public class MyToolBar extends JToolBar{
 		leviDeo.add(btnAdd);
 		leviDeo.add(btnEdit);
 		leviDeo.add(btnDelete);
+		leviDeo.add(btnAddStudent);
 		leviDeo.add(btnAddProfessor);
 		desniDeo.add(textField);
 		desniDeo.add(btnSearch);
@@ -161,5 +203,19 @@ public class MyToolBar extends JToolBar{
 		this.setFloatable(false);	// Mile promenio!
 		
 	}
+	
+	/**
+	 * Function which resizes any picture to a 20x20 picture for Menu Bar
+	 * @param ul -- Image
+	 * @return  Same but resized image
+	 */
+	private ImageIcon resizeIcon(ImageIcon ul) {
+		Image slika = ul.getImage();
+		BufferedImage bi = new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB);
+		Graphics g = bi.getGraphics();
+		g.drawImage(slika, 0, 0, 20, 20, null);
+		return new ImageIcon(bi);
+	}
+	
 	
 }

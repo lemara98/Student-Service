@@ -102,10 +102,15 @@ public class MyMainFrame extends JFrame {
 			
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				if(kartice.getSelectedIndex() == 0 || kartice.getSelectedIndex() == 1) {
-					myToolBar.getBtnAddProfessor().setVisible(true);
-				}else {
-					myToolBar.getBtnAddProfessor().setVisible(false);
+				if(kartice.getSelectedIndex() == 0 ) { 			// Proffesors
+					myToolBar.getBtnAddProfessor().setEnabled(true);
+					myToolBar.getBtnAddStudent().setEnabled(false);
+				} else if (kartice.getSelectedIndex() == 1) {	// Subjects
+					myToolBar.getBtnAddProfessor().setEnabled(false);
+					myToolBar.getBtnAddStudent().setEnabled(true);
+				} else {										// Students
+					myToolBar.getBtnAddProfessor().setEnabled(false);
+					myToolBar.getBtnAddStudent().setEnabled(false);
 				}
 				
 			}

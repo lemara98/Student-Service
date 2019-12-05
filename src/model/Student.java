@@ -14,7 +14,7 @@ public class Student {
 	private String emailAdresa;
 	private String brojIndeksa;
 	private String datumUpisa;
-	private int trenutnaGodinaStudija;
+	private Integer trenutnaGodinaStudija;
 	private StatusStudenta status;
 	private Double prosecnaOcena;
 //	private ArrayList<Subject> spisakPredmetaKojeStudentSlusa;
@@ -36,7 +36,20 @@ public class Student {
 		this.prosecnaOcena = prosecnaOcena;
 	//	this.spisakPredmetaKojeStudentSlusa = spisakPredmetaKojeStudentSlusa;	!!!!!
 	}
-
+	
+	public Student(Student s) {
+		this.ime = s.ime;
+		this.prezime = s.prezime;
+		this.datumRodjenja = s.datumRodjenja;
+		this.adresaStanovanje = s.adresaStanovanje;
+		this.kontaktTelefon = s.kontaktTelefon;
+		this.emailAdresa = s.emailAdresa;
+		this.brojIndeksa = s.brojIndeksa;
+		this.datumUpisa = s.datumUpisa;
+		this.trenutnaGodinaStudija = s.trenutnaGodinaStudija;
+		this.status = s.status;
+		this.prosecnaOcena = s.prosecnaOcena;
+	}
 
 	public String getIme() {
 		return ime;
@@ -154,6 +167,22 @@ public class Student {
 				+ emailAdresa + ", brojIndeksa=" + brojIndeksa + ", datumUpisa=" + datumUpisa
 				+ ", trenutnaGodinaStudija=" + trenutnaGodinaStudija + ", status=" + status + ", prosecnaOcena="
 				+ prosecnaOcena + "]";
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		
+		if (!(o instanceof Student))
+			return false;
+		
+		Student s = (Student) o;
+		
+		if (this.brojIndeksa.equals(s.brojIndeksa))
+				return true;
+			
+		return false;
 	}
 
 

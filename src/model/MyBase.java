@@ -305,6 +305,14 @@ public class MyBase {
 		
 		students.removeAll(temp);
 	}
+	
+	public void editStudent(int rowSelected) {
+			Student temp = students.get(rowSelected);
+			new EditFrameStudent(temp).setVisible(true);
+		
+	}
+	
+
 }
 	
 

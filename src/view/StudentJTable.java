@@ -18,6 +18,7 @@ public class StudentJTable extends JTable{
 		setColumnSelectionAllowed(true);
 		setRowSelectionAllowed(true);
 		AbstractTableModelStudent absStudent = new AbstractTableModelStudent();
+	//	setAutoCreateRowSorter(true);	// za sortiranje (Radi) !
 		setModel(absStudent);
 		
 	}

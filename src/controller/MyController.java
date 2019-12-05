@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.JOptionPane;
+
 import model.AddFrameStudent;
 import model.AddFrameSubject;
 import model.MyBase;
@@ -63,8 +65,21 @@ public class MyController {
 			Student st = MyBase.getInstance().getStudentRow(rowSelected);
 			MyBase.getInstance().deleteStudent(st.getBrojIndeksa());
 			MyMainFrame.getInstance().azurirajPrikaz();
-		}catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void editStudent(int rowSelected) {
+	//		Student st = MyBase.getInstance().getStudentRow(rowSelected);
+	//		new EditFrameStudent(st).setVisible(true);
+		try {
+			System.out.println("row selected = " + rowSelected);
+			MyBase.getInstance().editStudent(rowSelected);
+			MyMainFrame.getInstance().azurirajPrikaz();
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "YOU HAVE TO CHOOOSE A STUDENT FIRST", "WARNING", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 	

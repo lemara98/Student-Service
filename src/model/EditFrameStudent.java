@@ -16,41 +16,60 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class AddFrameStudent extends JDialog {
-
+public class EditFrameStudent extends JDialog {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7035957960442633423L;
+	private static final long serialVersionUID = -617832339058983070L;
 	
-	private JTextField imet = new JTextField("");
-	private JTextField pret = new JTextField("");
-	private JTextField datrt = new JTextField("");
-	private JTextField adrst = new JTextField("");
-	private JTextField kontt = new JTextField("");
-	private JTextField emat = new JTextField("");
-	private JTextField brit = new JTextField("");
-	private JTextField datut = new JTextField("");
-	private JTextField tgst = new JTextField("");
-	private JTextField stat = new JTextField("");
-	private JTextField prot = new JTextField("");
-	private JTextField spst = new JTextField("");
+	private JTextField imet;
+	private JTextField pret;
+	private JTextField datrt;
+	private JTextField adrst;
+	private JTextField kontt;
+	private JTextField emat;
+	private JTextField brit;
+	private JTextField datut;
+	private JTextField tgst;
+	private JTextField stat;
+	private JTextField prot;
+	private JTextField spst;
+	private Student menjaniStudent;
 	
 	
-	
-	
-	public AddFrameStudent() {
+	public EditFrameStudent(Student temp) {
 		super();
+		try {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension ss = kit.getScreenSize();
 		Dimension vel = new Dimension(ss.width/2, ss.height/2);
-		setTitle("Dodaj novog studenta");
+		setTitle("Edit student");
 		setSize(vel);
-		setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\inbox_plus [#1554].png").getImage());
+		setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\pen [#1319].png").getImage());
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setModal(true);
+		
+		
+		
+		imet = new JTextField(temp.getIme());
+		pret = new JTextField(temp.getPrezime());
+		datrt = new JTextField(temp.getDatumRodjenja());
+		adrst = new JTextField(temp.getAdresaStanovanje());
+		kontt = new JTextField(temp.getKontaktTelefon());
+		emat = new JTextField(temp.getEmailAdresa());
+		brit = new JTextField(temp.getBrojIndeksa());
+		datut = new JTextField(temp.getDatumUpisa());
+		tgst = new JTextField(Integer.toString(temp.getTrenutnaGodinaStudija()));
+		stat = new JTextField(temp.getStatus().toString());
+		prot = new JTextField(Double.toString(temp.getProsecnaOcena()));
+		spst = new JTextField("-");			//!!!
+		
+		menjaniStudent = temp;
+		
+		
+		
 		
 		
 		JPanel panel = new JPanel(new GridBagLayout());
@@ -202,6 +221,8 @@ public class AddFrameStudent extends JDialog {
 		
 		panel.add(sps, gbc);
 		
+		
+		
 		//// JTextArea ////
 		
 				// Ime
@@ -348,6 +369,8 @@ public class AddFrameStudent extends JDialog {
 				panel.add(spst, gbc);
 				
 		//// Dugmadi Submit i Cancel
+				
+		
 			
 		Dimension vd = new Dimension(100,25);
 		
@@ -357,7 +380,6 @@ public class AddFrameStudent extends JDialog {
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
-		
 		JButton btnSub = new JButton("Submit");
 		btnSub.setPreferredSize(vd);
 		btnSub.addActionListener(new ActionListener() {
@@ -371,35 +393,43 @@ public class AddFrameStudent extends JDialog {
 		//			ArrayList<Subject> sp = new ArrayList<Subject>();
 					List<Student> ls;
 					boolean greska = false;
-					Student s = new Student(imet.getText(),
-											pret.getText(),
-											datrt.getText(),
-											adrst.getText(),
-											kontt.getText(),
-											emat.getText(),
-											brit.getText(),
-											datut.getText(),Integer.parseInt(tgst.getText()),
-											StatusStudenta.valueOf(stat.getText().toUpperCase()),
-											Double.parseDouble(prot.getText()));
+					
+					menjaniStudent.setIme(imet.getText());
+					menjaniStudent.setPrezime(pret.getText());
+					menjaniStudent.setDatumRodjenja(datrt.getText());
+					menjaniStudent.setAdresaStanovanje(adrst.getText());
+					menjaniStudent.setKontaktTelefon(kontt.getText());
+					menjaniStudent.setEmailAdresa(emat.getText());
+					menjaniStudent.setBrojIndeksa(brit.getText());
+					menjaniStudent.setDatumUpisa(datut.getText());
+					menjaniStudent.setTrenutnaGodinaStudija(Integer.parseInt(tgst.getText()));
+					menjaniStudent.setStatus(StatusStudenta.valueOf(stat.getText()));
+					menjaniStudent.setProsecnaOcena(Double.parseDouble(prot.getText()));
+					
+
 					ls = MyBase.getInstance().getStudents();
+					
 					for(Student i : ls) {
-			//			System.out.println(i.equals(s));
-						if (i.equals(s)) {	
-							greska = true;
-			//				System.out.println(i.toString());
-							JOptionPane.showMessageDialog(panel, "YOU CAN'T ADD SAME STUDENT TWICE\nYOU ADDED SAME INDEX NUMBER AGAIN!", "ERROR", JOptionPane.ERROR_MESSAGE);
-							break;
+						if (i == menjaniStudent) continue;
+						if (i.equals(menjaniStudent)) {	
+								greska = true;
+								JOptionPane.showMessageDialog(panel, "THERE ALREADY IS A STUDENT WITH THAT INDEX!", "ERROR", JOptionPane.ERROR_MESSAGE);
+								break;
+							}
 						}
-					}
-					if (!greska)
-					MyBase.getInstance().addStudent(s);
+					
+					if (!greska) {
+					MyMainFrame.getInstance().azurirajPrikaz();
 					setVisible(false);
+					}
 				}
 				catch (Exception er) {
 					JOptionPane.showMessageDialog(panel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN ADDDING NEW STUDENT", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
+		
+		
 		
 		panel.add(btnSub, gbc);
 		
@@ -435,6 +465,26 @@ public class AddFrameStudent extends JDialog {
 		panel.add(btnCan, gbc);	
 		
 		add(panel);
+	
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+
+	public Student getStudentInformation() {
+		Student s = new Student(imet.getText(),
+				pret.getText(),
+				datrt.getText(),
+				adrst.getText(),
+				kontt.getText(),
+				emat.getText(),
+				brit.getText(),
+				datut.getText(),Integer.parseInt(tgst.getText()),
+				StatusStudenta.valueOf(stat.getText().toUpperCase()),
+				Double.parseDouble(prot.getText()));
+		return s;
 	}
 	
 }
