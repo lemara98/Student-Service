@@ -3,6 +3,7 @@ package testovi;
 import controller.MyController;
 import model.MyBase;
 import model.MyMainFrame;
+import model.Student;
 
 public class Test {
 

@@ -232,7 +232,7 @@ public class MyBase {
 		
 		readFromFile(studenti);
 		Student st1 = new Student("Ljuba", "Alicic", "01-04-1959", "Ilidza", "062431234", "ljuba.alicic@uns.ac.rs", "RA1/3019", "01-10-3019", 1, StatusStudenta.B, 6.34);
-		students.add(st1);
+		//students.add(st1);  Ovo te je zezalo!
 		
 		columnsStudent.add("Ime");
 		columnsStudent.add("Prezime");

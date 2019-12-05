@@ -79,7 +79,7 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-					//	int potvrda = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the program?\nThere may be some changes.\nDo you want to save it? ", "Exit program confirmation", JOptionPane.YES_NO_OPTION);
+				//	int potvrda = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the program?\nThere may be some changes.\nDo you want to save it? ", "Exit program confirmation", JOptionPane.YES_NO_OPTION);
 						
 					//	if (potvrda == JOptionPane.YES_OPTION) {
 							// Cuo sam povike , UBI GA UBI SVINJU
