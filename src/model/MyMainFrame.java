@@ -56,7 +56,7 @@ public class MyMainFrame extends JFrame {
 		
 		
 		// Sigurnosni Prozor za izlaz iz programa
-	//	izlazniProzor();		// izuzetno dosadna opcija pri testiranju aplikacije! Otkomentarisati pri kraju i dugme exit obavezno!
+		izlazniProzor();		// izuzetno dosadna opcija pri testiranju aplikacije! Otkomentarisati pri kraju i dugme exit obavezno!
 		
 		
 	// 	Odavde sam menjao tako da tu prilagodi. Od ove linije pa do 77
@@ -181,6 +181,7 @@ public class MyMainFrame extends JFrame {
 				
 				if (potvrda == JOptionPane.YES_OPTION) {
 					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					MyBase.getInstance().izvoz();
 					System.exit(0);
 				}
 				else {

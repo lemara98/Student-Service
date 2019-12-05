@@ -1,6 +1,14 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +22,9 @@ public class MyBase {
 		return instance;
 	}
 	
-	private File profesori = new File("\\src\\podaci\\Profesori.txt");
-	private File studenti = new File("\\src\\podaci\\Studenti.txt");
-	private File predmeti = new File("\\src\\podaci\\Predmeti.txt");
+	private File profesori = new File("src\\podaci\\Profesori.txt");
+	private File studenti = new File("src\\podaci\\Studenti.txt");
+	private File predmeti = new File("src\\podaci\\Predmeti.txt");
 	
 	private List<Professor> professors;		//Ove liste nam sluze kao baza podataka za tabelu
 	private List<String> columnsProfessor;
@@ -221,6 +229,8 @@ public class MyBase {
 		
 		ArrayList<Subject> sp = new ArrayList<Subject>();
 		sp.add(s1);
+		
+		readFromFile(studenti);
 		Student st1 = new Student("Ljuba", "Alicic", "01-04-1959", "Ilidza", "062431234", "ljuba.alicic@uns.ac.rs", "RA1/3019", "01-10-3019", 1, StatusStudenta.B, 6.34);
 		students.add(st1);
 		
@@ -317,10 +327,67 @@ public class MyBase {
 		
 	}
 	
+	/**
+	 * 
+	 * Uvozi podatke iz datoteke na lokaciji src\podaci\Studenti.txt u bazu podataka
+	 */
 	public void uvoz() {
-	
-		
+		readFromFile(studenti);	
 	}
+	
+	/**
+	 * Izvozi podatke iz baze podataka u datoteku na lokaciji src\podaci\stucenti.txt
+	 */
+	public void izvoz() {
+		writeToFile(studenti);
+	}
+	
+	private void readFromFile(File fajl) {
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fajl.getPath()), "UTF-8"))){
+				
+				String trenutni;
+				while ((trenutni = br.readLine()) != null) {
+					boolean jedinstven = true;
+					trenutni.trim();
+					String[] podStud = trenutni.split(", ");
+					Student ucitani = new Student(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], podStud[7], Integer.parseInt(podStud[8]), StatusStudenta.valueOf(podStud[9]), Double.parseDouble(podStud[10]));
+					for (Student provera : students) {
+						if (provera.equals(ucitani)) {
+							jedinstven = false;
+							break;
+						}
+					}
+					if (jedinstven)
+					students.add(ucitani);
+				}	
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
+	
+	private void writeToFile(File fajl) {
+		try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fajl.getPath()), "UTF-8"))){
+	
+			String trenutni = new String();
+			for(Student i : students) {
+				trenutni += i.toString() + "\n";
+			}
+			
+			br.append(trenutni);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 
 }

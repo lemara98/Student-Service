@@ -162,11 +162,11 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "Student [ime=" + ime + ", prezime=" + prezime + ", datumRodjenja=" + datumRodjenja
-				+ ", adresaStanovanje=" + adresaStanovanje + ", kontaktTelefon=" + kontaktTelefon + ", emailAdresa="
-				+ emailAdresa + ", brojIndeksa=" + brojIndeksa + ", datumUpisa=" + datumUpisa
-				+ ", trenutnaGodinaStudija=" + trenutnaGodinaStudija + ", status=" + status + ", prosecnaOcena="
-				+ prosecnaOcena + "]";
+		return ime + ", " + prezime + ", " + datumRodjenja
+				+ ", " + adresaStanovanje + ", " + kontaktTelefon + ", "
+				+ emailAdresa + ", " + brojIndeksa + ", " + datumUpisa
+				+ ", " + trenutnaGodinaStudija + ", " + status + ", "
+				+ prosecnaOcena;
 	}
 	
 	@Override
