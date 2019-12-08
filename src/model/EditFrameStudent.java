@@ -1,6 +1,9 @@
 package model;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
@@ -8,12 +11,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 public class EditFrameStudent extends JDialog {
@@ -32,14 +39,18 @@ public class EditFrameStudent extends JDialog {
 	private JTextField brit;
 	private JTextField datut;
 	private JTextField tgst;
-	private JTextField stat;
+	private String stat;
 	private JTextField prot;
 	private JTextField spst;
+	private JRadioButton budzet = new JRadioButton("Budzet");
+	private JRadioButton samofinansiranje = new JRadioButton("Samofinansiranje");
+	private ButtonGroup status = new ButtonGroup();
 	private Student menjaniStudent;
 	
 	
 	public EditFrameStudent(Student temp) {
 		super();
+		
 		try {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension ss = kit.getScreenSize();
@@ -51,7 +62,8 @@ public class EditFrameStudent extends JDialog {
 		setLocationRelativeTo(null);
 		setModal(true);
 		
-		
+		status.add(budzet);
+		status.add(samofinansiranje);
 		
 		imet = new JTextField(temp.getIme());
 		pret = new JTextField(temp.getPrezime());
@@ -62,15 +74,19 @@ public class EditFrameStudent extends JDialog {
 		brit = new JTextField(temp.getBrojIndeksa());
 		datut = new JTextField(temp.getDatumUpisa());
 		tgst = new JTextField(Integer.toString(temp.getTrenutnaGodinaStudija()));
-		stat = new JTextField(temp.getStatus().toString());
+		stat = new String(temp.getStatus().toString());
 		prot = new JTextField(Double.toString(temp.getProsecnaOcena()));
-		spst = new JTextField("-");			//!!!
 		
+		
+		if (stat == "Budzet") {
+			budzet.setSelected(true);
+		}
+		else {
+			samofinansiranje.setSelected(true);
+		}
+				
 		menjaniStudent = temp;
-		
-		
-		
-		
+	
 		
 		JPanel panel = new JPanel(new GridBagLayout());
 		
@@ -193,10 +209,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel sta = new JLabel("Status [ B, S ]");
-		
-		
-		panel.add(sta, gbc);
+		panel.add(budzet, gbc);
 		
 		// Prosecna ocena
 		gbc.gridx = 0;
@@ -209,19 +222,6 @@ public class EditFrameStudent extends JDialog {
 		
 		
 		panel.add(pro, gbc);
-		
-		// spisak predmeta koje student slusa
-		gbc.gridx = 0;
-		gbc.gridy = 11;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.WEST;
-		
-		JLabel sps = new JLabel("Spisak predmeta koje slusa   ");
-		
-		panel.add(sps, gbc);
-		
-		
 		
 		//// JTextArea ////
 		
@@ -340,10 +340,7 @@ public class EditFrameStudent extends JDialog {
 				gbc.gridheight = 1;
 				gbc.anchor = GridBagConstraints.WEST;
 				
-				stat.setPreferredSize(v);
-				
-				
-				panel.add(stat, gbc);
+				panel.add(samofinansiranje, gbc);
 				
 				// Prosecna ocena
 				gbc.gridx = 1;
@@ -357,22 +354,10 @@ public class EditFrameStudent extends JDialog {
 				
 				panel.add(prot, gbc);
 				
-				// spisak predmeta koje student slusa
-				gbc.gridx = 1;
-				gbc.gridy = 11;
-				gbc.gridwidth = 1;
-				gbc.gridheight = 1;
-				gbc.anchor = GridBagConstraints.WEST;
-				
-				spst.setPreferredSize(v);
-				
-				panel.add(spst, gbc);
-				
 		//// Dugmadi Submit i Cancel
 				
-		
-			
 		Dimension vd = new Dimension(100,25);
+		JPanel panelDugmadi = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		
 		// Submit
 		gbc.gridx = 0;
@@ -388,11 +373,16 @@ public class EditFrameStudent extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					// TODO Auto-generated method stub
-					
-					// DOBRO RAZMISLITI O LISTI PREDMETA KOJE STUDENT SLUSA!
-		//			ArrayList<Subject> sp = new ArrayList<Subject>();
 					List<Student> ls;
 					boolean greska = false;
+					
+					StatusStudenta n;
+					if (budzet.isSelected()) {
+						n = StatusStudenta.B;
+					}
+					else {
+						n = StatusStudenta.S;
+					}
 					
 					menjaniStudent.setIme(imet.getText());
 					menjaniStudent.setPrezime(pret.getText());
@@ -403,7 +393,7 @@ public class EditFrameStudent extends JDialog {
 					menjaniStudent.setBrojIndeksa(brit.getText());
 					menjaniStudent.setDatumUpisa(datut.getText());
 					menjaniStudent.setTrenutnaGodinaStudija(Integer.parseInt(tgst.getText()));
-					menjaniStudent.setStatus(StatusStudenta.valueOf(stat.getText()));
+					menjaniStudent.setStatus(n);
 					menjaniStudent.setProsecnaOcena(Double.parseDouble(prot.getText()));
 					
 
@@ -431,7 +421,7 @@ public class EditFrameStudent extends JDialog {
 		
 		
 		
-		panel.add(btnSub, gbc);
+		panelDugmadi.add(btnSub, gbc);
 		
 		// Cancel
 		gbc.gridx = 1;
@@ -456,15 +446,47 @@ public class EditFrameStudent extends JDialog {
 				brit.setText("");
 				datut.setText("");
 				tgst.setText("");
-				stat.setText("");
 				prot.setText("");
 				spst.setText("");
 				setVisible(false);
 			}
 		});
-		panel.add(btnCan, gbc);	
+		panelDugmadi.add(btnCan, gbc);	
 		
-		add(panel);
+		
+		////// Predmeti koje student polaze //////
+		JPanel panelPred = new JPanel(new GridBagLayout());
+		panelPred.setPreferredSize(new Dimension(300,480));
+		panelPred.setBackground(Color.CYAN);
+		
+		JLabel pred = new JLabel("Dostupni predmeti");
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		gbc.anchor = GridBagConstraints.WEST;
+
+		panelPred.add(pred,gbc);
+
+		List<Subject> listaPredmeta = MyBase.getInstance().getSubjects();
+		int j = 1;
+		for (Subject i : listaPredmeta) {
+			addPredmetToList(panelPred, i, j);
+			j++;
+		}
+		
+		JScrollPane panelSaPredmetima = new JScrollPane();
+		panelSaPredmetima.setPreferredSize(new Dimension(300,480));
+		panelSaPredmetima.add(pred);
+		panelSaPredmetima.add(panelPred);
+		
+		
+		//////
+		
+		add(panelPred, BorderLayout.EAST);
+		add(panel, BorderLayout.WEST);
+		add(panelDugmadi, BorderLayout.SOUTH);
 	
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -482,9 +504,24 @@ public class EditFrameStudent extends JDialog {
 				emat.getText(),
 				brit.getText(),
 				datut.getText(),Integer.parseInt(tgst.getText()),
-				StatusStudenta.valueOf(stat.getText().toUpperCase()),
+				StatusStudenta.valueOf(stat.toUpperCase()),
 				Double.parseDouble(prot.getText()));
 		return s;
 	}
+	
+	
+	private void addPredmetToList(JPanel panel, Subject predmet, int rbr) {
+		JCheckBox cekBox = new JCheckBox(predmet.getName());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridx = 0;
+		gbc.gridy = rbr;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		gbc.anchor = GridBagConstraints.WEST;
+		
+		panel.add(cekBox, gbc);
+}
 	
 }

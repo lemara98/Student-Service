@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -17,6 +19,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -37,9 +40,12 @@ public class AddFrameStudent extends JDialog {
 	private JTextField brit = new JTextField("");
 	private JTextField datut = new JTextField("");
 	private JTextField tgst = new JTextField("");
-	private JTextField stat = new JTextField("");
+//	private JTextField stat = new JTextField("");
 	private JTextField prot = new JTextField("");
 	private JTextField spst = new JTextField("");
+	private JRadioButton budzet = new JRadioButton("Budzet");
+	private JRadioButton samofinansiranje = new JRadioButton("Samofinansiranje");
+	private ButtonGroup status = new ButtonGroup();
 	
 	
 	
@@ -56,6 +62,8 @@ public class AddFrameStudent extends JDialog {
 		setLocationRelativeTo(null);
 		setModal(true);
 		
+		status.add(budzet);
+		status.add(samofinansiranje);
 		
 		JPanel panel = new JPanel(new GridBagLayout());
 		
@@ -166,7 +174,7 @@ public class AddFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel tgs = new JLabel("Trenutna godina studija");
+		JLabel tgs = new JLabel("Trenutna godina studija [1-4]");
 		
 		
 		panel.add(tgs, gbc);
@@ -178,10 +186,10 @@ public class AddFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel sta = new JLabel("Status [B,S]");
+	//	JLabel sta = new JLabel("Status [B,S]");
 		
-		
-		panel.add(sta, gbc);
+		panel.add(budzet, gbc);
+	//	panel.add(sta, gbc);
 		
 		// Prosecna ocena
 		gbc.gridx = 0;
@@ -323,10 +331,10 @@ public class AddFrameStudent extends JDialog {
 				gbc.gridheight = 1;
 				gbc.anchor = GridBagConstraints.WEST;
 				
-				stat.setPreferredSize(v);
+//				stat.setPreferredSize(v);
 				
-				
-				panel.add(stat, gbc);
+				panel.add(samofinansiranje, gbc);
+//				panel.add(stat, gbc);
 				
 				// Prosecna ocena
 				gbc.gridx = 1;
@@ -352,34 +360,6 @@ public class AddFrameStudent extends JDialog {
 //				panel.add(spst, gbc);
 				
 				
-		/////// COMBOBOX SA PREDMETIMA ////////
-						JPanel panelPred = new JPanel(new GridBagLayout());
-						panelPred.setPreferredSize(new Dimension(300,480));
-						
-						JLabel pred = new JLabel("Dostupni Predmeti");
-						
-						gbc.gridx = 0;
-						gbc.gridy = 0;
-						gbc.gridwidth = 1;
-						gbc.gridheight = 1;
-						gbc.anchor = GridBagConstraints.WEST;
-
-						panelPred.add(pred,gbc);
-		
-						List<Subject> listaPredmeta = MyBase.getInstance().getSubjects();
-						int j = 1;
-						for (Subject i : listaPredmeta) {
-							addPredmetToList(panelPred, i, j);
-							j++;
-						}
-						
-						JScrollPane panelSaPredmetima = new JScrollPane();
-						panelSaPredmetima.setPreferredSize(new Dimension(300,480));
-						panelSaPredmetima.add(pred);
-						panelSaPredmetima.add(panelPred);
-				
-		// Stavljanje dugmadi na novi panel
-				
 		JPanel panelDugmadi = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		panelDugmadi.setPreferredSize(new Dimension(200,40));
 				
@@ -404,12 +384,18 @@ public class AddFrameStudent extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					// TODO Auto-generated method stub
-					
-					// DOBRO RAZMISLITI O LISTI PREDMETA KOJE STUDENT SLUSA!
-		//			ArrayList<Subject> sp = new ArrayList<Subject>();
 					List<Student> ls;
 					boolean greska = false;
-					System.out.println(kontt.getText());
+					
+					StatusStudenta n;
+					if (budzet.isSelected()) {
+						n = StatusStudenta.B;
+					}
+					else {
+						n = StatusStudenta.S;
+					}
+					
+					
 					Student s = new Student(imet.getText(),
 											pret.getText(),
 											datrt.getText(),
@@ -418,21 +404,22 @@ public class AddFrameStudent extends JDialog {
 											emat.getText(),
 											brit.getText(),
 											datut.getText(),Integer.parseInt(tgst.getText()),
-											StatusStudenta.valueOf(stat.getText().toUpperCase()),
+											n,
+//											StatusStudenta.valueOf(stat.getText().toUpperCase()),
 											Double.parseDouble(prot.getText()));
 					ls = MyBase.getInstance().getStudents();
 					for(Student i : ls) {
-			//			System.out.println(i.equals(s));
 						if (i.equals(s)) {	
 							greska = true;
-			//				System.out.println(i.toString());
 							JOptionPane.showMessageDialog(panel, "YOU CAN'T ADD SAME STUDENT TWICE\nYOU ADDED SAME INDEX NUMBER AGAIN!", "ERROR", JOptionPane.ERROR_MESSAGE);
+							setVisible(true);
 							break;
 						}
 					}
-					if (!greska)
-					MyBase.getInstance().addStudent(s);
-					setVisible(false);
+					if (!greska) {
+						MyBase.getInstance().addStudent(s);
+						setVisible(false);
+					}
 				}
 				catch (Exception er) {
 					JOptionPane.showMessageDialog(panel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN ADDDING NEW STUDENT", JOptionPane.ERROR_MESSAGE);
@@ -465,13 +452,42 @@ public class AddFrameStudent extends JDialog {
 				brit.setText("");
 				datut.setText("");
 				tgst.setText("");
-				stat.setText("");
+//				stat.setText("");
 				prot.setText("");
 				spst.setText("");
 				setVisible(false);
 			}
 		});
 		panelDugmadi.add(btnCan, gbc);	
+		
+		/////// COMBOBOX SA PREDMETIMA ////////
+		JPanel panelPred = new JPanel(new GridBagLayout());
+		panelPred.setPreferredSize(new Dimension(300,480));
+		panelPred.setBackground(Color.CYAN);
+		
+		JLabel pred = new JLabel("Dostupni Predmeti");
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		gbc.anchor = GridBagConstraints.WEST;
+
+		panelPred.add(pred,gbc);
+
+		List<Subject> listaPredmeta = MyBase.getInstance().getSubjects();
+		int j = 1;
+		for (Subject i : listaPredmeta) {
+			addPredmetToList(panelPred, i, j);
+			j++;
+		}
+		
+		JScrollPane panelSaPredmetima = new JScrollPane();
+		panelSaPredmetima.setPreferredSize(new Dimension(300,480));
+		panelSaPredmetima.add(pred);
+		panelSaPredmetima.add(panelPred);
+
+		/////////////
 		
 		add(panelPred, BorderLayout.EAST);
 		add(panelDugmadi,BorderLayout.SOUTH);

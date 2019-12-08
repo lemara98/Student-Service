@@ -47,9 +47,20 @@ public class MyPopupMenu extends JPopupMenu {
 				int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
 				if(selectedPane == 0) {
 					//professors // Ovde se mora dodati!
+					int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
+					if (idx != -1) {
+//						MyController.getInstance().editProfessor(idx);
+					}
+					else
+						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
 				}else if(selectedPane == 1) {
 					//subjects // Ovde se mora ispraviti!
-					MyController.getInstance().addSubject();
+					int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
+					if (idx != -1) {
+//						MyController.getInstance().editSubject(idx);
+					}
+					else
+						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
 				}
 				else {
 					//students
@@ -57,7 +68,7 @@ public class MyPopupMenu extends JPopupMenu {
 					if (idx != -1)
 						MyController.getInstance().editStudent(idx);
 					else
-						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to delete", "WARNING", JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}

@@ -82,15 +82,29 @@ public class MyToolBar extends JToolBar{
 				// TODO Auto-generated method stub
 				int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
 				if(selectedPane == 0) {
-					//professors
+					//professors // Ovde se mora dodati!
+					int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
+					if (idx != -1) {
+//						MyController.getInstance().editProfessor(idx);
+					}
+					else
+						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
 				}else if(selectedPane == 1) {
-					//subjects
-					MyController.getInstance().addSubject();
+					//subjects // Ovde se mora ispraviti!
+					int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
+					if (idx != -1) {
+//						MyController.getInstance().editSubject(idx);
+					}
+					else
+						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
 				}
 				else {
 					//students
 					int idx = MyMainFrame.getInstance().getStudentJTable().getSelectedRow();
-					MyController.getInstance().editStudent(idx);
+					if (idx != -1)
+						MyController.getInstance().editStudent(idx);
+					else
+						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}

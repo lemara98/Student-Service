@@ -70,6 +70,23 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 		JMenuItem novi = new JMenuItem("New", ni);
 		novi.setMnemonic(KeyEvent.VK_N);
 		novi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
+		novi.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
+						if(selectedPane == 0) {
+							//professors
+						}else if(selectedPane == 1) {
+							//subjects
+							MyController.getInstance().addSubject();
+						}
+						else {
+							//students
+							MyController.getInstance().addStudent();
+						}
+					}
+				});
 		
 		// Close dugme
 		JMenuItem close = new JMenuItem("Close", ci);
@@ -102,25 +119,39 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 		izmeni.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
 		
 		izmeni.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
-				if(selectedPane == 0) {
-					//professors
-				}else if(selectedPane == 1) {
-					//subjects
-					MyController.getInstance().addSubject();
-				}
-				else {
-					//students
-					int idx = MyMainFrame.getInstance().getStudentJTable().getSelectedRow();
-					MyController.getInstance().editStudent(idx);
-				}
-				
-			}
-		});
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
+						if(selectedPane == 0) {
+							//professors // Ovde se mora dodati!
+							int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
+							if (idx != -1) {
+//								MyController.getInstance().editProfessor(idx);
+							}
+							else
+								JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
+						}else if(selectedPane == 1) {
+							//subjects // Ovde se mora ispraviti!
+							int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
+							if (idx != -1) {
+//								MyController.getInstance().editSubject(idx);
+							}
+							else
+								JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
+						}
+						else {
+							//students
+							int idx = MyMainFrame.getInstance().getStudentJTable().getSelectedRow();
+							if (idx != -1)
+								MyController.getInstance().editStudent(idx);
+							else
+								JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
+						}
+						
+					}
+				});
 		
 		
 		// Delete dugme
