@@ -9,11 +9,11 @@ public class Subject {
 	private String name;
 	private int semester;
 	private int yearOfStuding;
-	private String professor;
+	private Professor professor;
 	private List<Student> students;
 	
 	
-	public Subject(String name, int semester, int yearOfStuding, String professor,
+	public Subject(String name, int semester, int yearOfStuding, Professor professor,
 			List<Student> students) {
 		super();
 		++codeCnt;
@@ -25,6 +25,16 @@ public class Subject {
 		this.students = students;
 	}
 	
+	public Subject(String name, int semester, int yearOfStuding, Professor professor) {
+		super();
+		++codeCnt;
+		this.code = Integer.toString(codeCnt);
+		this.name = name;
+		this.semester = semester;
+		this.yearOfStuding = yearOfStuding;
+		this.professor = professor;
+		this.students = null;
+	}
 	
 	public String getCode() {
 		return code;
@@ -50,10 +60,10 @@ public class Subject {
 	public void setYearOfStuding(int yearOfStuding) {
 		this.yearOfStuding = yearOfStuding;
 	}
-	public String getProfessor() {
+	public Professor getProfessor() {
 		return professor;
 	}
-	public void setProfessor(String professor) {
+	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
 	public List<Student> getStudents() {

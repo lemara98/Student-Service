@@ -105,5 +105,6 @@ public class Professor {
 //	public void setSubjects(List<Subject> subjects) {
 //		this.subjects = subjects;
 //	}
+	
 
 }

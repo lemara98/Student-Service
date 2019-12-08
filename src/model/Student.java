@@ -42,6 +42,8 @@ public class Student {
 	//	this.spisakPredmetaKojeStudentSlusa = spisakPredmetaKojeStudentSlusa;
 	}
 
+	public Student() {}	//Dodao sam prazan konstruktor Sale.
+	
 	public Student(Student s) {
 		this.ime = s.ime;
 		this.prezime = s.prezime;
@@ -205,7 +207,7 @@ public class Student {
 	public void skiniPredmetSaSpiska(int ind) {
 		spisakPredmetaKojeStudentSlusa.remove(ind);
 	}
-
+	
 
 
 }

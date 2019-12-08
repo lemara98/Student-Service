@@ -42,19 +42,8 @@ public class MyBase {
 	///////////////////////////////////////////////PROFESSOR////////////////////////////////////////////////
 	
 	private void initProfessors() {
-		professors = new ArrayList<Professor>();
 		
-		Subject s1 = new Subject( "Bases of Data", 5, 3, "Ivana", students);
-		
-		List<Subject> subjects1 = new ArrayList<Subject>();
-		subjects1.add(s1);
-		
-		Professor p3 = new Professor("Milan","Vikakovic","03/02/56","Branimira Cosica",19223828,"vidakovic@gmail.com","FTN",122332134,"Professor","1.");
-		Professor p1 = new Professor("Pera","Peric","16/08/67","Branimira Cosica",061533466,"pera@gmail.com","FTN",12358701,"Profesor","Dr.");
-		Professor p2 = new Professor("Djoka","Djokic","04/02/99","Kralja Petra",0613442334,"djoka@gmail.com","FTN",12358702,"Profesor","Dr.");
-		professors.add(p3);
-		professors.add(p1);
-		professors.add(p2);
+		readFromFile(profesori);
 		
 		columnsProfessor = new ArrayList<String>();
 		columnsProfessor.add("FirstName");
@@ -131,6 +120,18 @@ public class MyBase {
 		
 	}
 	
+	public Professor getProfessorById(int id) {
+		Professor prof = new Professor();
+		for (Professor pr : professors) {
+			if(pr.getIdNumber() == id) {
+				prof = pr; 
+				break;
+			}
+		}
+		
+		return prof;
+	}
+	
 	//////////////////////////////////////////////////SUBJECT/////////////////////////////////////////////////
 	public void initSubjects() {
 		subjects = new ArrayList<Subject>();
@@ -147,6 +148,7 @@ public class MyBase {
 		columnsSubject.add("Semester");
 		columnsSubject.add("Year of study");
 		columnsSubject.add("Professor");
+		columnsSubject.add("Studenti");
 		
 		
 	}
@@ -189,7 +191,9 @@ public class MyBase {
 		case 2:
 			return Integer.toString(s.getYearOfStuding());
 		case 3:
-			return s.getProfessor();
+			return s.getProfessor().getFirstName() + s.getProfessor().getLastName();
+		case 4:
+			return "Prikazi";
 		default:
 			return null;
 		}
@@ -222,11 +226,6 @@ public class MyBase {
 	private void initStudents() {
 		students = new ArrayList<Student>();
 		columnsStudent = new ArrayList<String>();
-		
-		Subject s1 = new Subject("Algebra", 1, 1, "Rade Doros", students);
-		
-		ArrayList<Subject> sp = new ArrayList<Subject>();
-		sp.add(s1);
 		
 		readFromFile(studenti);
 	//	Student st1 = new Student("Ljuba", "Alicic", "01-04-1959", "Ilidza", "062431234", "ljuba.alicic@uns.ac.rs", "RA1/3019", "01-10-3019", 1, StatusStudenta.B, 6.34);
@@ -299,6 +298,18 @@ public class MyBase {
 				return null;
 		}
 	}
+	
+	//vraca Studenta sa zadatim indexom
+	public Student getStudentIndex(String idx) {
+		Student stud = new Student();
+		for(Student st : students) {
+			if(st.getBrojIndeksa() == idx) {
+				stud = st;
+				break;
+			}
+		}
+		return stud;
+	}
 	public void addStudent(Student s) {
 		students.add(s);
 		MyMainFrame.getInstance().azurirajPrikaz();
@@ -347,16 +358,47 @@ public class MyBase {
 				while ((trenutni = br.readLine()) != null) {
 					boolean jedinstven = true;
 					trenutni.trim();
-					String[] podStud = trenutni.split(", ");
-					Student ucitani = new Student(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], podStud[7], Integer.parseInt(podStud[8]), StatusStudenta.valueOf(podStud[9]), Double.parseDouble(podStud[10]));
-					for (Student provera : students) {
-						if (provera.equals(ucitani)) {
-							jedinstven = false;
-							break;
+					String[] podStud = trenutni.split(",");
+					if(fajl == studenti) {
+						Student ucitani = new Student(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], podStud[7], Integer.parseInt(podStud[8]), StatusStudenta.valueOf(podStud[9]), Double.parseDouble(podStud[10]));
+						for (Student provera : students) {
+							if (provera.equals(ucitani)) {
+								jedinstven = false;
+								break;
+							}
 						}
+						if (jedinstven)
+						students.add(ucitani);
+					}else if(fajl == profesori) {
+						Professor ucitani = new Professor(podStud[0], podStud[1], podStud[2], podStud[3], Long.parseLong(podStud[4]), podStud[5], podStud[6], Long.parseLong(podStud[7]), podStud[8],podStud[9]);
+						for (Professor provera : professors) {
+							if (provera.equals(ucitani)) {
+								jedinstven = false;
+								break;
+							}
+						}
+						if (jedinstven)
+						professors.add(ucitani);
+					}else if(fajl == predmeti){
+						String idProf = podStud[3];
+						Professor pr = MyBase.getInstance().getProfessorById(Integer.parseInt(idProf));
+						List<Student> st = new ArrayList<Student>();
+						for(int i = 4; i <= podStud.length; i++) {
+							st.add(MyBase.getInstance().getStudentIndex(podStud[i])); //dodajemo studente
+						}
+						Subject ucitani = new Subject(podStud[0], Integer.parseInt(podStud[1]), Integer.parseInt(podStud[2]), pr);
+						ucitani.setStudents(st);
+						
+						for (Subject provera : subjects) {
+							if (provera.equals(ucitani)) {
+								jedinstven = false;
+								break;
+							}
+						}
+						if (jedinstven)
+						subjects.add(ucitani);
 					}
-					if (jedinstven)
-					students.add(ucitani);
+					
 				}	
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
