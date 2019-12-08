@@ -35,10 +35,8 @@ public class MyBase {
 	
 	private MyBase() {
 		initProfessors();		//na Pocetku inicijalizujemo listu profesora
-
 		initSubjects();
 		initStudents();
-
 	}
 	
 	///////////////////////////////////////////////PROFESSOR////////////////////////////////////////////////
@@ -231,8 +229,8 @@ public class MyBase {
 		sp.add(s1);
 		
 		readFromFile(studenti);
-		Student st1 = new Student("Ljuba", "Alicic", "01-04-1959", "Ilidza", "062431234", "ljuba.alicic@uns.ac.rs", "RA1/3019", "01-10-3019", 1, StatusStudenta.B, 6.34);
-		//students.add(st1);  Ovo te je zezalo!
+	//	Student st1 = new Student("Ljuba", "Alicic", "01-04-1959", "Ilidza", "062431234", "ljuba.alicic@uns.ac.rs", "RA1/3019", "01-10-3019", 1, StatusStudenta.B, 6.34);
+	//	students.add(st1);  Ovo te je zezalo!
 		
 		columnsStudent.add("Ime");
 		columnsStudent.add("Prezime");
@@ -280,7 +278,7 @@ public class MyBase {
 			case 3:
 				return stud.getAdresaStanovanje();
 			case 4:
-				return stud.getEmailAdresa();
+				return stud.getKontaktTelefon();
 			case 5:
 				return stud.getEmailAdresa();
 			case 6:

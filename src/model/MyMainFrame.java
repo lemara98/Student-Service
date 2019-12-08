@@ -19,6 +19,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import model.MyPopupMenu.PopClickListener;
 import view.AbstractTableModelProfessor;
 import view.AbstractTableModelStudent;
 import view.AbstractTableModelSubject;
@@ -45,7 +46,6 @@ public class MyMainFrame extends JFrame {
 		setTitle("Studentska služba");
 		setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG2_black_icons\\naruto [#119].png").getImage());
 		
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setResizable(true);  // Sale podesi ovo kako ti odgovara! ##### Mile promenio na true! Da bi bio fenseraj
 							// ## Primetices da sam ogranicio minimumSize da ne bi
@@ -61,6 +61,7 @@ public class MyMainFrame extends JFrame {
 		
 	// 	Odavde sam menjao tako da tu prilagodi. Od ove linije pa do 77
 		
+
 		JPanel panelCentar = new JPanel();
 	
 		
@@ -89,10 +90,12 @@ public class MyMainFrame extends JFrame {
 		
 		professorJTable = new ProfessorJTable();
 		JScrollPane professorPane = new JScrollPane(professorJTable);
+		professorJTable.addMouseListener(new PopClickListener());
 		professorJTable.setVisible(true);
 		
 		subjectJTable = new SubjectJTable();
 		JScrollPane subjectPane = new JScrollPane(subjectJTable);
+		subjectJTable.addMouseListener(new PopClickListener());
 		subjectJTable.setVisible(true);
 		
 		kartice.addTab("Professors", professorPane);
@@ -120,6 +123,7 @@ public class MyMainFrame extends JFrame {
 		studentJTable = new StudentJTable();
 		JScrollPane studentPane = new JScrollPane(studentJTable);
 		studentJTable.setVisible(true);
+		studentJTable.addMouseListener(new PopClickListener());
 		
 		kartice.addTab("Students", studentPane);
 
@@ -134,7 +138,8 @@ public class MyMainFrame extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		
 		setVisible(true);
 	}
 	
@@ -171,25 +176,29 @@ public class MyMainFrame extends JFrame {
 	}
 	
 	/**
-	 * Sigurnosni prozor: Izbacuje YES_NO JOptionPane
+	 * Sigurnosni prozor: Izbacuje YES_NO_CANCEL JOptionPane
 	 *
 	 */
 	public void izlazniProzor() {
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				int potvrda = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the program?\nMake sure that you saved changes.", "Exit program confirmation", JOptionPane.YES_NO_OPTION);
+				int potvrda = JOptionPane.showConfirmDialog(null, "You are now exiting the program.\nDo you want to save changes?", "Exit program confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
 				
 				if (potvrda == JOptionPane.YES_OPTION) {
-					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					MyBase.getInstance().izvoz();
-					System.exit(0);
+					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				}
+				else if (potvrda == JOptionPane.NO_OPTION){
+					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				}
 				else {
-					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+					setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 				}
 			}
 		});
 	}
+		
+		
+}
 	
 
-}

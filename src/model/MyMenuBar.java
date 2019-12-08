@@ -21,10 +21,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+
+import controller.MyController;
 
 public class MyMenuBar extends JMenuBar { // Milan Knezevic
 	
@@ -53,7 +56,7 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 		// Close image - ci
 		ImageIcon ci = resizeIcon(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG2_black_icons\\shut_down [#1431].png"));
 		// New image - ni
-		ImageIcon ni = resizeIcon(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG2_black_icons\\plus [#1513].png"));
+		ImageIcon ni = resizeIcon(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\inbox_plus [#1554].png"));
 		// Delete image - oi (obrisi image)
 		ImageIcon oi = resizeIcon(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG2_black_icons\\delete [#1487].png"));
 		// Edit image -- ii (eto tako)
@@ -79,12 +82,16 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				//	int potvrda = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the program?\nThere may be some changes.\nDo you want to save it? ", "Exit program confirmation", JOptionPane.YES_NO_OPTION);
+					int potvrda = JOptionPane.showConfirmDialog(null, "You are now exiting the program.\nDo you want to save changes?", "Exit program confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
 						
-					//	if (potvrda == JOptionPane.YES_OPTION) {
+						if (potvrda == JOptionPane.YES_OPTION) {
 							// Cuo sam povike , UBI GA UBI SVINJU
+							MyBase.getInstance().izvoz();
 							System.exit(0);
-					//	}
+						}
+						else if (potvrda == JOptionPane.NO_OPTION) {
+							System.exit(0);
+						}
 					}
 				});
 	
@@ -94,11 +101,80 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 		izmeni.setMnemonic(KeyEvent.VK_E);
 		izmeni.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
 		
+		izmeni.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
+				if(selectedPane == 0) {
+					//professors
+				}else if(selectedPane == 1) {
+					//subjects
+					MyController.getInstance().addSubject();
+				}
+				else {
+					//students
+					int idx = MyMainFrame.getInstance().getStudentJTable().getSelectedRow();
+					MyController.getInstance().editStudent(idx);
+				}
+				
+			}
+		});
+		
 		
 		// Delete dugme
 		JMenuItem obrisi = new JMenuItem("Delete", oi);
 		obrisi.setMnemonic(KeyEvent.VK_D);
 		obrisi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.ALT_MASK));
+		
+		obrisi.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+					
+							if(MyMainFrame.getInstance().getSelectedTabbedPane() == 0) {
+								//index of selected row --> this gives us a professor
+								{
+									int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
+									if(idx != -1) {
+										
+										int dialogButton = JOptionPane.showConfirmDialog(obrisi, "Are you sure ?","Delete",JOptionPane.YES_NO_OPTION);
+										if(dialogButton == JOptionPane.YES_OPTION)
+											MyController.getInstance().deleteProfessor(idx);
+										
+									} else {
+										JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must fitrst select something to delete", "WARNING", JOptionPane.WARNING_MESSAGE);
+									}
+								}
+							}
+							else if (MyMainFrame.getInstance().getSelectedTabbedPane() == 1) {
+								
+									int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
+									if(idx != -1) {
+										int dialogButton = JOptionPane.showConfirmDialog(obrisi, "Are you sure ?","Delete",JOptionPane.YES_NO_OPTION);
+										if(dialogButton == JOptionPane.YES_OPTION) 
+											MyController.getInstance().deleteSubject(idx);
+									
+									} else {
+										JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to delete", "WARNING", JOptionPane.WARNING_MESSAGE);
+									}
+							}
+							else {
+								
+									int idx = MyMainFrame.getInstance().getStudentJTable().getSelectedRow();
+									if(idx != -1) {
+										int dialogButton = JOptionPane.showConfirmDialog(obrisi, "Are you sure ?","Delete",JOptionPane.YES_NO_OPTION);
+										if(dialogButton == JOptionPane.YES_OPTION) 
+										MyController.getInstance().deleteStudent(idx);
+										
+									} else {
+										JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to delete", "WARNING", JOptionPane.WARNING_MESSAGE);
+									}
+							}
+						
+					}
+				});
 		
 		// Help dugme
 		JMenuItem pomoc = new JMenuItem("Help", hi);
@@ -135,8 +211,6 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 		this.add(file);
 		this.add(edit);
 		this.add(help);
-		
-		
 	}
 	
 	/**
@@ -153,7 +227,7 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 	 * @param ul -- Image
 	 * @return  Same but resized image
 	 */
-	private ImageIcon resizeIcon(ImageIcon ul) {
+	public static ImageIcon resizeIcon(ImageIcon ul) {
 		Image slika = ul.getImage();
 		BufferedImage bi = new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = bi.getGraphics();

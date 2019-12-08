@@ -103,38 +103,52 @@ public class MyToolBar extends JToolBar{
 		btnDelete.setPreferredSize(new Dimension(30,30));
 		btnDelete.setToolTipText("Delete");
 		btnDelete.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				int dialogButton = JOptionPane.showConfirmDialog(btnDelete, "Are you sure ?","Delete",JOptionPane.YES_NO_OPTION);
-				if(dialogButton == JOptionPane.YES_OPTION) {
-	//				System.out.println("Professor deleted");
-	//				System.out.println(MyMainFrame.getInstance().getSelectedTabbedPane());
-					if(MyMainFrame.getInstance().getSelectedTabbedPane() == 0) {
-						//index of selected row --> this gives us a professor
-						int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
-						if(idx != -1) {
-							MyController.getInstance().deleteProfessor(idx);
-						}		
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+					
+							if(MyMainFrame.getInstance().getSelectedTabbedPane() == 0) {
+								//index of selected row --> this gives us a professor
+								{
+									int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
+									if(idx != -1) {
+										
+										int dialogButton = JOptionPane.showConfirmDialog(btnDelete, "Are you sure ?","Delete",JOptionPane.YES_NO_OPTION);
+										if(dialogButton == JOptionPane.YES_OPTION)
+											MyController.getInstance().deleteProfessor(idx);
+										
+									} else {
+										JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must fitrst select something to delete", "WARNING", JOptionPane.WARNING_MESSAGE);
+									}
+								}
+							}
+							else if (MyMainFrame.getInstance().getSelectedTabbedPane() == 1) {
+								
+									int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
+									if(idx != -1) {
+										int dialogButton = JOptionPane.showConfirmDialog(btnDelete, "Are you sure ?","Delete",JOptionPane.YES_NO_OPTION);
+										if(dialogButton == JOptionPane.YES_OPTION) 
+											MyController.getInstance().deleteSubject(idx);
+									
+									} else {
+										JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to delete", "WARNING", JOptionPane.WARNING_MESSAGE);
+									}
+							}
+							else {
+								
+									int idx = MyMainFrame.getInstance().getStudentJTable().getSelectedRow();
+									if(idx != -1) {
+										int dialogButton = JOptionPane.showConfirmDialog(btnDelete, "Are you sure ?","Delete",JOptionPane.YES_NO_OPTION);
+										if(dialogButton == JOptionPane.YES_OPTION) 
+										MyController.getInstance().deleteStudent(idx);
+										
+									} else {
+										JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to delete", "WARNING", JOptionPane.WARNING_MESSAGE);
+									}
+							}
+						
 					}
-					else if (MyMainFrame.getInstance().getSelectedTabbedPane() == 1) {
-						int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
-						if(idx != -1) {
-							MyController.getInstance().deleteSubject(idx);
-						}
-					}
-					else {
-						int idx = MyMainFrame.getInstance().getStudentJTable().getSelectedRow();
-						if(idx != -1) {
-							MyController.getInstance().deleteStudent(idx);
-						}	
-					}
-				}else {
-					System.out.println("Professor saved");
-				}
-			}
-		});
+				});
 		
 		// Button Search treba da highlightuje sve pronadjene na stringove u bazi
 		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\search_left [#1504].png");

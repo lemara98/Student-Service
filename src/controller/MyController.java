@@ -63,6 +63,7 @@ public class MyController {
 	public void deleteStudent(int rowSelected) {
 		try {
 			Student st = MyBase.getInstance().getStudentRow(rowSelected);
+			System.out.println(st);
 			MyBase.getInstance().deleteStudent(st.getBrojIndeksa());
 			MyMainFrame.getInstance().azurirajPrikaz();
 		} catch(Exception e) {
