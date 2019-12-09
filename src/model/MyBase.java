@@ -26,11 +26,11 @@ public class MyBase {
 	private File studenti = new File("src\\podaci\\Studenti.txt");
 	private File predmeti = new File("src\\podaci\\Predmeti.txt");
 	
-	private List<Professor> professors;		//Ove liste nam sluze kao baza podataka za tabelu
+	private List<Professor> professors = new ArrayList<Professor>();		//Ove liste nam sluze kao baza podataka za tabelu
 	private List<String> columnsProfessor;
-	private List<Student> students;
+	private List<Student> students = new ArrayList<Student>();
 	private List<String> columnsStudent;
-	private List<Subject> subjects;
+	private List<Subject> subjects = new ArrayList<Subject>();
 	private List<String> columnsSubject;
 	
 	private MyBase() {
@@ -43,7 +43,7 @@ public class MyBase {
 	
 	private void initProfessors() {
 		
-		professors = new ArrayList<Professor>();
+		
 		readFromFile(profesori);
 		
 		columnsProfessor = new ArrayList<String>();
@@ -135,14 +135,9 @@ public class MyBase {
 	
 	//////////////////////////////////////////////////SUBJECT/////////////////////////////////////////////////
 	public void initSubjects() {
-		subjects = new ArrayList<Subject>();
 		
-		Subject s1 = new Subject("OISISI",5,3,null,null);
-		Subject s2 = new Subject("NANS",5,3,null,null);
-		Subject s3 = new Subject("PJISP",1,1,null,null);
-		subjects.add(s1);
-		subjects.add(s2);
-		subjects.add(s3);
+		
+		readFromFile(predmeti);
 		
 		columnsSubject = new ArrayList<String>();
 		columnsSubject.add("Name");
@@ -225,7 +220,7 @@ public class MyBase {
 
 	
 	private void initStudents() {
-		students = new ArrayList<Student>();
+		
 		columnsStudent = new ArrayList<String>();
 		
 		readFromFile(studenti);
@@ -386,13 +381,12 @@ public class MyBase {
 						professors.add(ucitani);
 					}else if(fajl == predmeti){
 						String idProf = podStud[3];
-						Professor pr = MyBase.getInstance().getProfessorById(Integer.parseInt(idProf));
+						Professor pr = getProfessorById(Integer.parseInt(idProf));
 						List<Student> st = new ArrayList<Student>();
-						for(int i = 4; i <= podStud.length; i++) {
-							st.add(MyBase.getInstance().getStudentIndex(podStud[i])); //dodajemo studente
+						for(int i = 4; i < podStud.length; i++) {
+							st.add(getStudentIndex(podStud[i])); //dodajemo studente
 						}
-						Subject ucitani = new Subject(podStud[0], Integer.parseInt(podStud[1]), Integer.parseInt(podStud[2]), pr);
-						ucitani.setStudents(st);
+						Subject ucitani = new Subject(podStud[0], Integer.parseInt(podStud[1]), Integer.parseInt(podStud[2]), pr,st);
 						
 						for (Subject provera : subjects) {
 							if (provera.equals(ucitani)) {
