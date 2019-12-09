@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -71,6 +72,16 @@ public class Subject {
 	}
 	public void setStudents(List<Student> students) {
 		this.students = students;
+	}
+
+	@Override
+	public String toString() {
+		String stud = new String();
+		for (Student s : students) {
+			stud += ", " + s.getBrojIndeksa();
+		}
+		return  code + ", " + name + ", " + semester + ", "
+				+ yearOfStuding + ", " + professor.getIdNumber() + stud;
 	}
 	
 	

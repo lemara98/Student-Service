@@ -36,9 +36,9 @@ public class Professor {
 	
 	@Override
 	public String toString() {
-		return "Professor [firstName=" + firstName + ", lastName=" + lastName + ", date=" + date + ", livingAdress="
-				+ livingAdress + ", number=" + number + ", email=" + email + ", workAdress=" + workAdress
-				+ ", idNumber=" + idNumber + ", title=" + title + ", rank=" + rank + "]";
+		return  firstName + ", " + lastName + ", " + date + ", "
+				+ livingAdress + ", " + number + ", " + email + ", " + workAdress
+				+ ", " + idNumber + ", " + title + ", " + rank;
 	}
 
 
@@ -115,6 +115,7 @@ public class Professor {
 //	public void setSubjects(List<Subject> subjects) {
 //		this.subjects = subjects;
 //	}
+	
 	
 
 }

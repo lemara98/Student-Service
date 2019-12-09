@@ -413,8 +413,18 @@ public class MyBase {
 		try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fajl.getPath()), "UTF-8"))){
 	
 			String trenutni = new String();
-			for(Student i : students) {
-				trenutni += i.toString() + "\n";
+			if(fajl == studenti) {
+				for(Student i : students) {
+					trenutni += i.toString() + "\n";
+				}
+			}else if(fajl == profesori) {
+				for(Professor p : professors) {
+					trenutni += p.toString() + "\n";
+				}
+			}else if(fajl == predmeti) {
+				for(Subject s : subjects) {
+					trenutni += s.toString() + "\n";
+				}
 			}
 			
 			br.append(trenutni);
