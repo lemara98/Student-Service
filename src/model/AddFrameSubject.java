@@ -23,6 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import controller.MyController;
+
 public class AddFrameSubject extends JDialog {
 
 	/**
@@ -180,6 +182,7 @@ public class AddFrameSubject extends JDialog {
 		//Hocu da smestim profesore u combo box
 		for(Professor pr : MyBase.getInstance().getProfessors()) {
 			choises[i] = pr.getLastName() + " " + pr.getFirstName().substring(0,1) + ". " + pr.getIdNumber();
+			i++;
 		}
 		
 		JComboBox<String> professorComboBox = new JComboBox<String>(choises);
@@ -206,9 +209,22 @@ public class AddFrameSubject extends JDialog {
 											Integer.parseInt(yearTextField.getText()),
 											pr, studentsOnSubject);
 					
-					
+					//Provera da li je predmet vec u listi
+					boolean greska = false;
+					List<Subject> ls = MyBase.getInstance().getSubjects();
+					for(Subject i : ls) {
+						if (i.equals(s)) {	
+							greska = true;
+							JOptionPane.showMessageDialog(leftPanel, "YOU CAN'T ADD SAME STUDENT TWICE\nYOU ADDED SAME INDEX NUMBER AGAIN!", "ERROR", JOptionPane.ERROR_MESSAGE);
+							setVisible(true);
+							break;
+						}
+					}
+					if (!greska) {
+						MyBase.getInstance().addSubject(s);
+						setVisible(false);
+					}
 					//Potrebno dodati opadajuci meni za listu studenata na predmetu, takodje za profesora dugme!
-					MyBase.getInstance().addSubject(s);
 					
 				}catch(Exception ex) {
 					JOptionPane.showMessageDialog(leftPanel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN ADDDING NEW STUDENT", JOptionPane.ERROR_MESSAGE);
@@ -226,7 +242,10 @@ public class AddFrameSubject extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				nameTextField.setText("");
+				yearTextField.setText("");
+				semesterTextField.setText("");
+				setVisible(false);
 				
 			}
 		});
