@@ -387,13 +387,15 @@ public class AddFrameStudent extends JDialog {
 					List<Student> ls;
 					boolean greska = false;
 					
-					StatusStudenta n;
+					StatusStudenta n = null;
 					if (budzet.isSelected()) {
 						n = StatusStudenta.B;
 					}
-					else {
+					else if (samofinansiranje.isSelected()) {
 						n = StatusStudenta.S;
 					}
+					
+					if (n == null) throw new Exception();
 					
 					
 					Student s = new Student(imet.getText(),
@@ -452,7 +454,6 @@ public class AddFrameStudent extends JDialog {
 				brit.setText("");
 				datut.setText("");
 				tgst.setText("");
-//				stat.setText("");
 				prot.setText("");
 				spst.setText("");
 				setVisible(false);
@@ -460,20 +461,18 @@ public class AddFrameStudent extends JDialog {
 		});
 		panelDugmadi.add(btnCan, gbc);	
 		
-		/////// COMBOBOX SA PREDMETIMA ////////
+		/////// CHECHBOXI SA PREDMETIMA ////////
 		JPanel panelPred = new JPanel(new GridBagLayout());
-		panelPred.setPreferredSize(new Dimension(300,480));
-		panelPred.setBackground(Color.CYAN);
 		
-		JLabel pred = new JLabel("Dostupni Predmeti");
+		JLabel dp = new JLabel("Dostupni Predmeti:");
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.WEST;
+		gbc.anchor = GridBagConstraints.CENTER;
 
-		panelPred.add(pred,gbc);
+		panelPred.add(dp,gbc);
 
 		List<Subject> listaPredmeta = MyBase.getInstance().getSubjects();
 		int j = 1;
@@ -482,14 +481,12 @@ public class AddFrameStudent extends JDialog {
 			j++;
 		}
 		
-		JScrollPane panelSaPredmetima = new JScrollPane();
+		JScrollPane panelSaPredmetima = new JScrollPane(panelPred);
 		panelSaPredmetima.setPreferredSize(new Dimension(300,480));
-		panelSaPredmetima.add(pred);
-		panelSaPredmetima.add(panelPred);
 
 		/////////////
 		
-		add(panelPred, BorderLayout.EAST);
+		add(panelSaPredmetima, BorderLayout.EAST);
 		add(panelDugmadi,BorderLayout.SOUTH);
 		add(panel, BorderLayout.WEST);
 	}

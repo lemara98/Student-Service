@@ -187,7 +187,7 @@ public class MyBase {
 		case 2:
 			return Integer.toString(s.getYearOfStuding());
 		case 3:
-			return s.getProfessor().getFirstName() + s.getProfessor().getLastName();
+			return s.getProfessor().getFirstName() + " " + s.getProfessor().getLastName();
 		case 4:
 			return "Prikazi";
 		default:
@@ -380,7 +380,7 @@ public class MyBase {
 						if (jedinstven)
 						professors.add(ucitani);
 					}else if(fajl == predmeti){
-						String idProf = podStud[3];
+						String idProf = podStud[10];
 						Professor pr = getProfessorById(Integer.parseInt(idProf));
 						List<Student> st = new ArrayList<Student>();
 						for(int i = 4; i < podStud.length; i++) {
@@ -411,13 +411,28 @@ public class MyBase {
 	
 	private void writeToFile(File fajl) {
 		try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fajl.getPath()), "UTF-8"))){
-	
+			if (fajl == studenti) {
 			String trenutni = new String();
-			for(Student i : students) {
+			for(Student i : students) 
 				trenutni += i.toString() + "\n";
-			}
 			
 			br.append(trenutni);
+			
+			} else if (fajl == profesori) {
+				String trenutni = new String();
+				for (Professor i : professors)
+					trenutni += i.toString() + "\n";
+				
+				br.append(trenutni);
+				
+			} else if (fajl == predmeti) {
+				String trenutni = new String();
+				for (Subject i : subjects)
+					trenutni += i.toString() + "\n";
+				
+				br.append(trenutni);
+				
+			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

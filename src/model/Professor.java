@@ -31,15 +31,6 @@ public class Professor {
 		this.rank = rank;
 		//this.subjects = subjects2;
 	}
-	
-	
-	
-	@Override
-	public String toString() {
-		return "Professor [firstName=" + firstName + ", lastName=" + lastName + ", date=" + date + ", livingAdress="
-				+ livingAdress + ", number=" + number + ", email=" + email + ", workAdress=" + workAdress
-				+ ", idNumber=" + idNumber + ", title=" + title + ", rank=" + rank + "]";
-	}
 
 
 
@@ -116,5 +107,12 @@ public class Professor {
 //		this.subjects = subjects;
 //	}
 	
+	
+	@Override
+	public String toString() {
+		return firstName + ", " + lastName + ", " + date + ", "
+				+ livingAdress + ", " + number + ", " + email + ", " + workAdress
+				+ ", " + idNumber + ", " + title + ", " + rank;
+	}
 
 }
