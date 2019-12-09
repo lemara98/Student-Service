@@ -5,7 +5,7 @@ public class Professor {
 	private String lastName;
 	private String date;
 	private String livingAdress;
-	private long number;
+	private String number;
 	private String email;
 	private String workAdress;
 	private long idNumber;
@@ -13,7 +13,8 @@ public class Professor {
 	private String rank;
 	//private List<Subject> subjects;
 	//SimpleDateFormat df;
-	public Professor(String firstName, String lastName, String date, String livingAdress, long number, String email,
+	
+	public Professor(String firstName, String lastName, String date, String livingAdress, String number, String email,
 			String workAdress, long idNumber, String title, String rank) {
 		super();
 		
@@ -33,6 +34,15 @@ public class Professor {
 	
 	
 	
+	@Override
+	public String toString() {
+		return "Professor [firstName=" + firstName + ", lastName=" + lastName + ", date=" + date + ", livingAdress="
+				+ livingAdress + ", number=" + number + ", email=" + email + ", workAdress=" + workAdress
+				+ ", idNumber=" + idNumber + ", title=" + title + ", rank=" + rank + "]";
+	}
+
+
+
 	public Professor() {
 		super();
 	}
@@ -63,10 +73,10 @@ public class Professor {
 	public void setLivingAdress(String livingAdress) {
 		this.livingAdress = livingAdress;
 	}
-	public long getNumber() {
+	public String getNumber() {
 		return number;
 	}
-	public void setNumber(long number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 	public String getEmail() {

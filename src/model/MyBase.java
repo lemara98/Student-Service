@@ -43,6 +43,7 @@ public class MyBase {
 	
 	private void initProfessors() {
 		
+		professors = new ArrayList<Professor>();
 		readFromFile(profesori);
 		
 		columnsProfessor = new ArrayList<String>();
@@ -86,7 +87,7 @@ public class MyBase {
 			case 3:
 				return prof.getLivingAdress();
 			case 4:
-				return Long.toString(prof.getNumber());
+				return prof.getNumber();
 			case 5:
 				return prof.getEmail();
 			case 6:
@@ -342,6 +343,8 @@ public class MyBase {
 	 */
 	public void uvoz() {
 		readFromFile(studenti);	
+		readFromFile(profesori);
+		readFromFile(predmeti);
 	}
 	
 	/**
@@ -349,6 +352,8 @@ public class MyBase {
 	 */
 	public void izvoz() {
 		writeToFile(studenti);
+		writeToFile(profesori);
+		writeToFile(predmeti);
 	}
 	
 	private void readFromFile(File fajl) {
@@ -358,7 +363,7 @@ public class MyBase {
 				while ((trenutni = br.readLine()) != null) {
 					boolean jedinstven = true;
 					trenutni.trim();
-					String[] podStud = trenutni.split(",");
+					String[] podStud = trenutni.split(", ");
 					if(fajl == studenti) {
 						Student ucitani = new Student(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], podStud[7], Integer.parseInt(podStud[8]), StatusStudenta.valueOf(podStud[9]), Double.parseDouble(podStud[10]));
 						for (Student provera : students) {
@@ -369,8 +374,8 @@ public class MyBase {
 						}
 						if (jedinstven)
 						students.add(ucitani);
-					}else if(fajl == profesori) {
-						Professor ucitani = new Professor(podStud[0], podStud[1], podStud[2], podStud[3], Long.parseLong(podStud[4]), podStud[5], podStud[6], Long.parseLong(podStud[7]), podStud[8],podStud[9]);
+					} else if(fajl == profesori) {
+						Professor ucitani = new Professor(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], Long.parseLong(podStud[7]), podStud[8],podStud[9]);
 						for (Professor provera : professors) {
 							if (provera.equals(ucitani)) {
 								jedinstven = false;
