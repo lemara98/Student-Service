@@ -2,6 +2,7 @@ package controller;
 
 import javax.swing.JOptionPane;
 
+import model.AddFrameProfessor;
 import model.AddFrameStudent;
 import model.AddFrameSubject;
 import model.MyBase;
@@ -40,6 +41,12 @@ public class MyController {
 	
 	
 	//////////////////////////////////////////////PROFESOR/////////////////////////////////////////////////////
+
+	public void addProfessor() {
+		AddFrameProfessor.getInstance().setVisible(true);
+		MyMainFrame.getInstance().azurirajPrikaz();
+	}
+	
 	
 	public void deleteProfessor(int rowSelected) {
 		try {

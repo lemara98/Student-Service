@@ -5,6 +5,7 @@ import java.util.List;
 
 
 public class Subject {
+
 	private static int codeCnt = 0;
 	private String code;
 	private String name;
@@ -13,6 +14,7 @@ public class Subject {
 	private Professor professor;
 	private List<Student> students;
 	
+	public Subject() {}
 	
 	public Subject(String name, int semester, int yearOfStuding, Professor professor,
 			List<Student> students) {
@@ -84,7 +86,11 @@ public class Subject {
 				+ yearOfStuding + ", " + professor.getIdNumber() + stud;
 	}
 	
-	
+//	@Override
+//	public String toString() {
+//		return name + ", " + semester + ", "
+//				+ yearOfStuding + ", " + professor + ", " + students;
+//	}
 	
 	
 }

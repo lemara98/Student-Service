@@ -101,8 +101,9 @@ public class MyBase {
 		}
 	}
 	
-	public void addProfessor() {	//this method adds a new professor to my list(table)
-		//this.professors.add(pr);
+	public void addProfessor(Professor p) {	//this method adds a new professor to my list(table)
+		this.professors.add(p);
+		MyMainFrame.getInstance().azurirajPrikaz();
 	}
 	
 	public void deleteProfessor(long idNumber) {  //this method deletes a professor from my table by idNumber
@@ -187,7 +188,7 @@ public class MyBase {
 		case 2:
 			return Integer.toString(s.getYearOfStuding());
 		case 3:
-			return s.getProfessor().getFirstName() + s.getProfessor().getLastName();
+			return s.getProfessor().getFirstName() + " " + s.getProfessor().getLastName();
 		case 4:
 			return "Prikazi";
 		default:
@@ -214,6 +215,17 @@ public class MyBase {
 	
 	public void editSubject() {
 		
+	}
+	
+	public Subject getSubjectByCode(String code) {
+		Subject sub = new Subject();
+		for (Subject s : subjects) {
+			if(s.getCode() == code) {
+				sub = s;
+				break;
+			}
+		}
+		return sub;
 	}
 
 	/////////////////	Studenti	/////////////////
@@ -370,7 +382,11 @@ public class MyBase {
 						if (jedinstven)
 						students.add(ucitani);
 					} else if(fajl == profesori) {
-						Professor ucitani = new Professor(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], Long.parseLong(podStud[7]), podStud[8],podStud[9]);
+						List<Subject> sub = new ArrayList<Subject>();
+						for(int i = 9; i < podStud.length; i++) {
+							sub.add(getSubjectByCode(podStud[i]));
+						}
+						Professor ucitani = new Professor(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], podStud[7],podStud[8],sub);
 						for (Professor provera : professors) {
 							if (provera.equals(ucitani)) {
 								jedinstven = false;
@@ -380,7 +396,7 @@ public class MyBase {
 						if (jedinstven)
 						professors.add(ucitani);
 					}else if(fajl == predmeti){
-						String idProf = podStud[3];
+						String idProf = podStud[10];
 						Professor pr = getProfessorById(Integer.parseInt(idProf));
 						List<Student> st = new ArrayList<Student>();
 						for(int i = 4; i < podStud.length; i++) {
@@ -411,7 +427,7 @@ public class MyBase {
 	
 	private void writeToFile(File fajl) {
 		try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fajl.getPath()), "UTF-8"))){
-	
+			
 			String trenutni = new String();
 			if(fajl == studenti) {
 				for(Student i : students) {

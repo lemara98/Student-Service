@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -11,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -77,8 +77,7 @@ public class EditFrameStudent extends JDialog {
 		stat = new String(temp.getStatus().toString());
 		prot = new JTextField(Double.toString(temp.getProsecnaOcena()));
 		
-		
-		if (stat == "Budzet") {
+		if (stat.equals("B")) {
 			budzet.setSelected(true);
 		}
 		else {
@@ -447,27 +446,24 @@ public class EditFrameStudent extends JDialog {
 				datut.setText("");
 				tgst.setText("");
 				prot.setText("");
-				spst.setText("");
 				setVisible(false);
 			}
 		});
 		panelDugmadi.add(btnCan, gbc);	
 		
 		
-		////// Predmeti koje student polaze //////
+		////// CHECHBOXI SA PREDMETIMA //////
 		JPanel panelPred = new JPanel(new GridBagLayout());
-		panelPred.setPreferredSize(new Dimension(300,480));
-		panelPred.setBackground(Color.CYAN);
 		
-		JLabel pred = new JLabel("Dostupni predmeti");
+		JLabel dp = new JLabel("Dostupni predmeti:");
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.WEST;
+		gbc.anchor = GridBagConstraints.CENTER;
 
-		panelPred.add(pred,gbc);
+		panelPred.add(dp,gbc);
 
 		List<Subject> listaPredmeta = MyBase.getInstance().getSubjects();
 		int j = 1;
@@ -476,16 +472,15 @@ public class EditFrameStudent extends JDialog {
 			j++;
 		}
 		
-		JScrollPane panelSaPredmetima = new JScrollPane();
+		JScrollPane panelSaPredmetima = new JScrollPane(panelPred);
 		panelSaPredmetima.setPreferredSize(new Dimension(300,480));
-		panelSaPredmetima.add(pred);
-		panelSaPredmetima.add(panelPred);
 		
 		
 		//////
 		
-		add(panelPred, BorderLayout.EAST);
+		
 		add(panel, BorderLayout.WEST);
+		add(panelSaPredmetima, BorderLayout.EAST);
 		add(panelDugmadi, BorderLayout.SOUTH);
 	
 		} catch(Exception e) {

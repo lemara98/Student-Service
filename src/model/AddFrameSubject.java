@@ -48,7 +48,7 @@ public class AddFrameSubject extends JDialog {
 		Dimension screenSize = kit.getScreenSize();
 		int width = screenSize.width;
 		int height = screenSize.height;
-		setSize(new Dimension(width/3, height/4));
+		setSize(new Dimension(width/3+50, height/3));
 		this.setTitle("Add new element");
 		setVisible(true);
 		setModal(true);
@@ -61,10 +61,9 @@ public class AddFrameSubject extends JDialog {
 		
 		JPanel leftPanel = new JPanel();
 		leftPanel.setLayout(gbl);
-		JScrollPane rightPane = new JScrollPane();
 		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(gbl);
-		rightPane.add(rightPanel);	//da bi studenti mogli da mi stanu
+	
 		JPanel downPanel = new JPanel();
 		downPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		JPanel topPanel = new JPanel();
@@ -262,7 +261,9 @@ public class AddFrameSubject extends JDialog {
 			br++;
 		}
 		
-		
+		JScrollPane rightPane = new JScrollPane(rightPanel);
+		rightPane.setPreferredSize(new Dimension(250,250));
+		add(rightPane,BorderLayout.EAST);
 		
 	}
 	
