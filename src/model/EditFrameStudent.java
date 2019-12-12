@@ -8,9 +8,9 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,10 +41,11 @@ public class EditFrameStudent extends JDialog {
 	private JTextField tgst;
 	private String stat;
 	private JTextField prot;
-	private JTextField spst;
 	private JRadioButton budzet = new JRadioButton("Budzet");
 	private JRadioButton samofinansiranje = new JRadioButton("Samofinansiranje");
 	private ButtonGroup status = new ButtonGroup();
+	private ArrayList<JCheckBox> listaCekBoxova;
+	private List<Subject> listaPredmeta;
 	private Student menjaniStudent;
 	
 	
@@ -55,7 +56,7 @@ public class EditFrameStudent extends JDialog {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension ss = kit.getScreenSize();
 		Dimension vel = new Dimension(ss.width/2, ss.height/2);
-		setTitle("Edit student");
+		setTitle("Edit student " + temp.getBrojIndeksa() + " " + temp.getIme() + " " + temp.getPrezime());
 		setSize(vel);
 		setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\pen [#1319].png").getImage());
 		setResizable(false);
@@ -76,6 +77,26 @@ public class EditFrameStudent extends JDialog {
 		tgst = new JTextField(Integer.toString(temp.getTrenutnaGodinaStudija()));
 		stat = new String(temp.getStatus().toString());
 		prot = new JTextField(Double.toString(temp.getProsecnaOcena()));
+		
+		listaCekBoxova = new ArrayList<JCheckBox>();
+		JCheckBox box;
+		for (Subject i : MyBase.getInstance().getSubjects()) {
+			box = new JCheckBox(i.getCode() + " | " + i.getName());
+			listaCekBoxova.add(box);
+		}
+		
+		String text;
+		String[] kod;
+		for (Subject i : temp.getSpisakPredmetaKojeStudentSlusa()) {
+			for (JCheckBox j : listaCekBoxova) {
+				text = j.getText();
+				kod = text.split(" | ");
+				if (i.getCode().equals(kod[0]))
+					j.setSelected(true);
+			}
+		}
+		
+		
 		
 		if (stat.equals("B")) {
 			budzet.setSelected(true);
@@ -395,6 +416,20 @@ public class EditFrameStudent extends JDialog {
 					menjaniStudent.setStatus(n);
 					menjaniStudent.setProsecnaOcena(Double.parseDouble(prot.getText()));
 					
+					ArrayList<Subject> izmenjeniSpisak = new ArrayList<Subject>();
+					String tekst;
+					String[] sifra;
+					for(JCheckBox k : listaCekBoxova) {
+						System.out.println(k.getText());
+						if (k.isSelected()) {
+							tekst = k.getText();
+							sifra = tekst.split(" | ");
+							izmenjeniSpisak.add(MyBase.getInstance().getSubject(sifra[0]));
+						}
+					}
+					
+					menjaniStudent.setSpisakPredmetaKojeStudentSlusa(izmenjeniSpisak);
+					
 
 					ls = MyBase.getInstance().getStudents();
 					
@@ -436,16 +471,16 @@ public class EditFrameStudent extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				imet.setText("");
-				pret.setText("");
-				datrt.setText("");
-				adrst.setText("");
-				kontt.setText("");
-				emat.setText("");
-				brit.setText("");
-				datut.setText("");
-				tgst.setText("");
-				prot.setText("");
+//				imet.setText("");
+//				pret.setText("");
+//				datrt.setText("");
+//				adrst.setText("");
+//				kontt.setText("");
+//				emat.setText("");
+//				brit.setText("");
+//				datut.setText("");
+//				tgst.setText("");
+//				prot.setText("");
 				setVisible(false);
 			}
 		});
@@ -465,7 +500,7 @@ public class EditFrameStudent extends JDialog {
 
 		panelPred.add(dp,gbc);
 
-		List<Subject> listaPredmeta = MyBase.getInstance().getSubjects();
+		listaPredmeta = MyBase.getInstance().getSubjects();
 		int j = 1;
 		for (Subject i : listaPredmeta) {
 			addPredmetToList(panelPred, i, j);
@@ -490,23 +525,26 @@ public class EditFrameStudent extends JDialog {
 	}
 	
 
-	public Student getStudentInformation() {
-		Student s = new Student(imet.getText(),
-				pret.getText(),
-				datrt.getText(),
-				adrst.getText(),
-				kontt.getText(),
-				emat.getText(),
-				brit.getText(),
-				datut.getText(),Integer.parseInt(tgst.getText()),
-				StatusStudenta.valueOf(stat.toUpperCase()),
-				Double.parseDouble(prot.getText()));
-		return s;
-	}
+//	public Student getStudentInformation() {
+//		Student s = new Student(imet.getText(),
+//				pret.getText(),
+//				datrt.getText(),
+//				adrst.getText(),
+//				kontt.getText(),
+//				emat.getText(),
+//				brit.getText(),
+//				datut.getText(),Integer.parseInt(tgst.getText()),
+//				StatusStudenta.valueOf(stat.toUpperCase()),
+//				Double.parseDouble(prot.getText()));
+//		
+////				s.setSpisakPredmetaKojeStudentSlusa(spisakPredmetaKojeStudentSlusa);
+//		// Mora biti neka greska negde ako se ovo poziva! SPisakPredmeta se opet inicira
+//		return s;
+//	}
 	
 	
 	private void addPredmetToList(JPanel panel, Subject predmet, int rbr) {
-		JCheckBox cekBox = new JCheckBox(predmet.getName());
+
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -516,7 +554,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		panel.add(cekBox, gbc);
+		panel.add(listaCekBoxova.get(rbr-1), gbc);
 }
 	
 }
