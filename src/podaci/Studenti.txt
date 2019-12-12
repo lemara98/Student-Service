@@ -1,3 +1,6 @@
 Ljubivoje, Rsumovic, 01-04-1959, Novi Sad, 062431234, lj.rsum@uns.ac.rs, RA2/3019, 01-10-3019, 1, B, 6.34
 Ljuba, Alicic, 01-04-1959, Ilidza, 067342153, ljuba.alicic@uns.ac.rs, RA1/3019, 01-10-3019, 2, B, 6.34
 Milan, Knezevic, 29.04.1998., Kraljevica Marka 10 Novi Sad, 0631623155, mile.knezevic98@gmail.com, RA9/2017, 15-09-2017., 3, B, 8.88
+Pera, Markovic, 03-06-1978, Celarevo, 0657786240, pera.markovic@gmail.com, RA3/3019,  02-08-3000, 3, S, 8.78
+Djordje, Markovic, 03-06-1978, Celarevo, 0634456770, djordje.markovic@gmail.com, RA4/3019,  04-08-3000, 3, S, 8.79
+Djordje, Markovic, 03-06-1978, Celarevo, 0634456770, djordje.markovic@gmail.com, RA5/3019,  04-08-3000, 3, S, 8.79

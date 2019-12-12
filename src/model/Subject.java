@@ -14,6 +14,7 @@ public class Subject {
 	private Professor professor;
 	private ArrayList<Student> students;
 	
+	public Subject() {}
 	
 	public Subject(String name, int semester, int yearOfStuding, Professor professor,
 			ArrayList<Student> students) {
@@ -82,16 +83,31 @@ public class Subject {
 	public void setStudents(ArrayList<Student> students) {
 		this.students = students;
 	}
-	
+
 	@Override
 	public String toString() {
-		if (students.isEmpty())
-		return name + ", " + semester + ", "
-				+ yearOfStuding + ", " + professor;
-		else
-			return name + ", " + semester + ", "
-			+ yearOfStuding + ", " + professor ;
+// <<<<<<< EditFrameStudentBranch
+// 		if (students.isEmpty())
+// 		return name + ", " + semester + ", "
+// 				+ yearOfStuding + ", " + professor;
+// 		else
+// 			return name + ", " + semester + ", "
+// 			+ yearOfStuding + ", " + professor ;
+// =======
+		String stud = new String();
+		for (Student s : students) {
+			stud += ", " + s.getBrojIndeksa();
+		}
+		return  code + ", " + name + ", " + semester + ", "
+				+ yearOfStuding + ", " + professor.getIdNumber() + stud;
+// >>>>>>> Develop
 	}
+	
+//	@Override
+//	public String toString() {
+//		return name + ", " + semester + ", "
+//				+ yearOfStuding + ", " + professor + ", " + students;
+//	}
 	
 	
 }

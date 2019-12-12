@@ -58,6 +58,7 @@ public class MyToolBar extends JToolBar{
 				int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
 				if(selectedPane == 0) {
 					//professors
+					MyController.getInstance().addProfessor();
 				}else if(selectedPane == 1) {
 					//subjects
 					MyController.getInstance().addSubject();

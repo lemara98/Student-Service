@@ -103,8 +103,9 @@ public class MyBase {
 		}
 	}
 	
-	public void addProfessor() {	//this method adds a new professor to my list(table)
-		//this.professors.add(pr);
+	public void addProfessor(Professor p) {	//this method adds a new professor to my list(table)
+		this.professors.add(p);
+		MyMainFrame.getInstance().azurirajPrikaz();
 	}
 	
 	public void deleteProfessor(long idNumber) {  //this method deletes a professor from my table by idNumber
@@ -226,6 +227,17 @@ public class MyBase {
 	
 	public void editSubject() {
 		
+	}
+	
+	public Subject getSubjectByCode(String code) {
+		Subject sub = new Subject();
+		for (Subject s : subjects) {
+			if(s.getCode() == code) {
+				sub = s;
+				break;
+			}
+		}
+		return sub;
 	}
 
 	/////////////////	Studenti	/////////////////
@@ -392,7 +404,11 @@ public class MyBase {
 						if (jedinstven)
 						students.add(ucitani);
 					} else if(fajl == profesori) {
-						Professor ucitani = new Professor(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], Long.parseLong(podStud[7]), podStud[8],podStud[9]);
+						List<Subject> sub = new ArrayList<Subject>();
+						for(int i = 9; i < podStud.length; i++) {
+							sub.add(getSubjectByCode(podStud[i]));
+						}
+						Professor ucitani = new Professor(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], podStud[7],podStud[8],sub);
 						for (Professor provera : professors) {
 							if (provera.equals(ucitani)) {
 								jedinstven = false;
@@ -433,28 +449,23 @@ public class MyBase {
 	
 	private void writeToFile(File fajl) {
 		try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fajl.getPath()), "UTF-8"))){
-			if (fajl == studenti) {
+			
 			String trenutni = new String();
-			for(Student i : students) 
-				trenutni += i.toString() + "\n";
+			if(fajl == studenti) {
+				for(Student i : students) {
+					trenutni += i.toString() + "\n";
+				}
+			}else if(fajl == profesori) {
+				for(Professor p : professors) {
+					trenutni += p.toString() + "\n";
+				}
+			}else if(fajl == predmeti) {
+				for(Subject s : subjects) {
+					trenutni += s.toString() + "\n";
+				}
+			}
 			
 			br.append(trenutni);
-			
-			} else if (fajl == profesori) {
-				String trenutni = new String();
-				for (Professor i : professors)
-					trenutni += i.toString() + "\n";
-				
-				br.append(trenutni);
-				
-			} else if (fajl == predmeti) {
-				String trenutni = new String();
-				for (Subject i : subjects)
-					trenutni += i.toString() + "\n";
-				
-				br.append(trenutni);
-				
-			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

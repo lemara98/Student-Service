@@ -1,6 +1,9 @@
 package model;
 
+import java.util.List;
+
 public class Professor {
+	private static long idCounter = 135639;
 	private String firstName;
 	private String lastName;
 	private String date;
@@ -11,27 +14,33 @@ public class Professor {
 	private long idNumber;
 	private String title;
 	private String rank;
-	//private List<Subject> subjects;
+	private List<Subject> subjects;
 	//SimpleDateFormat df;
 	
 	public Professor(String firstName, String lastName, String date, String livingAdress, String number, String email,
-			String workAdress, long idNumber, String title, String rank) {
+			String workAdress, String title, String rank, List<Subject> subjects) {
 		super();
-		
+		idCounter += 49;	//random
 		this.firstName = firstName;
 		this.lastName = lastName;
-		//SimpleDateFormat = newDateFormat
 		this.date = date;
 		this.livingAdress = livingAdress;
 		this.number = number;
 		this.email = email;
 		this.workAdress = workAdress;
-		this.idNumber = idNumber;
+		this.idNumber = idCounter;
 		this.title = title;
 		this.rank = rank;
-		//this.subjects = subjects2;
+		this.subjects = subjects;
+	}	
+	
+	
+	@Override
+	public String toString() {
+		return  firstName + ", " + lastName + ", " + date + ", "
+				+ livingAdress + ", " + number + ", " + email + ", " + workAdress
+				+ ", " + idNumber + ", " + title + ", " + rank;
 	}
-
 
 
 	public Professor() {
@@ -106,13 +115,20 @@ public class Professor {
 //	public void setSubjects(List<Subject> subjects) {
 //		this.subjects = subjects;
 //	}
-	
-	
 	@Override
-	public String toString() {
-		return firstName + ", " + lastName + ", " + date + ", "
-				+ livingAdress + ", " + number + ", " + email + ", " + workAdress
-				+ ", " + idNumber + ", " + title + ", " + rank;
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		
+		if (!(o instanceof Professor))
+			return false;
+		
+		Professor p = (Professor)o;
+		
+		if (this.idNumber == p.idNumber)
+				return true;
+			
+		return false;
 	}
 
 }
