@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -9,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -46,6 +46,7 @@ public class AddFrameStudent extends JDialog {
 	private JRadioButton budzet = new JRadioButton("Budzet");
 	private JRadioButton samofinansiranje = new JRadioButton("Samofinansiranje");
 	private ButtonGroup status = new ButtonGroup();
+	private ArrayList<JCheckBox> listaCekBoxova;
 	
 	
 	
@@ -407,8 +408,19 @@ public class AddFrameStudent extends JDialog {
 											brit.getText(),
 											datut.getText(),Integer.parseInt(tgst.getText()),
 											n,
-//											StatusStudenta.valueOf(stat.getText().toUpperCase()),
 											Double.parseDouble(prot.getText()));
+					
+					for (JCheckBox i : listaCekBoxova) {
+						if (i.isSelected()) {
+							String text = i.getText();
+							String[] prvi = text.split(" | ");
+							String sifra = prvi[0].trim();
+
+							Subject predmet = MyBase.getInstance().getSubject(sifra);
+							s.dodajPredmetUSpisak(predmet);
+						}
+					}
+					
 					ls = MyBase.getInstance().getStudents();
 					for(Student i : ls) {
 						if (i.equals(s)) {	
@@ -424,7 +436,7 @@ public class AddFrameStudent extends JDialog {
 					}
 				}
 				catch (Exception er) {
-					JOptionPane.showMessageDialog(panel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN ADDDING NEW STUDENT", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(panel, "Ubacili ste neodgovarajuce podatke!", "ERROR IN ADDDING NEW STUDENT", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -463,6 +475,7 @@ public class AddFrameStudent extends JDialog {
 		
 		/////// CHECHBOXI SA PREDMETIMA ////////
 		JPanel panelPred = new JPanel(new GridBagLayout());
+		listaCekBoxova = new ArrayList<JCheckBox>();
 		
 		JLabel dp = new JLabel("Dostupni Predmeti:");
 		
@@ -498,8 +511,8 @@ public class AddFrameStudent extends JDialog {
 	 * @param rbr
 	 */
 	private void addPredmetToList(JPanel panel, Subject predmet, int rbr) {
-			JCheckBox cekBox = new JCheckBox(predmet.getName());
-			
+			JCheckBox cekBox = new JCheckBox(predmet.getCode() + " | "+ predmet.getName());
+			listaCekBoxova.add(cekBox);
 			GridBagConstraints gbc = new GridBagConstraints();
 			
 			gbc.gridx = 0;

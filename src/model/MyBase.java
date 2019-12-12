@@ -12,6 +12,8 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class MyBase {
 	private static MyBase instance = null;
 	
@@ -137,7 +139,6 @@ public class MyBase {
 	//////////////////////////////////////////////////SUBJECT/////////////////////////////////////////////////
 	public void initSubjects() {
 		
-		
 		readFromFile(predmeti);
 		
 		columnsSubject = new ArrayList<String>();
@@ -146,6 +147,7 @@ public class MyBase {
 		columnsSubject.add("Year of study");
 		columnsSubject.add("Professor");
 		columnsSubject.add("Studenti");
+		
 		
 		
 	}
@@ -176,6 +178,16 @@ public class MyBase {
 	
 	public Subject getSubjectRow(int row) {
 		return subjects.get(row);
+	}
+	
+	public Subject getSubject(String id) {
+		;
+		for (Subject s: subjects) {
+			if (s.getCode().equals(id))
+				return s;
+		}
+		JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "Ne postoji takav predmet");
+		return null;
 	}
 	
 	public String getSubjectValueAt(int row, int column) {
@@ -372,7 +384,17 @@ public class MyBase {
 					trenutni.trim();
 					String[] podStud = trenutni.split(", ");
 					if(fajl == studenti) {
-						Student ucitani = new Student(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], podStud[7], Integer.parseInt(podStud[8]), StatusStudenta.valueOf(podStud[9]), Double.parseDouble(podStud[10]));
+						Student ucitani = new Student(podStud[0], 
+													  podStud[1],
+													  podStud[2], 
+													  podStud[3], 
+													  podStud[4], 
+													  podStud[5], 
+													  podStud[6], 
+													  podStud[7], 
+													  Integer.parseInt(podStud[8]), 
+													  StatusStudenta.valueOf(podStud[9]), 
+													  Double.parseDouble(podStud[10]));
 						for (Student provera : students) {
 							if (provera.equals(ucitani)) {
 								jedinstven = false;
@@ -398,7 +420,7 @@ public class MyBase {
 					}else if(fajl == predmeti){
 						String idProf = podStud[10];
 						Professor pr = getProfessorById(Integer.parseInt(idProf));
-						List<Student> st = new ArrayList<Student>();
+						ArrayList<Student> st = new ArrayList<Student>();
 						for(int i = 4; i < podStud.length; i++) {
 							st.add(getStudentIndex(podStud[i])); //dodajemo studente
 						}

@@ -176,6 +176,7 @@ public class MyToolBar extends JToolBar{
 		btnAddStudent = new JButton(icon);
 		btnAddStudent.setPreferredSize(new Dimension(30,30));
 		btnAddStudent.setToolTipText("Add Student to subject");
+		btnAddStudent.setEnabled(false);
 		
 		// Button proffesor treba da doda predmetnog profesora predmetu
 		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_image_favorite_round [#1331].png");

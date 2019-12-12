@@ -39,7 +39,7 @@ public class Student {
 		this.trenutnaGodinaStudija = trenutnaGodinaStudija;
 		this.status = status;
 		this.prosecnaOcena = prosecnaOcena;
-	//	this.spisakPredmetaKojeStudentSlusa = spisakPredmetaKojeStudentSlusa;
+		this.spisakPredmetaKojeStudentSlusa = new ArrayList<Subject>();
 	}
 
 	public Student() {}	//Dodao sam prazan konstruktor Sale.
@@ -56,6 +56,7 @@ public class Student {
 		this.trenutnaGodinaStudija = s.trenutnaGodinaStudija;
 		this.status = s.status;
 		this.prosecnaOcena = s.prosecnaOcena;
+		this.spisakPredmetaKojeStudentSlusa = new ArrayList<Subject>();
 	}
 
 	public String getIme() {
@@ -169,11 +170,19 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return ime + ", " + prezime + ", " + datumRodjenja
+		if (spisakPredmetaKojeStudentSlusa.isEmpty())
+			return ime + ", " + prezime + ", " + datumRodjenja
 				+ ", " + adresaStanovanje + ", " + kontaktTelefon + ", "
 				+ emailAdresa + ", " + brojIndeksa + ", " + datumUpisa
 				+ ", " + trenutnaGodinaStudija + ", " + status + ", "
 				+ prosecnaOcena;
+		else 
+			return ime + ", " + prezime + ", " + datumRodjenja
+				+ ", " + adresaStanovanje + ", " + kontaktTelefon + ", "
+				+ emailAdresa + ", " + brojIndeksa + ", " + datumUpisa
+				+ ", " + trenutnaGodinaStudija + ", " + status + ", "
+				+ prosecnaOcena ;
+			
 	}
 	
 	@Override

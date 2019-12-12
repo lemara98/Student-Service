@@ -12,12 +12,12 @@ public class Subject {
 	private int semester;
 	private int yearOfStuding;
 	private Professor professor;
-	private List<Student> students;
+	private ArrayList<Student> students;
 	
 	public Subject() {}
 	
 	public Subject(String name, int semester, int yearOfStuding, Professor professor,
-			List<Student> students) {
+			ArrayList<Student> students) {
 		super();
 		++codeCnt;
 		this.code = Integer.toString(codeCnt);
@@ -36,7 +36,15 @@ public class Subject {
 		this.semester = semester;
 		this.yearOfStuding = yearOfStuding;
 		this.professor = professor;
-		this.students = null;
+		this.students = new ArrayList<Student>() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 2595655369364615933L;
+
+			
+		};
 	}
 	
 	public String getCode() {
@@ -72,18 +80,27 @@ public class Subject {
 	public List<Student> getStudents() {
 		return students;
 	}
-	public void setStudents(List<Student> students) {
+	public void setStudents(ArrayList<Student> students) {
 		this.students = students;
 	}
 
 	@Override
 	public String toString() {
+// <<<<<<< EditFrameStudentBranch
+// 		if (students.isEmpty())
+// 		return name + ", " + semester + ", "
+// 				+ yearOfStuding + ", " + professor;
+// 		else
+// 			return name + ", " + semester + ", "
+// 			+ yearOfStuding + ", " + professor ;
+// =======
 		String stud = new String();
 		for (Student s : students) {
 			stud += ", " + s.getBrojIndeksa();
 		}
 		return  code + ", " + name + ", " + semester + ", "
 				+ yearOfStuding + ", " + professor.getIdNumber() + stud;
+// >>>>>>> Develop
 	}
 	
 //	@Override

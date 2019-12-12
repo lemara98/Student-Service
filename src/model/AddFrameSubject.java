@@ -24,8 +24,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneLayout;
 
-import controller.MyController;
-
 public class AddFrameSubject extends JDialog {
 
 	/**
@@ -197,7 +195,7 @@ public class AddFrameSubject extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					//baca error ako nista ne unesemo zbog parseInt
-					List<Student> studentsOnSubject = new ArrayList<Student>();
+					ArrayList<Student> studentsOnSubject = new ArrayList<Student>();
 					
 					studentsOnSubject = manageCheckedCheckboxes(rightPanel);
 					
@@ -227,7 +225,7 @@ public class AddFrameSubject extends JDialog {
 					//Potrebno dodati opadajuci meni za listu studenata na predmetu, takodje za profesora dugme!
 					
 				}catch(Exception ex) {
-					JOptionPane.showMessageDialog(leftPanel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN ADDDING NEW STUDENT", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(leftPanel, "Ubacili ste neodgovarajuce podatke!", "ERROR IN ADDDING NEW STUDENT", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
@@ -282,9 +280,9 @@ public class AddFrameSubject extends JDialog {
 	}
 	
 	//This method returns a list of selected checkboxes(Students that should listen the subject)
-	public static List<Student> manageCheckedCheckboxes(final Container c) {
+	public static ArrayList<Student> manageCheckedCheckboxes(final Container c) {
 	    Component[] comps = c.getComponents();
-	    List<Student> checkedStudents = new ArrayList<Student>();
+	    ArrayList<Student> checkedStudents = new ArrayList<Student>();
 
 	    for (Component comp : comps) {
 
