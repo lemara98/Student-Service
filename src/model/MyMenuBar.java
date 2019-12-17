@@ -2,6 +2,7 @@ package model;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -18,10 +19,12 @@ import java.io.InputStreamReader;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -315,6 +318,19 @@ class Prozor extends JFrame {
 		// Mozda i ne mora ovaj!
 		setLayout(new BorderLayout());
 		
+		// Slika Milan Knezevic
+		ImageIcon mk = new ImageIcon("src\\podaci\\MK_slika.jpg");
+		Image slika = mk.getImage();
+		BufferedImage bi = new BufferedImage(300, 300, BufferedImage.TYPE_INT_ARGB);
+		Graphics g = bi.getGraphics();
+		g.drawImage(slika, 0, 0, 300, 300, null);
+		mk = new ImageIcon(bi);
+		JLabel mile = new JLabel(mk);
+		
+		// Slika Aleksandar Hadzibabic
+		ImageIcon sh = new ImageIcon(bi);
+		JLabel sale = new JLabel(sh);
+		
 		
 		// Videcemo sta cemo sa ovim -- nije gotovo!
 		
@@ -337,6 +353,27 @@ class Prozor extends JFrame {
 		splitPane.setMaximumSize(new Dimension(ss.width/2, ss.height/3));
 		
 		add(splitPane);
+		
+		// JPanel sa slikama
+		JPanel panel = new JPanel(new BorderLayout());
+		
+		panel.add(mile, BorderLayout.EAST);
+		// Ovde treba saletova slika !!!!!!!!!!!!!!!!!!!!!!!!!!!
+		panel.add(sale, BorderLayout.WEST);
+		
+		// centralni tekst i slike
+		JPanel centralniPanel = new JPanel(new BorderLayout());
+		
+		JLabel imem = new JLabel("<html> Prvi student: <br/> Milan Knezevic</html>");
+		
+		JLabel imes = new JLabel("<html>Drugi student: <br/>Aleksandar Hadzibabic </html>");
+		
+		centralniPanel.add(imem, BorderLayout.WEST);
+		centralniPanel.add(imes, BorderLayout.EAST);
+		
+		panel.add(centralniPanel, BorderLayout.CENTER);
+		
+		add(panel, BorderLayout.SOUTH);
 		
 		}
 	
