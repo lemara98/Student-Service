@@ -395,6 +395,16 @@ public class MyBase {
 													  Integer.parseInt(podStud[8]), 
 													  StatusStudenta.valueOf(podStud[9]), 
 													  Double.parseDouble(podStud[10]));
+						
+						for (int i = 11; i < podStud.length; i++) {
+							for(Subject j: subjects) {
+								if (podStud[i].equals(j.getCode())) {
+									ucitani.dodajPredmetUSpisak(j);
+									break;
+								}
+							}
+						}
+						
 						for (Student provera : students) {
 							if (provera.equals(ucitani)) {
 								jedinstven = false;

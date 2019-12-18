@@ -406,6 +406,9 @@ public class AddFrameStudent extends JDialog {
 						brit.getText().equals(""))
 						throw new Exception();
 					
+					double d = 0.00;
+					if (!prot.getText().equals(""))
+						d = Double.parseDouble(prot.getText());
 					
 					Student s = new Student(imet.getText(),
 											pret.getText(),
@@ -416,7 +419,8 @@ public class AddFrameStudent extends JDialog {
 											brit.getText(),
 											datut.getText(),Integer.parseInt(tgst.getText()),
 											n,
-											Double.parseDouble(prot.getText()));
+											d
+											);
 					
 					for (JCheckBox i : listaCekBoxova) {
 						if (i.isSelected()) {

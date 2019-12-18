@@ -2,7 +2,6 @@ package model;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -364,12 +363,22 @@ class Prozor extends JFrame {
 		// centralni tekst i slike
 		JPanel centralniPanel = new JPanel(new BorderLayout());
 		
-		JLabel imem = new JLabel("<html> Prvi student: <br/> Milan Knezevic</html>");
+		JLabel imem = new JLabel("<html>Prvi student: <br/> Milan Knezevic</html>");
 		
 		JLabel imes = new JLabel("<html>Drugi student: <br/>Aleksandar Hadzibabic </html>");
 		
+		ImageIcon naruto = new ImageIcon("src\\podaci\\naruto.png");
+		Image slikan = naruto.getImage();
+		BufferedImage bufim = new BufferedImage(300, 300, BufferedImage.TYPE_INT_ARGB);
+		Graphics gn = bufim.getGraphics();
+		gn.drawImage(slikan, 0, 0, 300, 300, null);
+		naruto = new ImageIcon(bufim);
+		JLabel narutoLabela = new JLabel(naruto);
+		
 		centralniPanel.add(imem, BorderLayout.WEST);
 		centralniPanel.add(imes, BorderLayout.EAST);
+		centralniPanel.add(narutoLabela, BorderLayout.CENTER);
+		
 		
 		panel.add(centralniPanel, BorderLayout.CENTER);
 		
@@ -403,7 +412,7 @@ class Prozor extends JFrame {
 	}
 	
 	/**
-	 * 
+	 * A Deroka mladog kapetana mucki ubi ceta partizana
 	 * @param ai - ImageIcon (AboutIcon)
 	 * @return singleton JFrame
 	 */

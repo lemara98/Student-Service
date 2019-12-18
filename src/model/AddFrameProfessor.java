@@ -24,6 +24,11 @@ import javax.swing.JTextField;
 
 public class AddFrameProfessor extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8383577535696823396L;
+	
 	private static AddFrameProfessor instance = null;
 	
 	public static AddFrameProfessor getInstance() {

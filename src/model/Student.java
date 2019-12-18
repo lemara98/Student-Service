@@ -176,12 +176,17 @@ public class Student {
 				+ emailAdresa + ", " + brojIndeksa + ", " + datumUpisa
 				+ ", " + trenutnaGodinaStudija + ", " + status + ", "
 				+ prosecnaOcena;
-		else 
-			return ime + ", " + prezime + ", " + datumRodjenja
-				+ ", " + adresaStanovanje + ", " + kontaktTelefon + ", "
-				+ emailAdresa + ", " + brojIndeksa + ", " + datumUpisa
-				+ ", " + trenutnaGodinaStudija + ", " + status + ", "
-				+ prosecnaOcena ;
+		
+		String predmeti = "";
+		for (Subject i: spisakPredmetaKojeStudentSlusa) {
+			predmeti += ", " + i.getCode().toString();
+		}
+		
+		return ime + ", " + prezime + ", " + datumRodjenja
+			+ ", " + adresaStanovanje + ", " + kontaktTelefon + ", "
+			+ emailAdresa + ", " + brojIndeksa + ", " + datumUpisa
+			+ ", " + trenutnaGodinaStudija + ", " + status + ", "
+			+ prosecnaOcena + predmeti;
 			
 	}
 	
