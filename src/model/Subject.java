@@ -102,6 +102,20 @@ public class Subject {
 				+ yearOfStuding + ", " + professor.getIdNumber() + stud;
 // >>>>>>> Develop
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+		if (obj.getClass() != this.getClass())
+			return false;
+		Subject sb = (Subject)obj;
+		if(sb.getCode() == this.getCode())
+			return true;
+		return false;
+	}
+	
+	
 	
 //	@Override
 //	public String toString() {

@@ -2,10 +2,26 @@ package view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
+
+import model.MyBase;
+import model.MyMainFrame;
+import model.Professor;
 
 public class ProfessorJTable extends JTable {
 
@@ -17,6 +33,79 @@ public class ProfessorJTable extends JTable {
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		AbstractTableModelProfessor absModel = new AbstractTableModelProfessor();
 		this.setModel(absModel);
+		
+		this.addMouseMotionListener(new MouseMotionListener() {
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				      JTable target = (JTable)e.getSource();
+				      if((target.columnAtPoint(e.getPoint()) == 9)) 
+				    	  setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+				      else 
+				    	  setCursor(new Cursor(0));
+	
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		this.addMouseListener(new MouseAdapter() {
+			  public void mouseClicked(MouseEvent e) {
+			    if (e.getClickCount() == 1) {
+			      JTable target = (JTable)e.getSource();
+			      int row = target.getSelectedRow();
+			      int column = target.getSelectedColumn();
+			     // do some stuff
+			      if (column == 9) {
+			    	  JDialog prozor = new JDialog(MyMainFrame.getInstance(), "Spisak predmeta koje profesor predaje");
+			    	  prozor.setResizable(true);
+			    	  prozor.setSize(new Dimension(500,400));
+			    	  prozor.setModal(true);
+			    	  
+			    	  JPanel panel = new JPanel(new GridBagLayout());
+			    	  panel.setPreferredSize(new Dimension(300,300));
+			    	  
+			    	  Professor pr = MyBase.getInstance().getProfessorRow(row);
+			    	  prozor.setTitle("Spisak predmeta koje predaje profesor: " + pr.getIdNumber() + " " + pr.getFirstName() + " " + pr.getLastName());
+			    	  
+			    	  GridBagConstraints gbc = new GridBagConstraints();
+			    	  	gbc.gridx = 0;
+		    			
+		    			gbc.gridwidth = 1;
+		    			gbc.gridheight = 1;
+		    			gbc.anchor = GridBagConstraints.CENTER;
+		    			JLabel predmet;
+		    		
+			    	  
+		    		  if (pr.getSubjects().isEmpty()) {
+			    		  JLabel nePredaje = new JLabel("Ne predaje ni jedan predmet!");
+			    		  panel.add(nePredaje,gbc);
+			    		  return;
+			    	  }else {
+			    		  for (int i = 0; i < pr.getSubjects().size(); i++) {
+				    		  predmet = new JLabel(pr.getSubjects().get(i).getName());
+				    		  System.out.println(pr.getSubjects().get(i).getName());
+				    		  gbc.gridy = i;
+				    		  panel.add(predmet,gbc);
+				    	  }
+			    	  }
+		    			
+			    	  
+			    	  JScrollPane scrolPanel = new JScrollPane(panel);
+			    	  
+			    	  prozor.add(scrolPanel);
+			    	  prozor.setLocationRelativeTo(null);
+			    	  prozor.setVisible(true);
+			      }
+			      
+			    }
+			  }
+			});
 	}
 	
 	//kada selektujemo polje da bude druge boje

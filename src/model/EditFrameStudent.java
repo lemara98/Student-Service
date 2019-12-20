@@ -104,7 +104,8 @@ public class EditFrameStudent extends JDialog {
 		else {
 			samofinansiranje.setSelected(true);
 		}
-				
+			
+		//Ovo je student koga menjamo
 		menjaniStudent = temp;
 	
 		

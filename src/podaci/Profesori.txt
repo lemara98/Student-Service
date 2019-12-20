@@ -1,3 +1,3 @@
-Milan, Vikakovic, 03-02-56, Branimira Cosica, 19223828, vidakovic@gmail.com, FTN, 135688, 135688, 135688
-Pera, Peric, 16-08-67, Branimira Cosica, 061533466, pera@gmail.com, FTN, 135737, 135737, 135737
-Djoka, Djokic, 04-02-99, Kralja Petra, 0613442334, djoka@gmail.com, FTN, 135786, 135786, 135786
+Milan, Vikakovic, 03-02-56, Branimira Cosica, 19223828, vidakovic@gmail.com, FTN, mr, dr, 1
+Pera, Peric, 16-08-67, Branimira Cosica, 061533466, pera@gmail.com, FTN, mr, dr, 1
+Djoka, Djokic, 04-02-99, Kralja Petra, 0613442334, djoka@gmail.com, FTN, mr, dr, 1

@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import model.AddFrameProfessor;
 import model.AddFrameStudent;
 import model.AddFrameSubject;
+import model.EditFrameProfessor;
 import model.MyBase;
 import model.MyMainFrame;
 import model.Professor;
@@ -39,6 +40,9 @@ public class MyController {
 		}
 	}
 	
+	public void editSubject() {
+		
+	}
 	
 	//////////////////////////////////////////////PROFESOR/////////////////////////////////////////////////////
 
@@ -58,6 +62,11 @@ public class MyController {
 		}
 	}
 	
+	public void editProfessor(int menjaniProfesoridx) {
+		Professor prof = MyBase.getInstance().getProfessorRow(menjaniProfesoridx);
+		new EditFrameProfessor(prof);
+		MyMainFrame.getInstance().azurirajPrikaz();
+	}
 	
 	////////////////////////////////////////////STUDENT/////////////////////////////////////////////////////
 	

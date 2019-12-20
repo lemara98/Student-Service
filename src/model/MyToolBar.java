@@ -86,7 +86,7 @@ public class MyToolBar extends JToolBar{
 					//professors // Ovde se mora dodati!
 					int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
 					if (idx != -1) {
-//						MyController.getInstance().editProfessor(idx);
+						MyController.getInstance().editProfessor(idx);
 					}
 					else
 						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
@@ -94,7 +94,7 @@ public class MyToolBar extends JToolBar{
 					//subjects // Ovde se mora ispraviti!
 					int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
 					if (idx != -1) {
-//						MyController.getInstance().editSubject(idx);
+///						MyController.getInstance().editSubject(idx);
 					}
 					else
 						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);

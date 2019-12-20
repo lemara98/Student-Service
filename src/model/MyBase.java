@@ -58,6 +58,7 @@ public class MyBase {
 		columnsProfessor.add("WorkPlace");
 		columnsProfessor.add("Title");
 		columnsProfessor.add("Rank");
+		columnsProfessor.add("Subjects");
 	}
 	
 	public List<Professor> getProfessors(){
@@ -98,6 +99,8 @@ public class MyBase {
 				return prof.getTitle();
 			case 8:
 				return prof.getRank();
+			case 9:
+				return "Prikazi";
 			default:
 				return null;
 		}
@@ -353,7 +356,6 @@ public class MyBase {
 	public void editStudent(int rowSelected) {
 			Student temp = students.get(rowSelected);
 			new EditFrameStudent(temp).setVisible(true);
-		
 	}
 	
 	/**
