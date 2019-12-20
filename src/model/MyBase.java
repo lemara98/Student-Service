@@ -418,7 +418,7 @@ public class MyBase {
 						if (jedinstven)
 						professors.add(ucitani);
 					}else if(fajl == predmeti){
-						String idProf = podStud[10];
+						String idProf = podStud[3];
 						Professor pr = getProfessorById(Integer.parseInt(idProf));
 						ArrayList<Student> st = new ArrayList<Student>();
 						for(int i = 4; i < podStud.length; i++) {

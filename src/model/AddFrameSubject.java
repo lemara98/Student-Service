@@ -22,7 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneLayout;
+
+import jdk.nashorn.internal.runtime.ListAdapter;
 
 public class AddFrameSubject extends JDialog {
 
@@ -40,6 +41,8 @@ public class AddFrameSubject extends JDialog {
 		return instance;
 	}
 	
+	private ArrayList<JCheckBox> listaCekBoxova;
+	
 	private AddFrameSubject() {
 		super();
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -50,6 +53,14 @@ public class AddFrameSubject extends JDialog {
 		this.setTitle("Add new element");
 		setVisible(true);
 		setModal(true);
+		
+		//List of students on course
+		listaCekBoxova = new ArrayList<JCheckBox>();
+		JCheckBox box;
+		for (Student student : MyBase.getInstance().getStudents()) {
+			box = new JCheckBox(student.getIme()+" "+student.getPrezime()+" "+student.getBrojIndeksa());
+			listaCekBoxova.add(box);
+		}
 		
 		this.setLocationRelativeTo(null);
 		setBackground(java.awt.Color.LIGHT_GRAY);
@@ -220,6 +231,10 @@ public class AddFrameSubject extends JDialog {
 					}
 					if (!greska) {
 						MyBase.getInstance().addSubject(s);
+						nameTextField.setText("");
+						yearTextField.setText("");
+						semesterTextField.setText("");
+						uncheckCheckBoxes();
 						setVisible(false);
 					}
 					//Potrebno dodati opadajuci meni za listu studenata na predmetu, takodje za profesora dugme!
@@ -243,8 +258,8 @@ public class AddFrameSubject extends JDialog {
 				nameTextField.setText("");
 				yearTextField.setText("");
 				semesterTextField.setText("");
+				uncheckCheckBoxes();
 				setVisible(false);
-				
 			}
 		});
 		
@@ -254,8 +269,8 @@ public class AddFrameSubject extends JDialog {
 		
 		//Na desni panel dodajemo listu studenata koji slusaju predmet
 		int br = 0;
-		for(Student st : MyBase.getInstance().getStudents()) {
-			addStudentToList(rightPanel,st,br);
+		for(JCheckBox k : listaCekBoxova) {
+			addStudentToList(rightPanel,k,br);
 			br++;
 		}
 		
@@ -265,8 +280,7 @@ public class AddFrameSubject extends JDialog {
 		
 	}
 	
-	private void addStudentToList(JPanel panel, Student student, int rbr) {
-		JCheckBox cekBox = new JCheckBox(student.getIme()+" "+student.getPrezime()+" "+student.getBrojIndeksa());
+	private void addStudentToList(JPanel panel, JCheckBox box, int rbr) {
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -276,7 +290,7 @@ public class AddFrameSubject extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		panel.add(cekBox, gbc);
+		panel.add(box, gbc);
 	}
 	
 	//This method returns a list of selected checkboxes(Students that should listen the subject)
@@ -288,6 +302,7 @@ public class AddFrameSubject extends JDialog {
 
 	        if (comp instanceof JCheckBox) {
 	            JCheckBox box = (JCheckBox) comp;
+	            System.out.println(box.getText());
 	            if (box.isSelected()) {
 	                String text = box.getText();
 	                String[] temp = text.split(" ");
@@ -299,5 +314,11 @@ public class AddFrameSubject extends JDialog {
 
 	    return checkedStudents;
 
+	}
+	
+	public void uncheckCheckBoxes() {
+		for (JCheckBox box : listaCekBoxova) {
+			box.setSelected(false);
+		}
 	}
 }
