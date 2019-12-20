@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 
 import jdk.nashorn.internal.runtime.ListAdapter;
 
+
 public class AddFrameSubject extends JDialog {
 
 	/**

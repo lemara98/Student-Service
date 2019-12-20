@@ -123,7 +123,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel ime = new JLabel("Ime");
+		JLabel ime = new JLabel("Ime*");
 		
 		panel.add(ime, gbc);
 		
@@ -136,7 +136,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel pre = new JLabel("Prezime");
+		JLabel pre = new JLabel("Prezime*");
 		
 		panel.add(pre, gbc);
 		
@@ -149,7 +149,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel datr = new JLabel("Datum rodjenja");
+		JLabel datr = new JLabel("Datum rodjenja*");
 		
 		panel.add(datr, gbc);
 
@@ -160,7 +160,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel adrs = new JLabel("Adresa stanovanja");
+		JLabel adrs = new JLabel("Adresa stanovanja*");
 		
 		panel.add(adrs, gbc);
 		
@@ -171,7 +171,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel kont = new JLabel("Kontakt telefon");
+		JLabel kont = new JLabel("Kontakt telefon*");
 		
 		panel.add(kont, gbc);
 		
@@ -194,7 +194,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel bri = new JLabel("Broj indeksa [ XX-nnn/yyyy]");
+		JLabel bri = new JLabel("Broj indeksa* [XXnnn/yyyy]");
 		
 		panel.add(bri, gbc);
 		
@@ -206,7 +206,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel datu = new JLabel("Datum upisa [dd-MM-yyyy]");
+		JLabel datu = new JLabel("Datum upisa [dd.MM.yyyy.]");
 		
 		panel.add(datu, gbc);
 		
@@ -217,7 +217,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel tgs = new JLabel("Trenutna godina studija");
+		JLabel tgs = new JLabel("Trenutna godina studija* [1-4]");
 		
 		
 		panel.add(tgs, gbc);
@@ -404,6 +404,18 @@ public class EditFrameStudent extends JDialog {
 						n = StatusStudenta.S;
 					}
 					
+					if (imet.getText().equals("") ||
+							pret.getText().equals("") ||
+							datrt.getText().equals("") ||
+							adrst.getText().equals("") ||
+							kontt.getText().equals("") ||
+							brit.getText().equals(""))
+							throw new Exception();
+					
+					double d = 0.00;
+					if (!prot.getText().equals(""))
+						d = Double.parseDouble(prot.getText());
+					
 					menjaniStudent.setIme(imet.getText());
 					menjaniStudent.setPrezime(pret.getText());
 					menjaniStudent.setDatumRodjenja(datrt.getText());
@@ -414,13 +426,12 @@ public class EditFrameStudent extends JDialog {
 					menjaniStudent.setDatumUpisa(datut.getText());
 					menjaniStudent.setTrenutnaGodinaStudija(Integer.parseInt(tgst.getText()));
 					menjaniStudent.setStatus(n);
-					menjaniStudent.setProsecnaOcena(Double.parseDouble(prot.getText()));
+					menjaniStudent.setProsecnaOcena(d);
 					
 					ArrayList<Subject> izmenjeniSpisak = new ArrayList<Subject>();
 					String tekst;
 					String[] sifra;
 					for(JCheckBox k : listaCekBoxova) {
-						System.out.println(k.getText());
 						if (k.isSelected()) {
 							tekst = k.getText();
 							sifra = tekst.split(" | ");
@@ -515,8 +526,8 @@ public class EditFrameStudent extends JDialog {
 		
 		
 		add(panel, BorderLayout.WEST);
-		add(panelSaPredmetima, BorderLayout.EAST);
 		add(panelDugmadi, BorderLayout.SOUTH);
+		add(panelSaPredmetima, BorderLayout.CENTER);
 	
 		} catch(Exception e) {
 			e.printStackTrace();
