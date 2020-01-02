@@ -40,7 +40,6 @@ public class AddFrameStudent extends JDialog {
 	private JTextField brit = new JTextField("");
 	private JTextField datut = new JTextField("");
 	private JTextField tgst = new JTextField("");
-//	private JTextField stat = new JTextField("");
 	private JTextField prot = new JTextField("");
 	private JTextField spst = new JTextField("");
 	private JRadioButton budzet = new JRadioButton("Budzet");
@@ -405,6 +404,9 @@ public class AddFrameStudent extends JDialog {
 						kontt.getText().equals("") ||
 						brit.getText().equals(""))
 						throw new Exception();
+					
+					String[] datum = datrt.getText().split("\\.");
+					if (datum.length != 3) throw new Exception();
 					
 					double d = 0.00;
 					if (!prot.getText().equals(""))

@@ -42,7 +42,7 @@ public class AddFrameSubject extends JDialog {
 		int width = screenSize.width;
 		int height = screenSize.height;
 		setSize(new Dimension(width/3+100, height/3));
-		this.setTitle("Add new subject");
+		this.setTitle("Dodaj novi predmet");
 		this.setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\inbox_plus [#1554].png").getImage());
 		setModal(true);
 		

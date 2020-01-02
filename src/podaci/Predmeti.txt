@@ -1,3 +1,3 @@
-1, asd2, 2, 1, , RA3/3019, RA4/3019, RA5/3019
-2, aaa, 1, 1, 028394732, RA1/3019, RA9/2017, RA3/3019
-3, aaaaa, 1, 3, , RA1/3019, RA3/3019, RA4/3019
+1, Logicko projektovanje racunarskih sistema 1, 2, 1, 01940848392, RA9/2017, RA3/3019, RA4/3019, RA5/3019
+2, Sistem automatskog buzdovanija, 1, 1, 028394732, RA1/3019, RA9/2017, RA3/3019
+3, Лепопис, 1, 3, , RA1/3019, RA3/3019, RA4/3019

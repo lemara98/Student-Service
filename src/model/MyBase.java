@@ -51,17 +51,17 @@ public class MyBase {
 		readFromFile(profesori);
 		
 		columnsProfessor = new ArrayList<String>();
-		columnsProfessor.add("ID number");
-		columnsProfessor.add("FirstName");
-		columnsProfessor.add("LastName");
-		columnsProfessor.add("Date");
-		columnsProfessor.add("Adress");
-		columnsProfessor.add("PhoneNumber");
-		columnsProfessor.add("Email");
-		columnsProfessor.add("WorkPlace");
-		columnsProfessor.add("Title");
-		columnsProfessor.add("Rank");
-		columnsProfessor.add("Subjects");
+		columnsProfessor.add("ID broj");
+		columnsProfessor.add("Ime");
+		columnsProfessor.add("Prezime");
+		columnsProfessor.add("Datum rodjenja");
+		columnsProfessor.add("Adresa stanovanja");
+		columnsProfessor.add("Broj telefona");
+		columnsProfessor.add("Email adresa");
+		columnsProfessor.add("Radno mesto");
+		columnsProfessor.add("Zvanje");
+		columnsProfessor.add("Rang u hijerarhiji");
+		columnsProfessor.add("Predmeti");
 	}
 	
 	public List<Professor> getProfessors(){
@@ -148,11 +148,11 @@ public class MyBase {
 		readFromFile(predmeti);
 		
 		columnsSubject = new ArrayList<String>();
-		columnsSubject.add("Subject code");
-		columnsSubject.add("Name");
-		columnsSubject.add("Semester");
-		columnsSubject.add("Year of study");
-		columnsSubject.add("Professor");
+		columnsSubject.add("Sifra predmeta");
+		columnsSubject.add("Naziv predmeta");
+		columnsSubject.add("Semestar");
+		columnsSubject.add("Na Godini studiji");
+		columnsSubject.add("Profesor");
 		columnsSubject.add("Studenti");
 		
 		
@@ -188,7 +188,6 @@ public class MyBase {
 	}
 	
 	public Subject getSubject(String id) {
-		;
 		for (Subject s: subjects) {
 			if (s.getCode().equals(id))
 				return s;

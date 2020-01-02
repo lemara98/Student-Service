@@ -20,7 +20,7 @@ public class Subject {
 			ArrayList<Student> students) {
 		super();
 		this.code = codeCnt;
-		this.codeCnt = Integer.parseInt(codeCnt);
+		Subject.codeCnt = Integer.parseInt(codeCnt);
 		this.name = name;
 		this.semester = semester;
 		this.yearOfStuding = yearOfStuding;

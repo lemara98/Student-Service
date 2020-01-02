@@ -56,7 +56,7 @@ public class EditFrameStudent extends JDialog {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension ss = kit.getScreenSize();
 		Dimension vel = new Dimension(ss.width/2, ss.height/2);
-		setTitle("Edit student " + temp.getBrojIndeksa() + " " + temp.getIme() + " " + temp.getPrezime());
+		setTitle("Edit student: " + temp.getBrojIndeksa() + " " + temp.getIme() + " " + temp.getPrezime());
 		setSize(vel);
 		setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\pen [#1319].png").getImage());
 		setResizable(false);
@@ -413,6 +413,9 @@ public class EditFrameStudent extends JDialog {
 							brit.getText().equals(""))
 							throw new Exception();
 					
+					String[] datum = datrt.getText().split("\\.");
+					if (datum.length != 3) throw new Exception();
+					
 					double d = 0.00;
 					if (!prot.getText().equals(""))
 						d = Double.parseDouble(prot.getText());
@@ -495,17 +498,6 @@ public class EditFrameStudent extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-//				imet.setText("");
-//				pret.setText("");
-//				datrt.setText("");
-//				adrst.setText("");
-//				kontt.setText("");
-//				emat.setText("");
-//				brit.setText("");
-//				datut.setText("");
-//				tgst.setText("");
-//				prot.setText("");
 				setVisible(false);
 			}
 		});
@@ -548,24 +540,6 @@ public class EditFrameStudent extends JDialog {
 		}
 		
 	}
-	
-
-//	public Student getStudentInformation() {
-//		Student s = new Student(imet.getText(),
-//				pret.getText(),
-//				datrt.getText(),
-//				adrst.getText(),
-//				kontt.getText(),
-//				emat.getText(),
-//				brit.getText(),
-//				datut.getText(),Integer.parseInt(tgst.getText()),
-//				StatusStudenta.valueOf(stat.toUpperCase()),
-//				Double.parseDouble(prot.getText()));
-//		
-////				s.setSpisakPredmetaKojeStudentSlusa(spisakPredmetaKojeStudentSlusa);
-//		// Mora biti neka greska negde ako se ovo poziva! SPisakPredmeta se opet inicira
-//		return s;
-//	}
 	
 	
 	private void addPredmetToList(JPanel panel, Subject predmet, int rbr) {

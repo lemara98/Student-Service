@@ -41,7 +41,7 @@ public class EditFrameProfessor extends JDialog {
 		int width = screenSize.width;
 		int height = screenSize.height;
 		setSize(new Dimension(width/3+100, height/2));
-		this.setTitle("Edit proffesor: " + menjaniProfesor.getIdNumber() + " " + menjaniProfesor.getFirstName() + " " + menjaniProfesor.getLastName());
+		this.setTitle("Edit professor: " + menjaniProfesor.getIdNumber() + " " + menjaniProfesor.getFirstName() + " " + menjaniProfesor.getLastName());
 		this.setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\pen [#1319].png").getImage());
 		setModal(true);
 		
@@ -87,7 +87,7 @@ public class EditFrameProfessor extends JDialog {
 		
 		gbc0.anchor = GridBagConstraints.CENTER;
 		
-		JLabel IDNumberLabel = new JLabel("ID number*");
+		JLabel IDNumberLabel = new JLabel("ID broj*");
 		leftPanel.add(IDNumberLabel,gbc0);
 		
 		GridBagConstraints gbc1 = new GridBagConstraints();
@@ -114,7 +114,7 @@ public class EditFrameProfessor extends JDialog {
 		
 		gbc.anchor = GridBagConstraints.CENTER;
 		
-		JLabel firstNameLabel = new JLabel("First name*");
+		JLabel firstNameLabel = new JLabel("Ime*");
 		leftPanel.add(firstNameLabel,gbc);
 		
 		GridBagConstraints gbc2 = new GridBagConstraints();
@@ -141,7 +141,7 @@ public class EditFrameProfessor extends JDialog {
 		
 		gbc3.anchor = GridBagConstraints.CENTER;
 		
-		JLabel lastNameLabel = new JLabel("Last name*");
+		JLabel lastNameLabel = new JLabel("Prezime*");
 		leftPanel.add(lastNameLabel,gbc3);
 		
 		GridBagConstraints gbc4 = new GridBagConstraints();
@@ -168,7 +168,7 @@ public class EditFrameProfessor extends JDialog {
 		
 		gbc5.anchor = GridBagConstraints.CENTER;
 		
-		JLabel yearLabel = new JLabel("Year of birth*");
+		JLabel yearLabel = new JLabel("Datum rodjenja* [dd.MM.yyyy.]");
 		leftPanel.add(yearLabel,gbc5);
 		
 		GridBagConstraints gbc6 = new GridBagConstraints();
@@ -195,7 +195,7 @@ public class EditFrameProfessor extends JDialog {
 		
 		gbc7.anchor = GridBagConstraints.CENTER;
 		
-		JLabel livingAdressLabel = new JLabel("Living adress*");
+		JLabel livingAdressLabel = new JLabel("Adresa stanovanja*");
 		leftPanel.add(livingAdressLabel,gbc7);
 		
 		GridBagConstraints gbc8 = new GridBagConstraints();
@@ -222,7 +222,7 @@ public class EditFrameProfessor extends JDialog {
 		
 		gbc9.anchor = GridBagConstraints.CENTER;
 		
-		JLabel contactNumberLabel = new JLabel("Contact number*");
+		JLabel contactNumberLabel = new JLabel("Kontakt telefon*");
 		leftPanel.add(contactNumberLabel,gbc9);
 		
 		GridBagConstraints gbc10 = new GridBagConstraints();
@@ -249,7 +249,7 @@ public class EditFrameProfessor extends JDialog {
 		
 		gbc11.anchor = GridBagConstraints.CENTER;
 		
-		JLabel emailLabel = new JLabel("Email*");
+		JLabel emailLabel = new JLabel("Email adresa*");
 		leftPanel.add(emailLabel,gbc11);
 		
 		GridBagConstraints gbc12 = new GridBagConstraints();
@@ -276,7 +276,7 @@ public class EditFrameProfessor extends JDialog {
 		
 		gbc13.anchor = GridBagConstraints.CENTER;
 		
-		JLabel workAdressLabel = new JLabel("Work adress*");
+		JLabel workAdressLabel = new JLabel("Adresa radnog mesta*");
 		leftPanel.add(workAdressLabel,gbc13);
 		
 		GridBagConstraints gbc14 = new GridBagConstraints();
@@ -303,7 +303,7 @@ public class EditFrameProfessor extends JDialog {
 		
 		gbc15.anchor = GridBagConstraints.CENTER;
 		
-		JLabel titleLabel = new JLabel("Title*");
+		JLabel titleLabel = new JLabel("Zvanje*");
 		leftPanel.add(titleLabel,gbc15);
 		
 		GridBagConstraints gbc16 = new GridBagConstraints();
@@ -330,7 +330,7 @@ public class EditFrameProfessor extends JDialog {
 		
 		gbc17.anchor = GridBagConstraints.CENTER;
 		
-		JLabel rankLabel = new JLabel("Rank*");
+		JLabel rankLabel = new JLabel("Rang*");
 		leftPanel.add(rankLabel,gbc17);
 		
 		GridBagConstraints gbc18 = new GridBagConstraints();
@@ -377,6 +377,9 @@ public class EditFrameProfessor extends JDialog {
 							workAdressTextField.getText().equals("") ||
 							rankTextField.getText().equals(""))
 							throw new Exception();
+					
+					String[] datum = yearTextField.getText().split("\\.");
+					if (datum.length != 3) throw new Exception();
 					
 					
 					List<Subject> checkedSubjects = new ArrayList<Subject>();
