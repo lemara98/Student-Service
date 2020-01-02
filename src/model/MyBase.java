@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+
 public class MyBase {
 	private static MyBase instance = null;
 	
@@ -37,8 +38,9 @@ public class MyBase {
 	
 	private MyBase() {
 		initProfessors();		//na Pocetku inicijalizujemo listu profesora
-		initSubjects();
 		initStudents();
+		initSubjects();
+		
 	}
 	
 	///////////////////////////////////////////////PROFESSOR////////////////////////////////////////////////
@@ -49,6 +51,7 @@ public class MyBase {
 		readFromFile(profesori);
 		
 		columnsProfessor = new ArrayList<String>();
+		columnsProfessor.add("ID number");
 		columnsProfessor.add("FirstName");
 		columnsProfessor.add("LastName");
 		columnsProfessor.add("Date");
@@ -78,28 +81,31 @@ public class MyBase {
 	public Professor getProfessorRow(int rowIndex) {
 		return professors.get(rowIndex);		//returns one of my professors from the list
 	}
+
 	public String getProfessorValueAt(int row, int column) {		//returns the string of one table field
 			Professor prof = this.professors.get(row);
 			switch(column) {
 			case 0:
-				return prof.getFirstName();
+				return prof.getIdNumber();
 			case 1:
-				return prof.getLastName();
+				return prof.getFirstName();
 			case 2:
-				return prof.getDate();
+				return prof.getLastName();
 			case 3:
-				return prof.getLivingAdress();
+				return prof.getDate();
 			case 4:
-				return prof.getNumber();
+				return prof.getLivingAdress();
 			case 5:
-				return prof.getEmail();
+				return prof.getNumber();
 			case 6:
-				return prof.getWorkAdress();
+				return prof.getEmail();
 			case 7:
-				return prof.getTitle();
+				return prof.getWorkAdress();
 			case 8:
-				return prof.getRank();
+				return prof.getTitle();
 			case 9:
+				return prof.getRank();
+			case 10:
 				return "Prikazi";
 			default:
 				return null;
@@ -111,11 +117,11 @@ public class MyBase {
 		MyMainFrame.getInstance().azurirajPrikaz();
 	}
 	
-	public void deleteProfessor(long idNumber) {  //this method deletes a professor from my table by idNumber
+	public void deleteProfessor(String idNumber) {  //this method deletes a professor from my table by idNumber
 		List<Professor> temp = new ArrayList<Professor>(); 
 		
 		for(Professor pr : professors) {
-			if(pr.getIdNumber() == idNumber) {
+			if(pr.getIdNumber().equals(idNumber)) {
 				temp.add(pr);
 			}
 		}
@@ -127,16 +133,13 @@ public class MyBase {
 		
 	}
 	
-	public Professor getProfessorById(int id) {
-		Professor prof = new Professor();
+	public Professor getProfessorById(String id) {
 		for (Professor pr : professors) {
-			if(pr.getIdNumber() == id) {
-				prof = pr; 
-				break;
+			if(pr.getIdNumber().equals(id)) {
+				return pr;
 			}
 		}
-		
-		return prof;
+		return null;
 	}
 	
 	//////////////////////////////////////////////////SUBJECT/////////////////////////////////////////////////
@@ -145,6 +148,7 @@ public class MyBase {
 		readFromFile(predmeti);
 		
 		columnsSubject = new ArrayList<String>();
+		columnsSubject.add("Subject code");
 		columnsSubject.add("Name");
 		columnsSubject.add("Semester");
 		columnsSubject.add("Year of study");
@@ -197,14 +201,18 @@ public class MyBase {
 		Subject s = subjects.get(row);
 		switch(column) {
 		case 0:
-			return s.getName();
+			return s.getCode();
 		case 1:
-			return Integer.toString(s.getSemester());
+			return s.getName();
 		case 2:
-			return Integer.toString(s.getYearOfStuding());
+			return Integer.toString(s.getSemester());
 		case 3:
-			return s.getProfessor().getFirstName() + " " + s.getProfessor().getLastName();
+			return Integer.toString(s.getYearOfStuding());
 		case 4:
+			if(s.getProfessor() == null)
+				return "---";
+			return s.getProfessor().getFirstName() + " " + s.getProfessor().getLastName();
+		case 5:
 			return "Prikazi";
 		default:
 			return null;
@@ -226,9 +234,15 @@ public class MyBase {
 		}
 		
 		subjects.removeAll(temp);
+
 	}
 	
-	public void editSubject() {
+	
+	
+	public void editSubject(int idx) {
+		Subject s = MyBase.getInstance().getSubjectRow(idx);
+		new EditFrameSubject(s).setVisible(true);
+		MyMainFrame.getInstance().azurirajPrikaz();
 		
 	}
 	
@@ -242,6 +256,12 @@ public class MyBase {
 		}
 		return sub;
 	}
+	
+	public void deleteStudentFromSubjects(Student stud) {
+			for(Subject s : subjects) {
+				s.deleteStudentFromSubject(stud);
+			}
+		}
 
 	/////////////////	Studenti	/////////////////
 
@@ -324,14 +344,12 @@ public class MyBase {
 	
 	//vraca Studenta sa zadatim indexom
 	public Student getStudentIndex(String idx) {
-		Student stud = new Student();
 		for(Student st : students) {
-			if(st.getBrojIndeksa() == idx) {
-				stud = st;
-				break;
+			if(st.getBrojIndeksa().equals(idx)) {
+				return st;
 			}
 		}
-		return stud;
+		return null;
 	}
 	public void addStudent(Student s) {
 		students.add(s);
@@ -341,12 +359,13 @@ public class MyBase {
 		return students.get(rowIndex);
 	}
 	
-	public void deleteStudent(String brInd) {  //this method deletes a professor from my table by idNumber
+	public void deleteStudent(String brInd) {  
 		List<Student> temp = new ArrayList<Student>(); 
 		
 		for(Student st : students) {
-			if(st.getBrojIndeksa() == brInd) {
+			if(st.getBrojIndeksa().equals(brInd)) {
 				temp.add(st);
+				break;
 			}
 		}
 		
@@ -358,9 +377,15 @@ public class MyBase {
 			new EditFrameStudent(temp).setVisible(true);
 	}
 	
+	public void removeSubjectsFromStudents(Subject s) {
+		for(Student st: students)
+			st.removeSubjectFromStudents(s);
+	}
+	
+/////////////////////////////////////////////////////////////////////////////////	
 	/**
 	 * 
-	 * Uvozi podatke iz datoteke na lokaciji src\podaci\Studenti.txt u bazu podataka
+	 * Uvozi podatke iz datoteke na lokaciji src\podaci u bazu podataka
 	 */
 	public void uvoz() {
 		readFromFile(studenti);	
@@ -369,7 +394,7 @@ public class MyBase {
 	}
 	
 	/**
-	 * Izvozi podatke iz baze podataka u datoteku na lokaciji src\podaci\stucenti.txt
+	 * Izvozi podatke iz baze podataka u datoteku na lokaciji src\podaci
 	 */
 	public void izvoz() {
 		writeToFile(studenti);
@@ -386,66 +411,93 @@ public class MyBase {
 					trenutni.trim();
 					String[] podStud = trenutni.split(", ");
 					if(fajl == studenti) {
-						Student ucitani = new Student(podStud[0], 
-													  podStud[1],
-													  podStud[2], 
-													  podStud[3], 
-													  podStud[4], 
-													  podStud[5], 
-													  podStud[6], 
-													  podStud[7], 
-													  Integer.parseInt(podStud[8]), 
-													  StatusStudenta.valueOf(podStud[9]), 
-													  Double.parseDouble(podStud[10]));
-						
-						for (int i = 11; i < podStud.length; i++) {
-							for(Subject j: subjects) {
-								if (podStud[i].equals(j.getCode())) {
-									ucitani.dodajPredmetUSpisak(j);
+						if (podStud.length > 10) {
+							Student ucitani = new Student(podStud[0], 
+														  podStud[1],
+														  podStud[2], 
+														  podStud[3], 
+														  podStud[4], 
+														  podStud[5], 
+														  podStud[6], 
+														  podStud[7], 
+														  Integer.parseInt(podStud[8]), 
+														  StatusStudenta.valueOf(podStud[9]), 
+														  Double.parseDouble(podStud[10]));
+							
+							for (int i = 11; i < podStud.length; i++) {
+								for(Subject j: subjects) {
+									if (podStud[i].equals(j.getCode())) {
+										ucitani.dodajPredmetUSpisak(j);
+										break;
+									}
+								}
+							}
+							
+							for (Student provera : students) {
+								if (provera.equals(ucitani)) {
+									jedinstven = false;
 									break;
 								}
 							}
+							if (jedinstven)
+							students.add(ucitani);
 						}
-						
-						for (Student provera : students) {
-							if (provera.equals(ucitani)) {
-								jedinstven = false;
-								break;
-							}
-						}
-						if (jedinstven)
-						students.add(ucitani);
 					} else if(fajl == profesori) {
-						List<Subject> sub = new ArrayList<Subject>();
-						for(int i = 9; i < podStud.length; i++) {
-							sub.add(getSubjectByCode(podStud[i]));
-						}
-						Professor ucitani = new Professor(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], podStud[7],podStud[8],sub);
-						for (Professor provera : professors) {
-							if (provera.equals(ucitani)) {
-								jedinstven = false;
-								break;
+						if(podStud.length > 9 ) {
+							
+							List<Subject> sub = new ArrayList<Subject>();
+							for(int i = 9; i < podStud.length; i++) {
+								sub.add(getSubjectByCode(podStud[i]));
 							}
+							
+							
+							Professor ucitani = new Professor(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], podStud[7], podStud[8], podStud[9], sub);
+							for (Professor provera : professors) {
+								if (provera.equals(ucitani)) {
+									jedinstven = false;
+									break;
+								}
+							}
+							
+							if (jedinstven)
+							professors.add(ucitani);
 						}
-						if (jedinstven)
-						professors.add(ucitani);
 					}else if(fajl == predmeti){
-						String idProf = podStud[3];
-						Professor pr = getProfessorById(Integer.parseInt(idProf));
-						ArrayList<Student> st = new ArrayList<Student>();
-						for(int i = 4; i < podStud.length; i++) {
-							st.add(getStudentIndex(podStud[i])); //dodajemo studente
-						}
-						Subject ucitani = new Subject(podStud[0], Integer.parseInt(podStud[1]), Integer.parseInt(podStud[2]), pr,st);
-						
-						for (Subject provera : subjects) {
-							if (provera.equals(ucitani)) {
-								jedinstven = false;
-								break;
+						if (podStud.length > 3) {
+							Professor pr = null;
+							if(podStud[4] != "") { 
+								String idProf = podStud[4];
+								pr = getProfessorById(idProf);
+							}
+							ArrayList<Student> st = new ArrayList<Student>();
+							Student student;
+							
+							if(podStud.length >= 6) {
+								for(int i = 5; i < podStud.length; i++) {
+									student = getStudentIndex(podStud[i]);
+									st.add(student); //dodajemo studente
+								}
+							}
+							Subject ucitani = new Subject(podStud[0], podStud[1], Integer.parseInt(podStud[2]), Integer.parseInt(podStud[3]), pr, st);
+							for (Subject provera : subjects) {
+								if (provera.equals(ucitani)) {
+									jedinstven = false;
+									break;
+								}
+							}
+							if (jedinstven) {
+								subjects.add(ucitani);
+								
+								if(podStud.length >= 6) {
+									for(int i = 5; i < podStud.length; i++) {
+										student = getStudentIndex(podStud[i]);
+										student.dodajPredmetUSpisak(ucitani);
+									}
+								if (pr != null)	
+									pr.addSubjectToSubjects(ucitani);
+								}
 							}
 						}
-						if (jedinstven)
-						subjects.add(ucitani);
 					}
 					
 				}	
@@ -462,21 +514,21 @@ public class MyBase {
 	private void writeToFile(File fajl) {
 		try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fajl.getPath()), "UTF-8"))){
 			
-			String trenutni = new String();
+			StringBuilder trenutni = new StringBuilder();
 			if(fajl == studenti) {
 				for(Student i : students) {
-					trenutni += i.toString() + "\n";
+					trenutni.append(i.toString() + "\n");
 				}
 			}else if(fajl == profesori) {
 				for(Professor p : professors) {
-					trenutni += p.toString() + "\n";
+					trenutni.append(p.toString() + "\n");
 				}
 			}else if(fajl == predmeti) {
 				for(Subject s : subjects) {
-					trenutni += s.toString() + "\n";
+					trenutni.append(s.toString() + "\n");
 				}
 			}
-			
+
 			br.append(trenutni);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

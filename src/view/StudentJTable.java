@@ -87,10 +87,10 @@ public class StudentJTable extends JTable{
 		    			
 		    			gbc.gridwidth = 1;
 		    			gbc.gridheight = 1;
-		    			gbc.anchor = GridBagConstraints.CENTER;
+		    			gbc.anchor = GridBagConstraints.WEST;
 		    			JLabel predmet;
 			    	  for (int i = 0; i < s.getSpisakPredmetaKojeStudentSlusa().size(); i++) {
-			    		  predmet = new JLabel(s.getSpisakPredmetaKojeStudentSlusa().get(i).getName());
+			    		  predmet = new JLabel(s.getSpisakPredmetaKojeStudentSlusa().get(i).getCode() + " | " +s.getSpisakPredmetaKojeStudentSlusa().get(i).getName());
 			    		  gbc.gridy = i;
 			    		  panel.add(predmet,gbc);
 			    	  }

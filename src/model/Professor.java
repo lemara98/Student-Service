@@ -1,9 +1,9 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Professor {
-	private static long idCounter = 135639;
 	private String firstName;
 	private String lastName;
 	private String date;
@@ -11,16 +11,16 @@ public class Professor {
 	private String number;
 	private String email;
 	private String workAdress;
-	private long idNumber;
+	private String idNumber;
 	private String title;
 	private String rank;
 	private List<Subject> subjects;
 	//SimpleDateFormat df;
 	
-	public Professor(String firstName, String lastName, String date, String livingAdress, String number, String email,
+	public Professor(String idNumber, String firstName, String lastName, String date, String livingAdress, String number, String email,
 			String workAdress, String title, String rank, List<Subject> subjects) {
 		super();
-		idCounter += 49;	//random
+		this.idNumber = idNumber;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.date = date;
@@ -28,18 +28,18 @@ public class Professor {
 		this.number = number;
 		this.email = email;
 		this.workAdress = workAdress;
-		this.idNumber = idCounter;
 		this.title = title;
 		this.rank = rank;
 		this.subjects = subjects;
+		this.subjects = new ArrayList<Subject>();
 	}	
 	
 	
 	@Override
 	public String toString() {
-		return  firstName + ", " + lastName + ", " + date + ", "
+		return  idNumber + ", " + firstName + ", " + lastName + ", " + date + ", "
 				+ livingAdress + ", " + number + ", " + email + ", " + workAdress
-				+ ", " + idNumber + ", " + title + ", " + rank;
+				+ ", " + title + ", " + rank;
 	}
 
 
@@ -91,10 +91,10 @@ public class Professor {
 	public void setWorkAdress(String workAdress) {
 		this.workAdress = workAdress;
 	}
-	public long getIdNumber() {
+	public String getIdNumber() {
 		return idNumber;
 	}
-	public void setIdNumber(long idNumber) {
+	public void setIdNumber(String idNumber) {
 		this.idNumber = idNumber;
 	}
 	public String getTitle() {
@@ -109,12 +109,7 @@ public class Professor {
 	public void setRank(String rank) {
 		this.rank = rank;
 	}
-//	public List<Subject> getSubjects() {
-//		return subjects;
-//	}
-//	public void setSubjects(List<Subject> subjects) {
-//		this.subjects = subjects;
-//	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (o == this)
@@ -140,5 +135,19 @@ public class Professor {
 	public void setSubjects(List<Subject> subjects) {
 		this.subjects = subjects;
 	}
+	
+	public void addSubjectToSubjects(Subject s) {
+		this.subjects.add(s);
+	}
+	
+	public void addSubjectToSubjects(String s) {
+		Subject newSubject = MyBase.getInstance().getSubject(s);
+		this.subjects.add(newSubject);
+	}
+	
+	public void deleteSubjectFromSubjects(Subject sub) {
+		this.subjects.remove(sub);
+	}
+
 
 }

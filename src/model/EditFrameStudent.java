@@ -417,6 +417,9 @@ public class EditFrameStudent extends JDialog {
 					if (!prot.getText().equals(""))
 						d = Double.parseDouble(prot.getText());
 					
+					List<Subject> razlika = menjaniStudent.getSpisakPredmetaKojeStudentSlusa();
+					
+					
 					menjaniStudent.setIme(imet.getText());
 					menjaniStudent.setPrezime(pret.getText());
 					menjaniStudent.setDatumRodjenja(datrt.getText());
@@ -429,18 +432,28 @@ public class EditFrameStudent extends JDialog {
 					menjaniStudent.setStatus(n);
 					menjaniStudent.setProsecnaOcena(d);
 					
+					
+					
 					ArrayList<Subject> izmenjeniSpisak = new ArrayList<Subject>();
 					String tekst;
 					String[] sifra;
 					for(JCheckBox k : listaCekBoxova) {
+						tekst = k.getText();
+						sifra = tekst.split(" | ");
 						if (k.isSelected()) {
-							tekst = k.getText();
-							sifra = tekst.split(" | ");
 							izmenjeniSpisak.add(MyBase.getInstance().getSubject(sifra[0]));
+							MyBase.getInstance().getSubject(sifra[0]).addStudentToSubject(menjaniStudent);
 						}
 					}
 					
 					menjaniStudent.setSpisakPredmetaKojeStudentSlusa(izmenjeniSpisak);
+					
+					razlika.removeAll(izmenjeniSpisak);
+					
+					
+					for(Subject sub: razlika) {
+							MyBase.getInstance().getSubject(sub.getCode()).deleteStudentFromSubject(menjaniStudent);
+					}
 					
 
 					ls = MyBase.getInstance().getStudents();
@@ -460,7 +473,7 @@ public class EditFrameStudent extends JDialog {
 					}
 				}
 				catch (Exception er) {
-					JOptionPane.showMessageDialog(panel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN ADDDING NEW STUDENT", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(panel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN EDITTING STUDENT", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

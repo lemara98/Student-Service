@@ -28,16 +28,16 @@ public class MyToolBar extends JToolBar{
 	
 	private static final long serialVersionUID = 2933819767532950350L;
 
-	private JButton btnAddProfessor;
-	private JButton btnAddStudent;
+//	private JButton btnAddProfessor;
+//	private JButton btnAddStudent;
 	
-	public JButton getBtnAddProfessor() {
-		return btnAddProfessor;
-	}
-	
-	public JButton getBtnAddStudent() {
-		return btnAddStudent;
-	}
+//	public JButton getBtnAddProfessor() {
+//		return btnAddProfessor;
+//	}
+//	
+//	public JButton getBtnAddStudent() {
+//		return btnAddStudent;
+//	}
 	
 	public MyToolBar() {
 		super(SwingConstants.HORIZONTAL);
@@ -94,7 +94,7 @@ public class MyToolBar extends JToolBar{
 					//subjects // Ovde se mora ispraviti!
 					int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
 					if (idx != -1) {
-///						MyController.getInstance().editSubject(idx);
+						MyController.getInstance().editSubject(idx);
 					}
 					else
 						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
@@ -133,7 +133,7 @@ public class MyToolBar extends JToolBar{
 											MyController.getInstance().deleteProfessor(idx);
 										
 									} else {
-										JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must fitrst select something to delete", "WARNING", JOptionPane.WARNING_MESSAGE);
+										JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to delete", "WARNING", JOptionPane.WARNING_MESSAGE);
 									}
 								}
 							}
@@ -171,32 +171,31 @@ public class MyToolBar extends JToolBar{
 		btnSearch.setPreferredSize(new Dimension(30,30));
 		btnSearch.setToolTipText("Search");
 		
-		// Button addStudent treba da doda studente na predmet!
-		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_plus [#1357].png");
-		btnAddStudent = new JButton(icon);
-		btnAddStudent.setPreferredSize(new Dimension(30,30));
-		btnAddStudent.setToolTipText("Add Student to subject");
-		btnAddStudent.setEnabled(false);
-		
-		// Button proffesor treba da doda predmetnog profesora predmetu
-		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_image_favorite_round [#1331].png");
-		btnAddProfessor = new JButton(icon);
-		btnAddProfessor.setPreferredSize(new Dimension(30,30));
-		btnAddProfessor.setToolTipText("Add Professor to subject");
+//		// Button addStudent treba da doda studente na predmet!
+//		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_plus [#1357].png");
+//		btnAddStudent = new JButton(icon);
+//		btnAddStudent.setPreferredSize(new Dimension(30,30));
+//		btnAddStudent.setToolTipText("Add Student to subject");
+//		btnAddStudent.setEnabled(false);
+//		
+//		// Button proffesor treba da doda predmetnog profesora predmetu
+//		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_image_favorite_round [#1331].png");
+//		btnAddProfessor = new JButton(icon);
+//		btnAddProfessor.setPreferredSize(new Dimension(30,30));
+//		btnAddProfessor.setToolTipText("Add Professor to subject");
 		
 		JTextField textField = new JTextField("Type here to search");
 		Font f1 = textField.getFont();
 		Font f = new Font("Verdana", Font.ITALIC, 12);
 		textField.setFont(f);
-		textField.setPreferredSize(new Dimension(150,20));
+		textField.setPreferredSize(new Dimension(450,20));
 		textField.addFocusListener(new FocusListener() {
 			
 			@Override
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				textField.setText("Type here to search");
-				Font f = new Font("Verdana", Font.ITALIC, 12);
-				textField.setFont(f);
+					textField.setText("Type here to search");
+					Font f = new Font("Verdana", Font.ITALIC, 12);
+					textField.setFont(f);
 			}
 			
 			@Override
@@ -221,8 +220,8 @@ public class MyToolBar extends JToolBar{
 		leviDeo.add(btnAdd);
 		leviDeo.add(btnEdit);
 		leviDeo.add(btnDelete);
-		leviDeo.add(btnAddStudent);
-		leviDeo.add(btnAddProfessor);
+//		leviDeo.add(btnAddStudent);
+//		leviDeo.add(btnAddProfessor);
 		desniDeo.add(textField);
 		desniDeo.add(btnSearch);
 		

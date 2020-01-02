@@ -16,6 +16,18 @@ public class Subject {
 	
 	public Subject() {}
 	
+	public Subject(String codeCnt, String name, int semester, int yearOfStuding, Professor professor,
+			ArrayList<Student> students) {
+		super();
+		this.code = codeCnt;
+		this.codeCnt = Integer.parseInt(codeCnt);
+		this.name = name;
+		this.semester = semester;
+		this.yearOfStuding = yearOfStuding;
+		this.professor = professor;
+		this.students = students;
+	}
+	
 	public Subject(String name, int semester, int yearOfStuding, Professor professor,
 			ArrayList<Student> students) {
 		super();
@@ -86,21 +98,17 @@ public class Subject {
 
 	@Override
 	public String toString() {
-// <<<<<<< EditFrameStudentBranch
-// 		if (students.isEmpty())
-// 		return name + ", " + semester + ", "
-// 				+ yearOfStuding + ", " + professor;
-// 		else
-// 			return name + ", " + semester + ", "
-// 			+ yearOfStuding + ", " + professor ;
-// =======
-		String stud = new String();
+		StringBuilder stud = new StringBuilder();
 		for (Student s : students) {
-			stud += ", " + s.getBrojIndeksa();
+			stud.append(", " + s.getBrojIndeksa());
 		}
-		return  code + ", " + name + ", " + semester + ", "
-				+ yearOfStuding + ", " + professor.getIdNumber() + stud;
-// >>>>>>> Develop
+		
+		if (professor != null)
+			return  code + ", " + name + ", " + semester + ", "
+					+ yearOfStuding + ", " + professor.getIdNumber() + stud;
+		else
+			return  code + ", " + name + ", " + semester + ", "
+			+ yearOfStuding + ", " + stud;
 	}
 
 	@Override
@@ -116,12 +124,28 @@ public class Subject {
 	}
 	
 	
+	public void deleteStudentFromSubject(Student stud) {
+			for(Student st : this.students) {
+				if(st.equals(stud)) {
+					this.students.remove(stud);
+					break;
+				}
+			}
+		}
 	
-//	@Override
-//	public String toString() {
-//		return name + ", " + semester + ", "
-//				+ yearOfStuding + ", " + professor + ", " + students;
-//	}
+	public void addStudentToSubject(Student stud) {
+		boolean t = true;
+		for(Student s : this.students) {
+			if (stud.equals(s)) {
+				t = false;
+				break;
+			}
+		}
+		
+		if(t)
+			this.students.add(stud);
+	}
+	
 	
 	
 }

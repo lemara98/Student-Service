@@ -430,6 +430,7 @@ public class AddFrameStudent extends JDialog {
 
 							Subject predmet = MyBase.getInstance().getSubject(sifra);
 							s.dodajPredmetUSpisak(predmet);
+							predmet.addStudentToSubject(s);
 						}
 					}
 					

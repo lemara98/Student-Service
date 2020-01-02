@@ -222,7 +222,16 @@ public class Student {
 		spisakPredmetaKojeStudentSlusa.remove(ind);
 	}
 	
+	public void removeSubjectFromStudents(Subject s) {
+		for(Subject sub: this.spisakPredmetaKojeStudentSlusa)
+			if(s.equals(sub))
+				this.spisakPredmetaKojeStudentSlusa.remove(sub);
+	}
 
+	public void ukloniStudentaSaPredmeta(Subject menjaniPredmet) {
+		this.spisakPredmetaKojeStudentSlusa.remove(menjaniPredmet);
+		
+	}
 
 }
 

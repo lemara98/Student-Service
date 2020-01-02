@@ -8,6 +8,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +18,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -79,6 +86,7 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 						int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
 						if(selectedPane == 0) {
 							//professors
+							MyController.getInstance().addProfessor();
 						}else if(selectedPane == 1) {
 							//subjects
 							MyController.getInstance().addSubject();
@@ -130,7 +138,7 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 							//professors // Ovde se mora dodati!
 							int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
 							if (idx != -1) {
-//								MyController.getInstance().editProfessor(idx);
+								MyController.getInstance().editProfessor(idx);
 							}
 							else
 								JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
@@ -138,7 +146,7 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 							//subjects // Ovde se mora ispraviti!
 							int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
 							if (idx != -1) {
-//								MyController.getInstance().editSubject(idx);
+								MyController.getInstance().editSubject(idx);
 							}
 							else
 								JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
@@ -213,6 +221,14 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 		JMenuItem pomoc = new JMenuItem("Help", hi);
 		pomoc.setMnemonic(KeyEvent.VK_H);
 		pomoc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, ActionEvent.ALT_MASK));
+		pomoc.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						HelpProzor.getInstance(hi);
+					}
+				});
 		
 		
 		// About dugme
@@ -327,20 +343,25 @@ class Prozor extends JFrame {
 		JLabel mile = new JLabel(mk);
 		
 		// Slika Aleksandar Hadzibabic
-		ImageIcon sh = new ImageIcon(bi);
+		ImageIcon sh = new ImageIcon("src\\podaci\\AH_slika.jpg");
+		slika = sh.getImage();
+		bi = new BufferedImage(300, 300, BufferedImage.TYPE_INT_ARGB);
+		g = bi.getGraphics();
+		g.drawImage(slika, 0, 0, 300, 300, null);
+		sh = new ImageIcon(bi);
 		JLabel sale = new JLabel(sh);
 		
 		
 		// Videcemo sta cemo sa ovim -- nije gotovo!
 		
-		File biografije = new File("Biografije.txt");
+		File biografije = new File("src\\podaci\\Biografije.txt");
 		JTextArea txt = new JTextArea(readFromFile(biografije));
 		txt.setEditable(false);
 		JScrollPane bioP = new JScrollPane(txt);
 		bioP.setMinimumSize(new Dimension(500,400));
 		
 
-		File aplikacije = new File("Aplikacija.txt");
+		File aplikacije = new File("src\\podaci\\Aplikacija.txt");
 		JTextArea txt2 = new JTextArea(readFromFile(aplikacije));
 		txt2.setEditable(false);
 		JScrollPane appP = new JScrollPane(txt2);
@@ -356,9 +377,8 @@ class Prozor extends JFrame {
 		// JPanel sa slikama
 		JPanel panel = new JPanel(new BorderLayout());
 		
-		panel.add(mile, BorderLayout.EAST);
-		// Ovde treba saletova slika !!!!!!!!!!!!!!!!!!!!!!!!!!!
-		panel.add(sale, BorderLayout.WEST);
+		panel.add(sale, BorderLayout.EAST);
+		panel.add(mile, BorderLayout.WEST);
 		
 		// centralni tekst i slike
 		JPanel centralniPanel = new JPanel(new BorderLayout());
@@ -374,6 +394,55 @@ class Prozor extends JFrame {
 		gn.drawImage(slikan, 0, 0, 300, 300, null);
 		naruto = new ImageIcon(bufim);
 		JLabel narutoLabela = new JLabel(naruto);
+		
+		narutoLabela.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				AudioInputStream audioInputStream;
+				Clip clip;
+				File zvuk = new File("src\\podaci\\naruto.wav");
+				
+				try {
+					audioInputStream = AudioSystem.getAudioInputStream(zvuk);
+					clip = AudioSystem.getClip();
+					clip.open(audioInputStream);
+					clip.start();
+				} catch (UnsupportedAudioFileException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (LineUnavailableException e1) {
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		centralniPanel.add(imem, BorderLayout.WEST);
 		centralniPanel.add(imes, BorderLayout.EAST);
@@ -391,7 +460,7 @@ class Prozor extends JFrame {
 	 * @param fajl - File
 	 * @return String from a file
 	 */
-	private String readFromFile(File fajl) {
+	public static String readFromFile(File fajl) {
 		
 		StringBuilder sadrzaj = new StringBuilder();
 		try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fajl.getPath()), "UTF-8"))) {
@@ -421,4 +490,53 @@ class Prozor extends JFrame {
 			instance = new Prozor(ai);
 		return instance;
 	}
+	
+	
+	
 }
+
+	
+	
+class HelpProzor extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2097143162463813774L;
+	
+	private static HelpProzor instance = null;
+
+	private HelpProzor(ImageIcon ai) {
+		// osnove novog prozora
+		super();
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension ss = kit.getScreenSize();
+		setTitle("Help");
+		setIconImage(ai.getImage());
+		setSize(ss.width*7/9, ss.height*8/9);
+		setResizable(true);
+		setMinimumSize(new Dimension(ss.width/2, ss.height/3));
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
+		File help = new File("src\\podaci\\Help.txt");
+		JTextArea txt = new JTextArea(Prozor.readFromFile(help));
+		txt.setEditable(false);
+		JScrollPane helpP = new JScrollPane(txt);
+		helpP.setMinimumSize(new Dimension(500,400));
+		this.add(helpP);
+		
+		setVisible(true);
+		
+	}
+	
+	public static HelpProzor getInstance(ImageIcon ai) {
+		if (instance == null)
+			instance = new HelpProzor(ai);
+		instance.setVisible(true);
+		return instance;
+			
+	}
+}
+	
+	
+

@@ -49,7 +49,7 @@ public class MyPopupMenu extends JPopupMenu {
 					//professors // Ovde se mora dodati!
 					int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
 					if (idx != -1) {
-//						MyController.getInstance().editProfessor(idx);
+						MyController.getInstance().editProfessor(idx);
 					}
 					else
 						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
@@ -57,7 +57,7 @@ public class MyPopupMenu extends JPopupMenu {
 					//subjects // Ovde se mora ispraviti!
 					int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
 					if (idx != -1) {
-//						MyController.getInstance().editSubject(idx);
+						MyController.getInstance().editSubject(idx);
 					}
 					else
 						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
@@ -96,7 +96,7 @@ public class MyPopupMenu extends JPopupMenu {
 									MyController.getInstance().deleteProfessor(idx);
 								
 							} else {
-								JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must fitrst select something to delete", "WARNING", JOptionPane.WARNING_MESSAGE);
+								JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to delete", "WARNING", JOptionPane.WARNING_MESSAGE);
 							}
 						}
 					}

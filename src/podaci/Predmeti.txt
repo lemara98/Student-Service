@@ -1,2 +1,3 @@
-Algebra, 1, 1, 135639, RA2/3019
-Numericki algoritmi i numericki softver, 2, 1, 135639, RA2/3019
+1, asd2, 2, 1, , RA3/3019, RA4/3019, RA5/3019
+2, aaa, 1, 1, 028394732, RA1/3019, RA9/2017, RA3/3019
+3, aaaaa, 1, 3, , RA1/3019, RA3/3019, RA4/3019

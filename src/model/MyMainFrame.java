@@ -16,8 +16,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import model.MyPopupMenu.PopClickListener;
 import view.AbstractTableModelProfessor;
@@ -101,23 +99,23 @@ public class MyMainFrame extends JFrame {
 		kartice.addTab("Professors", professorPane);
 		kartice.addTab("Subjects", subjectPane);
 		//Listener that sets addProfessor button depending of selected tab in tabbed pane
-		kartice.addChangeListener(new ChangeListener() {
-			
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				if(kartice.getSelectedIndex() == 0 ) { 			// Proffesors
-					myToolBar.getBtnAddProfessor().setEnabled(true);
-					myToolBar.getBtnAddStudent().setEnabled(false);
-				} else if (kartice.getSelectedIndex() == 1) {	// Subjects
-					myToolBar.getBtnAddProfessor().setEnabled(false);
-					myToolBar.getBtnAddStudent().setEnabled(true);
-				} else {										// Students
-					myToolBar.getBtnAddProfessor().setEnabled(false);
-					myToolBar.getBtnAddStudent().setEnabled(false);
-				}
-				
-			}
-		});
+//		kartice.addChangeListener(new ChangeListener() {
+//			
+//			@Override
+//			public void stateChanged(ChangeEvent e) {
+//				if(kartice.getSelectedIndex() == 0 ) { 			// Proffesors
+//					myToolBar.getBtnAddProfessor().setEnabled(true);
+//					myToolBar.getBtnAddStudent().setEnabled(false);
+//				} else if (kartice.getSelectedIndex() == 1) {	// Subjects
+//					myToolBar.getBtnAddProfessor().setEnabled(false);
+//					myToolBar.getBtnAddStudent().setEnabled(true);
+//				} else {										// Students
+//					myToolBar.getBtnAddProfessor().setEnabled(false);
+//					myToolBar.getBtnAddStudent().setEnabled(false);
+//				}
+//				
+//			}
+//		});
 		
 		// Dodajemo karticu studenata
 		studentJTable = new StudentJTable();

@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.SecondaryLoop;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,8 +23,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+
 public class EditFrameProfessor extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3909516676082554815L;
+	
 	private List<Subject> listOfsubjects;
 	
 	public EditFrameProfessor(Professor menjaniProfesor) {
@@ -35,9 +40,9 @@ public class EditFrameProfessor extends JDialog {
 		Dimension screenSize = kit.getScreenSize();
 		int width = screenSize.width;
 		int height = screenSize.height;
-		setSize(new Dimension(width/3+50, height/2));
-		this.setTitle("Add new element");
-		setVisible(true);
+		setSize(new Dimension(width/3+100, height/2));
+		this.setTitle("Edit proffesor: " + menjaniProfesor.getIdNumber() + " " + menjaniProfesor.getFirstName() + " " + menjaniProfesor.getLastName());
+		this.setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\pen [#1319].png").getImage());
 		setModal(true);
 		
 		this.setLocationRelativeTo(null);
@@ -69,27 +74,53 @@ public class EditFrameProfessor extends JDialog {
 		topPanel.setSize(new Dimension(100,50));	//top panel mi sluzi da zauzme mesto zvog borderLayouta
 		
 		this.add(leftPanel,BorderLayout.WEST);	//sa leve strane ce biti polja za unos teksta
-		this.add(rightPanel,BorderLayout.EAST); //desno ce biti lista studenata koji slusaju predmet
 		this.add(downPanel, BorderLayout.SOUTH);	//dole ce biti submit i cancel button
-		this.add(topPanel, BorderLayout.NORTH);	//samo zauzima mesto
+		this.add(rightPanel,BorderLayout.CENTER); //desno ce biti lista studenata koji slusaju predmet
+		
+		GridBagConstraints gbc0 = new GridBagConstraints();		
+		
+		gbc0.gridx = 0;
+		gbc0.gridy = 0;
+		
+		gbc0.gridwidth = 1;
+		gbc0.gridheight = 1;
+		
+		gbc0.anchor = GridBagConstraints.CENTER;
+		
+		JLabel IDNumberLabel = new JLabel("ID number*");
+		leftPanel.add(IDNumberLabel,gbc0);
+		
+		GridBagConstraints gbc1 = new GridBagConstraints();
+		
+		gbc1.gridx = 1;
+		gbc1.gridy = 0;
+		
+		gbc1.gridwidth = 1;
+		gbc1.gridheight = 1;
+		
+		gbc1.anchor = GridBagConstraints.CENTER;
+		
+		JTextField IDNumberTextField = new JTextField(number);
+		IDNumberTextField.setPreferredSize(new Dimension(150,20));
+		leftPanel.add(IDNumberTextField,gbc1);
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.gridx = 0;
-		gbc.gridy = 0;
+		gbc.gridy = 1;
 		
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		
 		gbc.anchor = GridBagConstraints.CENTER;
 		
-		JLabel firstNameLabel = new JLabel("First name");
+		JLabel firstNameLabel = new JLabel("First name*");
 		leftPanel.add(firstNameLabel,gbc);
 		
 		GridBagConstraints gbc2 = new GridBagConstraints();
 		
 		gbc2.gridx = 1;
-		gbc2.gridy = 0;
+		gbc2.gridy = 1;
 		
 		gbc2.gridwidth = 1;
 		gbc2.gridheight = 1;
@@ -97,26 +128,26 @@ public class EditFrameProfessor extends JDialog {
 		gbc2.anchor = GridBagConstraints.CENTER;
 		
 		JTextField firstnameTextField = new JTextField(firstName);
-		firstnameTextField.setPreferredSize(new Dimension(100,20));
+		firstnameTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(firstnameTextField,gbc2);
 		
 		GridBagConstraints gbc3 = new GridBagConstraints();
 		
 		gbc3.gridx = 0;
-		gbc3.gridy = 1;
+		gbc3.gridy = 2;
 		
 		gbc3.gridwidth = 1;
 		gbc3.gridheight = 1;
 		
 		gbc3.anchor = GridBagConstraints.CENTER;
 		
-		JLabel lastNameLabel = new JLabel("Last name");
+		JLabel lastNameLabel = new JLabel("Last name*");
 		leftPanel.add(lastNameLabel,gbc3);
 		
 		GridBagConstraints gbc4 = new GridBagConstraints();
 		
 		gbc4.gridx = 1;
-		gbc4.gridy = 1;
+		gbc4.gridy = 2;
 		
 		gbc4.gridwidth = 1;
 		gbc4.gridheight = 1;
@@ -124,26 +155,26 @@ public class EditFrameProfessor extends JDialog {
 		gbc4.anchor = GridBagConstraints.CENTER;
 		
 		JTextField lastNameTextField = new JTextField(lastName);
-		lastNameTextField.setPreferredSize(new Dimension(100,20));
+		lastNameTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(lastNameTextField,gbc4);
 		
 		GridBagConstraints gbc5 = new GridBagConstraints();
 		
 		gbc5.gridx = 0;
-		gbc5.gridy = 2;
+		gbc5.gridy = 3;
 		
 		gbc5.gridwidth = 1;
 		gbc5.gridheight = 1;
 		
 		gbc5.anchor = GridBagConstraints.CENTER;
 		
-		JLabel yearLabel = new JLabel("Year of birth");
+		JLabel yearLabel = new JLabel("Year of birth*");
 		leftPanel.add(yearLabel,gbc5);
 		
 		GridBagConstraints gbc6 = new GridBagConstraints();
 		
 		gbc6.gridx = 1;
-		gbc6.gridy = 2;
+		gbc6.gridy = 3;
 		
 		gbc6.gridwidth = 1;
 		gbc6.gridheight = 1;
@@ -151,26 +182,26 @@ public class EditFrameProfessor extends JDialog {
 		gbc6.anchor = GridBagConstraints.CENTER;
 		
 		JTextField yearTextField = new JTextField(date);
-		yearTextField.setPreferredSize(new Dimension(100,20));
+		yearTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(yearTextField,gbc6);
 		
 		GridBagConstraints gbc7 = new GridBagConstraints();
 		
 		gbc7.gridx = 0;
-		gbc7.gridy = 3;
+		gbc7.gridy = 4;
 		
 		gbc7.gridwidth = 1;
 		gbc7.gridheight = 1;
 		
 		gbc7.anchor = GridBagConstraints.CENTER;
 		
-		JLabel livingAdressLabel = new JLabel("Living adress");
+		JLabel livingAdressLabel = new JLabel("Living adress*");
 		leftPanel.add(livingAdressLabel,gbc7);
 		
 		GridBagConstraints gbc8 = new GridBagConstraints();
 		
 		gbc8.gridx = 1;
-		gbc8.gridy = 3;
+		gbc8.gridy = 4;
 		
 		gbc8.gridwidth = 1;
 		gbc8.gridheight = 1;
@@ -178,26 +209,26 @@ public class EditFrameProfessor extends JDialog {
 		gbc8.anchor = GridBagConstraints.CENTER;
 		
 		JTextField livingAdressTextField = new JTextField(livingAdress);
-		livingAdressTextField.setPreferredSize(new Dimension(100,20));
+		livingAdressTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(livingAdressTextField,gbc8);
 		
 		GridBagConstraints gbc9 = new GridBagConstraints();
 		
 		gbc9.gridx = 0;
-		gbc9.gridy = 4;
+		gbc9.gridy = 5;
 		
 		gbc9.gridwidth = 1;
 		gbc9.gridheight = 1;
 		
 		gbc9.anchor = GridBagConstraints.CENTER;
 		
-		JLabel contactNumberLabel = new JLabel("Contact number");
+		JLabel contactNumberLabel = new JLabel("Contact number*");
 		leftPanel.add(contactNumberLabel,gbc9);
 		
 		GridBagConstraints gbc10 = new GridBagConstraints();
 		
 		gbc10.gridx = 1;
-		gbc10.gridy = 4;
+		gbc10.gridy = 5;
 		
 		gbc10.gridwidth = 1;
 		gbc10.gridheight = 1;
@@ -205,26 +236,26 @@ public class EditFrameProfessor extends JDialog {
 		gbc10.anchor = GridBagConstraints.CENTER;
 		
 		JTextField contactNumberTextField = new JTextField(number);
-		contactNumberTextField.setPreferredSize(new Dimension(100,20));
+		contactNumberTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(contactNumberTextField,gbc10);
 		
 		GridBagConstraints gbc11 = new GridBagConstraints();
 		
 		gbc11.gridx = 0;
-		gbc11.gridy = 5;
+		gbc11.gridy = 6;
 		
 		gbc11.gridwidth = 1;
 		gbc11.gridheight = 1;
 		
 		gbc11.anchor = GridBagConstraints.CENTER;
 		
-		JLabel emailLabel = new JLabel("Email");
+		JLabel emailLabel = new JLabel("Email*");
 		leftPanel.add(emailLabel,gbc11);
 		
 		GridBagConstraints gbc12 = new GridBagConstraints();
 		
 		gbc12.gridx = 1;
-		gbc12.gridy = 5;
+		gbc12.gridy = 6;
 		
 		gbc12.gridwidth = 1;
 		gbc12.gridheight = 1;
@@ -232,26 +263,26 @@ public class EditFrameProfessor extends JDialog {
 		gbc12.anchor = GridBagConstraints.CENTER;
 		
 		JTextField emailTextField = new JTextField(email);
-		emailTextField.setPreferredSize(new Dimension(100,20));
+		emailTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(emailTextField,gbc12);
 		
 		GridBagConstraints gbc13 = new GridBagConstraints();
 		
 		gbc13.gridx = 0;
-		gbc13.gridy = 6;
+		gbc13.gridy = 7;
 		
 		gbc13.gridwidth = 1;
 		gbc13.gridheight = 1;
 		
 		gbc13.anchor = GridBagConstraints.CENTER;
 		
-		JLabel workAdressLabel = new JLabel("Work adress");
+		JLabel workAdressLabel = new JLabel("Work adress*");
 		leftPanel.add(workAdressLabel,gbc13);
 		
 		GridBagConstraints gbc14 = new GridBagConstraints();
 		
 		gbc14.gridx = 1;
-		gbc14.gridy = 6;
+		gbc14.gridy = 7;
 		
 		gbc14.gridwidth = 1;
 		gbc14.gridheight = 1;
@@ -259,26 +290,26 @@ public class EditFrameProfessor extends JDialog {
 		gbc14.anchor = GridBagConstraints.CENTER;
 		
 		JTextField workAdressTextField = new JTextField(workAdress);
-		workAdressTextField.setPreferredSize(new Dimension(100,20));
+		workAdressTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(workAdressTextField,gbc14);
 		
 		GridBagConstraints gbc15 = new GridBagConstraints();
 		
 		gbc15.gridx = 0;
-		gbc15.gridy = 7;
+		gbc15.gridy = 8;
 		
 		gbc15.gridwidth = 1;
 		gbc15.gridheight = 1;
 		
 		gbc15.anchor = GridBagConstraints.CENTER;
 		
-		JLabel titleLabel = new JLabel("Title");
+		JLabel titleLabel = new JLabel("Title*");
 		leftPanel.add(titleLabel,gbc15);
 		
 		GridBagConstraints gbc16 = new GridBagConstraints();
 		
 		gbc16.gridx = 1;
-		gbc16.gridy = 7;
+		gbc16.gridy = 8;
 		
 		gbc16.gridwidth = 1;
 		gbc16.gridheight = 1;
@@ -286,26 +317,26 @@ public class EditFrameProfessor extends JDialog {
 		gbc16.anchor = GridBagConstraints.CENTER;
 		
 		JTextField titleTextField = new JTextField(title);
-		titleTextField.setPreferredSize(new Dimension(100,20));
+		titleTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(titleTextField,gbc16);
 		
 		GridBagConstraints gbc17 = new GridBagConstraints();
 		
 		gbc17.gridx = 0;
-		gbc17.gridy = 8;
+		gbc17.gridy = 9;
 		
 		gbc17.gridwidth = 1;
 		gbc17.gridheight = 1;
 		
 		gbc17.anchor = GridBagConstraints.CENTER;
 		
-		JLabel rankLabel = new JLabel("Rank");
+		JLabel rankLabel = new JLabel("Rank*");
 		leftPanel.add(rankLabel,gbc17);
 		
 		GridBagConstraints gbc18 = new GridBagConstraints();
 		
 		gbc18.gridx = 1;
-		gbc18.gridy = 8;
+		gbc18.gridy = 9;
 		
 		gbc18.gridwidth = 1;
 		gbc18.gridheight = 1;
@@ -313,7 +344,7 @@ public class EditFrameProfessor extends JDialog {
 		gbc18.anchor = GridBagConstraints.CENTER;
 		
 		JTextField rankTextField = new JTextField(rank);
-		rankTextField.setPreferredSize(new Dimension(100,20));
+		rankTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(rankTextField,gbc18);
 		
 		//Na desni panel dodajemo listu studenata koji slusaju predmet
@@ -336,10 +367,26 @@ public class EditFrameProfessor extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					//baca error ako nista ne unesemo zbog parseInt
+					if (IDNumberTextField.getText().equals("") ||
+							firstnameTextField.getText().equals("")||
+							lastNameTextField.getText().equals("") ||
+							yearTextField.getText().equals("") ||
+							livingAdressTextField.getText().equals("") ||
+							contactNumberTextField.getText().equals("") ||
+							emailTextField.getText().equals("") ||
+							workAdressTextField.getText().equals("") ||
+							rankTextField.getText().equals(""))
+							throw new Exception();
+					
+					
 					List<Subject> checkedSubjects = new ArrayList<Subject>();
 					
-					checkedSubjects = manageCheckedCheckboxes(rightPanel);
+					List<Subject> zaBrisanje = listOfsubjects;
 					
+					checkedSubjects = manageCheckedCheckboxes(rightPanel, menjaniProfesor);
+					
+					zaBrisanje.removeAll(checkedSubjects);
+
 					menjaniProfesor.setFirstName(firstnameTextField.getText());
 					menjaniProfesor.setLastName(lastNameTextField.getText());
 					menjaniProfesor.setDate(yearTextField.getText());
@@ -351,9 +398,12 @@ public class EditFrameProfessor extends JDialog {
 					menjaniProfesor.setRank(rankTextField.getText());
 					menjaniProfesor.setSubjects(checkedSubjects);
 					
-					if(firstnameTextField.getText() == "" ||
-							lastNameTextField.getText() == "" 
-							) throw new Exception();
+					
+					
+					for(Subject sub : zaBrisanje) {
+						MyBase.getInstance().getProfessorById(menjaniProfesor.getIdNumber()).deleteSubjectFromSubjects(sub);
+						sub.setProfessor(null);
+					}
 					
 					//Potrebno dodati opadajuci meni za listu studenata na predmetu, takodje za profesora dugme!
 					
@@ -373,7 +423,7 @@ public class EditFrameProfessor extends JDialog {
 					}
 					
 				}catch(Exception ex) {
-					JOptionPane.showMessageDialog(leftPanel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN ADDDING NEW STUDENT", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(leftPanel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN EDITTING PROFESSOR", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
@@ -387,26 +437,17 @@ public class EditFrameProfessor extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				firstnameTextField.setText("");
-				lastNameTextField.setText("");
-			    yearTextField.setText("");
-			    livingAdressTextField.setText("");
-			    contactNumberTextField.setText("");
-			    emailTextField.setText("");
-			    workAdressTextField.setText("");
-			    titleLabel.setText("");
-			    rankTextField.setText("");
 				setVisible(false);
 			}
 		});
 		
 		downPanel.add(cancelBtn);
-		
+		setVisible(true);
 		
 	}
 	
 	private void addSubjectToList(JPanel panel, Subject subject, int rbr) {
-		JCheckBox cekBox = new JCheckBox(subject.getName() + " " + subject.getCode());
+		JCheckBox cekBox = new JCheckBox(subject.getCode() + " | " + subject.getName());
 		
 		for (Subject s : listOfsubjects) {
 			if(subject.equals(s)) {
@@ -425,7 +466,7 @@ public class EditFrameProfessor extends JDialog {
 		panel.add(cekBox, gbc);
 	}
 	
-	public static List<Subject> manageCheckedCheckboxes(final Container c) {
+	public static List<Subject> manageCheckedCheckboxes(final Container c, Professor menjaniProfesor) {
 	    Component[] comps = c.getComponents();
 	    List<Subject> checkedSubjects = new ArrayList<Subject>();
 
@@ -435,9 +476,14 @@ public class EditFrameProfessor extends JDialog {
 	            JCheckBox box = (JCheckBox) comp;
 	            if (box.isSelected()) {
 	                String text = box.getText();
-	                String[] temp = text.split(" ");
-	                Subject sub = MyBase.getInstance().getSubjectByCode(temp[1]);//uzimam predmet i ubacujem u listu
+	                String[] temp = text.split(" | ");
+	                Subject sub = MyBase.getInstance().getSubject(temp[0]);//uzimam predmet i ubacujem u listu
 	                checkedSubjects.add(sub);
+	                Professor p = sub.getProfessor();
+	                if (p != null) {
+	                	p.deleteSubjectFromSubjects(sub);
+	                }
+	                sub.setProfessor(menjaniProfesor);
 	            }
 	        }
 	    }

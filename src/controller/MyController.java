@@ -26,13 +26,30 @@ public class MyController {
 	
 	//////////////////////////////////////////////PREDMET/////////////////////////////////////////////////////
 	public void addSubject() {
-		AddFrameSubject.getInstance().setVisible(true);
+		new AddFrameSubject().setVisible(true);
 		MyMainFrame.getInstance().azurirajPrikaz();
 	}
 	
 	public void deleteSubject(int rowSelected) {
 		try {
 			Subject s = MyBase.getInstance().getSubjectRow(rowSelected);
+			for(Professor pr : MyBase.getInstance().getProfessors()) {
+				for(Subject sub : pr.getSubjects()) {
+					if (sub.equals(s)) {
+						pr.deleteSubjectFromSubjects(sub);
+						break;
+					}
+				}
+			}
+			
+			for(Student stud : MyBase.getInstance().getStudents()) {
+				for(Subject sub : stud.getSpisakPredmetaKojeStudentSlusa()) {
+					if(sub.equals(s)) {
+						stud.ukloniStudentaSaPredmeta(sub);
+						break;
+					}
+				}
+			}
 			MyBase.getInstance().deleteSubject(s.getCode());
 			MyMainFrame.getInstance().azurirajPrikaz();
 		}catch(Exception e) {
@@ -40,14 +57,19 @@ public class MyController {
 		}
 	}
 	
-	public void editSubject() {
+	public void editSubject(int idx) {
+		try {
+		MyBase.getInstance().editSubject(idx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
 	//////////////////////////////////////////////PROFESOR/////////////////////////////////////////////////////
 
 	public void addProfessor() {
-		AddFrameProfessor.getInstance().setVisible(true);
+		new AddFrameProfessor().setVisible(true);
 		MyMainFrame.getInstance().azurirajPrikaz();
 	}
 	
@@ -55,6 +77,11 @@ public class MyController {
 	public void deleteProfessor(int rowSelected) {
 		try {
 			Professor pr = MyBase.getInstance().getProfessorRow(rowSelected);
+			for(Subject s : MyBase.getInstance().getSubjects()) {
+				if(s.getProfessor().equals(pr)) {
+					s.setProfessor(null);
+				}
+			}
 			MyBase.getInstance().deleteProfessor(pr.getIdNumber());
 			MyMainFrame.getInstance().azurirajPrikaz();
 		}catch(Exception e) {
@@ -79,6 +106,15 @@ public class MyController {
 	public void deleteStudent(int rowSelected) {
 		try {
 			Student st = MyBase.getInstance().getStudentRow(rowSelected);
+			for(Subject sub : MyBase.getInstance().getSubjects()) {
+				for(Student stud : sub.getStudents()) {
+					if(stud.equals(st)) {
+						sub.deleteStudentFromSubject(stud);
+						break;
+					}
+				}
+			}
+			System.out.println("AAAA");
 			MyBase.getInstance().deleteStudent(st.getBrojIndeksa());
 			MyMainFrame.getInstance().azurirajPrikaz();
 		} catch(Exception e) {

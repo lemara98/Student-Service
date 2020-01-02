@@ -40,7 +40,7 @@ public class ProfessorJTable extends JTable {
 			public void mouseMoved(MouseEvent e) {
 				// TODO Auto-generated method stub
 				      JTable target = (JTable)e.getSource();
-				      if((target.columnAtPoint(e.getPoint()) == 9)) 
+				      if((target.columnAtPoint(e.getPoint()) == 10)) 
 				    	  setCursor(new Cursor(Cursor.HAND_CURSOR)); 
 				      else 
 				    	  setCursor(new Cursor(0));
@@ -61,7 +61,7 @@ public class ProfessorJTable extends JTable {
 			      int row = target.getSelectedRow();
 			      int column = target.getSelectedColumn();
 			     // do some stuff
-			      if (column == 9) {
+			      if (column == 10) {
 			    	  JDialog prozor = new JDialog(MyMainFrame.getInstance(), "Spisak predmeta koje profesor predaje");
 			    	  prozor.setResizable(true);
 			    	  prozor.setSize(new Dimension(500,400));
@@ -78,18 +78,15 @@ public class ProfessorJTable extends JTable {
 		    			
 		    			gbc.gridwidth = 1;
 		    			gbc.gridheight = 1;
-		    			gbc.anchor = GridBagConstraints.CENTER;
+		    			gbc.anchor = GridBagConstraints.WEST;
 		    			JLabel predmet;
 		    		
-			    	  
 		    		  if (pr.getSubjects().isEmpty()) {
-			    		  JLabel nePredaje = new JLabel("Ne predaje ni jedan predmet!");
-			    		  panel.add(nePredaje,gbc);
+		    			  JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "Ovaj profesor ne predaje nijedan predmet!");
 			    		  return;
 			    	  }else {
 			    		  for (int i = 0; i < pr.getSubjects().size(); i++) {
-				    		  predmet = new JLabel(pr.getSubjects().get(i).getName());
-				    		  System.out.println(pr.getSubjects().get(i).getName());
+				    		  predmet = new JLabel(pr.getSubjects().get(i).getCode() + " | " + pr.getSubjects().get(i).getName());
 				    		  gbc.gridy = i;
 				    		  panel.add(predmet,gbc);
 				    	  }

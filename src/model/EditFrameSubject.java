@@ -25,33 +25,44 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 
-public class AddFrameSubject extends JDialog {
+public class EditFrameSubject extends JDialog {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5176543725768611200L;
 	
+	private ArrayList<JCheckBox> listaCekBoxova;
 	
-	public ArrayList<JCheckBox> listaCekBoxova;
-	
-	public AddFrameSubject() {
+	public EditFrameSubject(Subject menjaniPredmet) {
 		super();
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
 		int width = screenSize.width;
 		int height = screenSize.height;
 		setSize(new Dimension(width/3+100, height/3));
-		this.setTitle("Add new subject");
-		this.setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\inbox_plus [#1554].png").getImage());
+		this.setTitle("Edit subject: " + menjaniPredmet.getCode() + " " + menjaniPredmet.getName());
+		this.setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\pen [#1319].png").getImage());
+		
 		setModal(true);
 		
 		//List of students on course
 		listaCekBoxova = new ArrayList<JCheckBox>();
 		JCheckBox box;
 		for (Student student : MyBase.getInstance().getStudents()) {
-			box = new JCheckBox(student.getBrojIndeksa() + " | " + student.getIme() + " " + student.getPrezime());
+			box = new JCheckBox(student.getBrojIndeksa() + " | " + student.getIme()+" "+student.getPrezime());
 			listaCekBoxova.add(box);
+		}
+		
+		String text;
+		String[] kod;
+		for (Student i : menjaniPredmet.getStudents()) {
+			for (JCheckBox j : listaCekBoxova) {
+				text = j.getText();
+				kod = text.split(" | ");
+				if (i.getBrojIndeksa().equals(kod[0]))
+					j.setSelected(true);
+			}
 		}
 		
 		this.setLocationRelativeTo(null);
@@ -95,7 +106,7 @@ public class AddFrameSubject extends JDialog {
 		
 		gbc2.anchor = GridBagConstraints.CENTER;
 		
-		JTextField nameTextField = new JTextField();
+		JTextField nameTextField = new JTextField(menjaniPredmet.getName());
 		nameTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(nameTextField,gbc2);
 		
@@ -122,7 +133,8 @@ public class AddFrameSubject extends JDialog {
 		
 		gbc4.anchor = GridBagConstraints.CENTER;
 		
-		JTextField semesterTextField = new JTextField();
+		Integer sem = menjaniPredmet.getSemester();
+		JTextField semesterTextField = new JTextField(sem.toString());
 		semesterTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(semesterTextField,gbc4);
 		
@@ -149,7 +161,8 @@ public class AddFrameSubject extends JDialog {
 		
 		gbc6.anchor = GridBagConstraints.CENTER;
 		
-		JTextField yearTextField = new JTextField();
+		Integer year = menjaniPredmet.getYearOfStuding();
+		JTextField yearTextField = new JTextField(year.toString());
 		yearTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(yearTextField,gbc6);
 		
@@ -178,16 +191,23 @@ public class AddFrameSubject extends JDialog {
 		
 		String[] choises = new String[MyBase.getInstance().getProfessors().size() + 1];
 		int i = 1;
+		int idx = -1;
+		choises[0] = "Nema Profesora!";
+		if (menjaniPredmet.getProfessor() == null)
+			idx = 0; 
+		
 		//Hocu da smestim profesore u combo box
-		choises[0] = "Nema Profesora";
 		for(Professor pr : MyBase.getInstance().getProfessors()) {
 			choises[i] = pr.getIdNumber() + " | " + pr.getLastName() + " " + pr.getFirstName();
+			if (idx == 0) { ++i; continue; }
+			if (menjaniPredmet.getProfessor().getIdNumber().equals(pr.getIdNumber()))
+				idx = i;
 			i++;
 		}
 		
 		JComboBox<String> professorComboBox = new JComboBox<String>(choises);
-		professorComboBox.setSize(new Dimension(100,20));
-		professorComboBox.setSelectedIndex(-1);
+		professorComboBox.setSize(new Dimension(150,20));
+		professorComboBox.setSelectedIndex(idx);
 		leftPanel.add(professorComboBox,gbc8);
 		
 		JButton submitBtn = new JButton("Submit");
@@ -207,46 +227,54 @@ public class AddFrameSubject extends JDialog {
 					
 					ArrayList<Student> studentsOnSubject = new ArrayList<Student>();
 					
-					
-					
+					studentsOnSubject = manageCheckedCheckboxes(rightPanel, menjaniPredmet);
+					List<Student> zaBrisanje = menjaniPredmet.getStudents();
+					Professor profa = menjaniPredmet.getProfessor();
+					if(profa != null)
+						profa.deleteSubjectFromSubjects(menjaniPredmet);
 					Professor pr;
 					if(professorComboBox.getSelectedItem().toString().equals("Nema profesora!")) {
 						pr = null;
+						menjaniPredmet.setProfessor(pr);
+						
 					} else {
 						String[] prof = professorComboBox.getSelectedItem().toString().split(" | ");
 						pr = MyBase.getInstance().getProfessorById(prof[0]);
+						menjaniPredmet.setProfessor(pr);
 					}
 					
-					Subject s = new Subject(nameTextField.getText(),
-											Integer.parseInt(semesterTextField.getText()),
-											Integer.parseInt(yearTextField.getText()),
-											pr, studentsOnSubject);
-					
-					studentsOnSubject = manageCheckedCheckboxes(rightPanel, s);
+					menjaniPredmet.setName(nameTextField.getText());
+					menjaniPredmet.setSemester(Integer.parseInt(semesterTextField.getText()));
+					menjaniPredmet.setYearOfStuding(Integer.parseInt(yearTextField.getText()));
 					
 					
-					s.setStudents(studentsOnSubject);
+					menjaniPredmet.setStudents(studentsOnSubject);
 					if(pr != null)
-						pr.addSubjectToSubjects(s);
+						pr.addSubjectToSubjects(menjaniPredmet);
 					
-					//Provera da li je predmet vec u listi
+					zaBrisanje.removeAll(studentsOnSubject);
+					
+					for(Student stud : zaBrisanje)
+						MyBase.getInstance().getStudentIndex(stud.getBrojIndeksa()).ukloniStudentaSaPredmeta(menjaniPredmet);
+					
+					
 					boolean greska = false;
 					List<Subject> ls = MyBase.getInstance().getSubjects();
 					for(Subject i : ls) {
-						if (i.equals(s)) {	
+						if (i == menjaniPredmet) continue;
+						if (i.equals(menjaniPredmet)) {	
 							greska = true;
-							JOptionPane.showMessageDialog(leftPanel, "YOU CAN'T ADD SAME SUBJECT TWICE\nYOU ADDED SAME CODE NUMBER AGAIN!", "ERROR", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(leftPanel, "THERE ALREADY IS A SUBJECT WITH THAT CODE!", "ERROR", JOptionPane.ERROR_MESSAGE);
 							break;
 						}
 					}
 					if (!greska) {
-						MyBase.getInstance().addSubject(s);
 						setVisible(false);
 					}
 					//Potrebno dodati opadajuci meni za listu studenata na predmetu, takodje za profesora dugme!
 					
 				}catch(Exception ex) {
-					JOptionPane.showMessageDialog(leftPanel, "Ubacili ste neodgovarajuce podatke!", "ERROR IN ADDDING NEW SUBJECT", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(leftPanel, "Ubacili ste neodgovarajuce podatke!", "ERROR IN EDITTING SUBJECT", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
@@ -261,6 +289,10 @@ public class AddFrameSubject extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				nameTextField.setText("");
+				yearTextField.setText("");
+				semesterTextField.setText("");
+				uncheckCheckBoxes();
 				setVisible(false);
 			}
 		});
@@ -280,7 +312,6 @@ public class AddFrameSubject extends JDialog {
 		rightPane.setPreferredSize(new Dimension(250,250));
 		add(rightPane,BorderLayout.CENTER);
 		
-		
 	}
 	
 	private void addStudentToList(JPanel panel, JCheckBox box, int rbr) {
@@ -294,11 +325,10 @@ public class AddFrameSubject extends JDialog {
 		gbc.anchor = GridBagConstraints.WEST;
 		
 		panel.add(box, gbc);
-		
 	}
 	
 	//This method returns a list of selected checkboxes(Students that should listen the subject)
-	public static ArrayList<Student> manageCheckedCheckboxes(final Container c, Subject dodavaniPredmet) {
+	public static ArrayList<Student> manageCheckedCheckboxes(final Container c, Subject menjaniPredmet) {
 	    Component[] comps = c.getComponents();
 	    ArrayList<Student> checkedStudents = new ArrayList<Student>();
 
@@ -311,7 +341,7 @@ public class AddFrameSubject extends JDialog {
 	                String[] temp = text.split(" | ");
 	                Student st = MyBase.getInstance().getStudentIndex(temp[0]);//uzimam studenta i ubacujem u listu
 	                checkedStudents.add(st);
-	                st.dodajPredmetUSpisak(dodavaniPredmet);
+	                st.dodajPredmetUSpisak(menjaniPredmet);
 	            }
 	        }
 	    }
