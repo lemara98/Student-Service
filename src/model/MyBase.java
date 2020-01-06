@@ -333,6 +333,8 @@ public class MyBase {
 					return "Budzet";
 				return "Samofinansiranje";
 			case 10:
+				if (stud.getProsecnaOcena() == 0.0)
+					return "---";
 				return Double.toString(stud.getProsecnaOcena());
 			case 11:	
 				return 	" Prikazi ";	//stud.getSpisakPredmetaKojeStudentSlusa().toString();

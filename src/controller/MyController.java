@@ -114,7 +114,6 @@ public class MyController {
 					}
 				}
 			}
-			System.out.println("AAAA");
 			MyBase.getInstance().deleteStudent(st.getBrojIndeksa());
 			MyMainFrame.getInstance().azurirajPrikaz();
 		} catch(Exception e) {

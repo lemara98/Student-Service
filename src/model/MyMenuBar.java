@@ -326,7 +326,7 @@ class Prozor extends JFrame {
 		setIconImage(ai.getImage());
 		setSize(ss.width*7/9, ss.height*8/9);
 		setResizable(true);
-		setMinimumSize(new Dimension(ss.width/2, ss.height/3));
+		setMinimumSize(new Dimension(ss.width*7/9, ss.height*8/9));
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		

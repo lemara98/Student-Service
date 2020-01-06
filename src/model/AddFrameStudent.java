@@ -41,7 +41,6 @@ public class AddFrameStudent extends JDialog {
 	private JTextField datut = new JTextField("");
 	private JTextField tgst = new JTextField("");
 	private JTextField prot = new JTextField("");
-	private JTextField spst = new JTextField("");
 	private JRadioButton budzet = new JRadioButton("Budzet");
 	private JRadioButton samofinansiranje = new JRadioButton("Samofinansiranje");
 	private ButtonGroup status = new ButtonGroup();
@@ -408,9 +407,17 @@ public class AddFrameStudent extends JDialog {
 					String[] datum = datrt.getText().split("\\.");
 					if (datum.length != 3) throw new Exception();
 					
+					String[] index = brit.getText().split("/");
+					if(index.length != 2) throw new Exception();
+					
 					double d = 0.00;
-					if (!prot.getText().equals(""))
+					if (!prot.getText().equals("")) {
 						d = Double.parseDouble(prot.getText());
+						if (d < 6.0 || d > 10.0) throw new Exception("kod unosa ocene");
+					}
+					
+					int god = Integer.parseInt(tgst.getText());
+					if (god < 1 || god > 4) throw new Exception();
 					
 					Student s = new Student(imet.getText(),
 											pret.getText(),
@@ -471,18 +478,6 @@ public class AddFrameStudent extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				imet.setText("");
-				pret.setText("");
-				datrt.setText("");
-				adrst.setText("");
-				kontt.setText("");
-				emat.setText("");
-				brit.setText("");
-				datut.setText("");
-				tgst.setText("");
-				prot.setText("");
-				spst.setText("");
 				setVisible(false);
 			}
 		});

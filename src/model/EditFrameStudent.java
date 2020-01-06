@@ -150,7 +150,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel datr = new JLabel("Datum rodjenja*");
+		JLabel datr = new JLabel("Datum rodjenja* [dd.MM.yyyy.]");
 		
 		panel.add(datr, gbc);
 
@@ -417,8 +417,14 @@ public class EditFrameStudent extends JDialog {
 					if (datum.length != 3) throw new Exception();
 					
 					double d = 0.00;
-					if (!prot.getText().equals(""))
+					if (!prot.getText().equals("")) {
 						d = Double.parseDouble(prot.getText());
+						if (d < 6.0 || d > 10.0) throw new Exception();
+					}
+					
+					int god = Integer.parseInt(tgst.getText());
+					if (god < 1 || god > 4) throw new Exception();
+					
 					
 					List<Subject> razlika = menjaniStudent.getSpisakPredmetaKojeStudentSlusa();
 					
