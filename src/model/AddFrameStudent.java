@@ -411,9 +411,10 @@ public class AddFrameStudent extends JDialog {
 					if(index.length != 2) throw new Exception();
 					
 					double d = 0.00;
-					if (!prot.getText().equals("") || !prot.getText().equals("0.0")) {
+					if (!prot.getText().equals("")) {
 						d = Double.parseDouble(prot.getText());
-						if (d < 6.0 || d > 10.0) throw new Exception("kod unosa ocene");
+						if (d != 0.0)
+							if (d < 6.0 || d > 10.0) throw new Exception();
 					}
 					
 					int god = Integer.parseInt(tgst.getText());
