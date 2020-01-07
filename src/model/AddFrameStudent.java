@@ -162,7 +162,7 @@ public class AddFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel datu = new JLabel("Datum upisa [dd.MM.yyyy]");
+		JLabel datu = new JLabel("Datum upisa [dd.MM.yyyy.]");
 		
 		panel.add(datu, gbc);
 		
@@ -411,7 +411,7 @@ public class AddFrameStudent extends JDialog {
 					if(index.length != 2) throw new Exception();
 					
 					double d = 0.00;
-					if (!prot.getText().equals("")) {
+					if (!prot.getText().equals("") || !prot.getText().equals("0.0")) {
 						d = Double.parseDouble(prot.getText());
 						if (d < 6.0 || d > 10.0) throw new Exception("kod unosa ocene");
 					}

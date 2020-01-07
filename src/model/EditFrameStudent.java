@@ -417,7 +417,7 @@ public class EditFrameStudent extends JDialog {
 					if (datum.length != 3) throw new Exception();
 					
 					double d = 0.00;
-					if (!prot.getText().equals("")) {
+					if (!prot.getText().equals("") || !prot.getText().equals("0.0")) {
 						d = Double.parseDouble(prot.getText());
 						if (d < 6.0 || d > 10.0) throw new Exception();
 					}
