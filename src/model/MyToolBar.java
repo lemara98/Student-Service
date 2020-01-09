@@ -23,11 +23,12 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
-import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import controller.MyController;
 import view.AbstractTableModelStudent;
+
+
 
 public class MyToolBar extends JToolBar{
 
@@ -91,6 +92,7 @@ public class MyToolBar extends JToolBar{
 				if(selectedPane == 0) {
 					//professors // Ovde se mora dodati!
 					int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
+					
 					if (idx != -1) {
 						MyController.getInstance().editProfessor(idx);
 					}
@@ -183,35 +185,31 @@ public class MyToolBar extends JToolBar{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String searchString = textField.getText();
-				searchString.trim();
-				String[] str = searchString.split(";");
-				System.out.println(str[0]);
 				List<RowFilter<AbstractTableModelStudent, Integer>> list = new ArrayList<RowFilter<AbstractTableModelStudent, Integer>>();
-				for(int i = 0; i < str.length; i++) {
-					list.add(RowFilter.regexFilter(str[i],i));
-				}
-//				RowFilter<AbstractTableModelStudent, Integer> rowFilterStudent = new RowFilter<AbstractTableModelStudent, Integer>(){
-//				
-//					@Override
-//					public boolean include(Entry<? extends AbstractTableModelStudent, ? extends Integer> entry) {
-//						AbstractTableModelStudent studentModel = entry.getModel();
-//						for (int i = entry.getValueCount() - 1; i >= 0; i--) {
-//					       if (entry.getStringValue(i).startsWith(str[i])) {
-//					         return true;
-//					       }
-//						}
-//						return false;
-//					}
-//					
-//				};
-				
-//				TableModel model = MyMainFrame.getInstance().getStudentJTable().getModel();
-//				TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-//				MyMainFrame.getInstance().getStudentJTable().setRowSorter(sorter);
+				@SuppressWarnings("unchecked")
 				TableRowSorter<AbstractTableModelStudent> sorter = (TableRowSorter<AbstractTableModelStudent>)MyMainFrame.getInstance().getStudentJTable().getRowSorter();
-				sorter.setRowFilter(RowFilter.andFilter(list));
+				if(!searchString.equals("Type here to search") && !searchString.isEmpty()) {
+					searchString.trim();
+					System.out.println(searchString);
+					String[] str = searchString.split(";");
+					List<String> values = new ArrayList<String>();
+					for(String s : str) {
+						String[] string = s.split(":");
+						values.add(string[1]);
+					}
+					List<Integer> numberColumns = getStudentColumnForSearch(searchString);
+					System.out.println(str[0]);
+					
+					int brojac = 0;
+					for(Integer i : numberColumns) {
+						list.add(RowFilter.regexFilter(values.get(brojac++),i));
+					}
+					sorter.setRowFilter(RowFilter.andFilter(list));
+					
+				}else {
+					sorter.setRowFilter(null);
+				}
 				MyMainFrame.getInstance().azurirajPrikaz();
-				
 			}
 		});
 		
@@ -233,20 +231,56 @@ public class MyToolBar extends JToolBar{
 		Font f = new Font("Verdana", Font.ITALIC, 12);
 		textField.setFont(f);
 		textField.setPreferredSize(new Dimension(450,20));
+//		textField.addKeyListener(new KeyListener() {
+//			
+//			@Override
+//			public void keyTyped(KeyEvent e) {
+//				if(textField.getText().isEmpty()) {
+//					//textField.setText("Type here to search");
+//					textField.setToolTipText("BlaBla");
+//					Font f = new Font("Verdana", Font.ITALIC, 12);
+//					textField.setFont(f);
+//				}else if(textField.getText().equals("Type here to search")){
+//					textField.setText("");
+//				}else {
+//					
+//					textField.setCaretColor(Color.BLACK);
+//					textField.setFont(f1);
+//				}
+//				
+//			}
+//			
+//			@Override
+//			public void keyReleased(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
 		textField.addFocusListener(new FocusListener() {
 			
 			@Override
 			public void focusLost(FocusEvent e) {
+				if(textField.getText().isEmpty()) {
 					textField.setText("Type here to search");
+					
 					Font f = new Font("Verdana", Font.ITALIC, 12);
 					textField.setFont(f);
+				}
 			}
 			
 			@Override
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
+				if(textField.getText().equals("Type here to search")) {
+					textField.setText("");
+				}
 				textField.setCaretColor(Color.BLACK);
-				textField.setText("");
 				textField.setFont(f1);
 			}
 		});
@@ -288,6 +322,57 @@ public class MyToolBar extends JToolBar{
 		g.drawImage(slika, 0, 0, 20, 20, null);
 		return new ImageIcon(bi);
 	}
-	
-	
+
+	public List<Integer> getStudentColumnForSearch(String userInput) {
+		userInput.trim();
+		String[] kolone = userInput.split(";");
+
+		List<Integer> columns = new ArrayList<Integer>();
+		for(String str : kolone) {
+			String[] value = str.split(":");
+			switch(value[0]) {
+			case "Broj indeksa":
+				columns.add(0);
+				break;
+			case "Ime":
+				columns.add(1);
+				break;
+			case "Prezime":
+				columns.add(2);
+				break;
+			case "Datum rodjenja":
+				columns.add(3);
+				break;
+			case "Adresa stanovanja":
+				columns.add(4);
+				break;
+			case "Kontakt telefon":
+				columns.add(5);
+				break;
+			case "Email adresa":
+				columns.add(6);
+				break;
+			case "Datum upisa":
+				columns.add(7);
+				break;
+			case "Trenutna godina studija":
+				columns.add(8);
+				break;
+			case "Status":
+				columns.add(9);
+				break;
+			case "Prosecna ocena":
+				columns.add(10);
+				break;
+			case "Spisak predmeta koje student slusa":	
+				columns.add(11);
+				break;
+			}
+		}
+		return columns;
+	}
+
 }
+
+
+

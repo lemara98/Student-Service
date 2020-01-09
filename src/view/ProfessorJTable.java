@@ -33,6 +33,7 @@ public class ProfessorJTable extends JTable {
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		AbstractTableModelProfessor absModel = new AbstractTableModelProfessor();
 		this.setModel(absModel);
+		this.setAutoCreateRowSorter(true);
 		
 		this.addMouseMotionListener(new MouseMotionListener() {
 			

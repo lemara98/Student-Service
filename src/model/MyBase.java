@@ -239,8 +239,14 @@ public class MyBase {
 	
 	
 	public void editSubject(int idx) {
-		Subject s = MyBase.getInstance().getSubjectRow(idx);
-		new EditFrameSubject(s).setVisible(true);
+		String idSub = (String)MyMainFrame.getInstance().getSubjectJTable().getValueAt(idx, 0);
+		Subject sub = null;
+		for(Subject s : MyBase.getInstance().getSubjects()) {
+			if(s.getCode().equals(idSub)) {
+				sub = s;
+			}
+		}
+		new EditFrameSubject(sub).setVisible(true);
 		MyMainFrame.getInstance().azurirajPrikaz();
 		
 	}
@@ -273,13 +279,13 @@ public class MyBase {
 	//	Student st1 = new Student("Ljuba", "Alicic", "01-04-1959", "Ilidza", "062431234", "ljuba.alicic@uns.ac.rs", "RA1/3019", "01-10-3019", 1, StatusStudenta.B, 6.34);
 	//	students.add(st1);  Ovo te je zezalo!
 		
+		columnsStudent.add("Broj indeksa");
 		columnsStudent.add("Ime");
 		columnsStudent.add("Prezime");
 		columnsStudent.add("Datum rodjenja");
 		columnsStudent.add("Adresa stanovanja");
 		columnsStudent.add("Kontakt telefon");
-		columnsStudent.add("Email Adresa");
-		columnsStudent.add("Broj indeksa");
+		columnsStudent.add("Email adresa");	
 		columnsStudent.add("Datum upisa");
 		columnsStudent.add("Trenutna godina studija");
 		columnsStudent.add("Status");
@@ -311,19 +317,19 @@ public class MyBase {
 			Student stud = this.students.get(row);
 			switch(column) {
 			case 0:
-				return stud.getIme();
-			case 1:
-				return stud.getPrezime();
-			case 2:
-				return stud.getDatumRodjenja().toString();
-			case 3:
-				return stud.getAdresaStanovanje();
-			case 4:
-				return stud.getKontaktTelefon();
-			case 5:
-				return stud.getEmailAdresa();
-			case 6:
 				return stud.getBrojIndeksa();
+			case 1:
+				return stud.getIme();
+			case 2:
+				return stud.getPrezime();
+			case 3:
+				return stud.getDatumRodjenja().toString();
+			case 4:
+				return stud.getAdresaStanovanje();
+			case 5:
+				return stud.getKontaktTelefon();
+			case 6:
+				return stud.getEmailAdresa();
 			case 7:
 				return stud.getDatumUpisa();
 			case 8:
@@ -374,8 +380,15 @@ public class MyBase {
 	}
 	
 	public void editStudent(int rowSelected) {
-			Student temp = students.get(rowSelected);
-			new EditFrameStudent(temp).setVisible(true);
+			String idStud = (String)MyMainFrame.getInstance().getStudentJTable().getValueAt(rowSelected, 0);
+			Student stud = null;
+			for(Student s : MyBase.getInstance().getStudents()) {
+				if(s.getBrojIndeksa().equals(idStud)) {
+					stud = s;
+				}
+			}
+			new EditFrameStudent(stud).setVisible(true);
+			MyMainFrame.getInstance().azurirajPrikaz();
 	}
 	
 	public void removeSubjectsFromStudents(Subject s) {

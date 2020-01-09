@@ -33,6 +33,7 @@ public class SubjectJTable extends JTable {
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		AbstractTableModelSubject abs = new AbstractTableModelSubject();
 		setModel(abs);
+		setAutoCreateRowSorter(true);
 
 	
 	this.addMouseMotionListener(new MouseMotionListener() {

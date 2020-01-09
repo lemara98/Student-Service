@@ -90,7 +90,13 @@ public class MyController {
 	}
 	
 	public void editProfessor(int menjaniProfesoridx) {
-		Professor prof = MyBase.getInstance().getProfessorRow(menjaniProfesoridx);
+		String idProf = (String)MyMainFrame.getInstance().getProfessorJTable().getValueAt(menjaniProfesoridx, 0);
+		Professor prof = null;
+		for(Professor p : MyBase.getInstance().getProfessors()) {
+			if(p.getIdNumber().equals(idProf)) {
+				prof = p;
+			}
+		}
 		new EditFrameProfessor(prof);
 		MyMainFrame.getInstance().azurirajPrikaz();
 	}
