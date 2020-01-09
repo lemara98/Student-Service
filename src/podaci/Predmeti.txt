@@ -1,3 +1,5 @@
-1, Logicko projektovanje racunarskih sistema 1, 2, 1, 01940848392, RA9/2017, RA3/3019, RA4/3019, RA5/3019
-2, Sistem automatskog buzdovanija, 1, 1, 028394732, RA1/3019, RA9/2017, RA3/3019
-3, Краснопис, 1, 3, , RA1/3019, RA3/3019, RA4/3019
+OP301; Osnove programiranja; 1; 1; "007198721", Aleksa Petković
+DM881; Diskretna matematika; 3; 2; "008431903", Jana Lazarević
+PP007; Paralelno programiranje; 5; 3; "005671007", Nađa Aleksić
+RVP33; Računarstvo visokih performansi; 7; 4; "009999331", Đorđe Spasojević
+JSD91; Jezici specifični za domen; 8; 4; null

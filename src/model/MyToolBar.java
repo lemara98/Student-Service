@@ -26,7 +26,9 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableRowSorter;
 
 import controller.MyController;
+import view.AbstractTableModelProfessor;
 import view.AbstractTableModelStudent;
+import view.AbstractTableModelSubject;
 
 
 
@@ -185,30 +187,83 @@ public class MyToolBar extends JToolBar{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String searchString = textField.getText();
-				List<RowFilter<AbstractTableModelStudent, Integer>> list = new ArrayList<RowFilter<AbstractTableModelStudent, Integer>>();
-				@SuppressWarnings("unchecked")
-				TableRowSorter<AbstractTableModelStudent> sorter = (TableRowSorter<AbstractTableModelStudent>)MyMainFrame.getInstance().getStudentJTable().getRowSorter();
-				if(!searchString.equals("Type here to search") && !searchString.isEmpty()) {
-					searchString.trim();
-					System.out.println(searchString);
-					String[] str = searchString.split(";");
-					List<String> values = new ArrayList<String>();
-					for(String s : str) {
-						String[] string = s.split(":");
-						values.add(string[1]);
+				if(MyMainFrame.getInstance().getSelectedTabbedPane() == 0) {
+					List<RowFilter<AbstractTableModelProfessor, Integer>> list = new ArrayList<RowFilter<AbstractTableModelProfessor, Integer>>();
+					@SuppressWarnings("unchecked")
+					TableRowSorter<AbstractTableModelProfessor> sorter = (TableRowSorter<AbstractTableModelProfessor>)MyMainFrame.getInstance().getProfessorJTable().getRowSorter();
+					if(!searchString.equals("Type here to search") && !searchString.isEmpty()) {
+						searchString.trim();
+						System.out.println(searchString);
+						String[] str = searchString.split(";");
+						List<String> values = new ArrayList<String>();
+						for(String s : str) {
+							String[] string = s.split(":");
+							values.add(string[1]);
+						}
+						List<Integer> numberColumns = getProfessorColumnForSearch(searchString);
+						System.out.println(str[0]);
+						
+						int brojac = 0;
+						for(Integer i : numberColumns) {
+							list.add(RowFilter.regexFilter(values.get(brojac++),i));
+						}
+						sorter.setRowFilter(RowFilter.andFilter(list));
+						
+					}else {
+						sorter.setRowFilter(null);
 					}
-					List<Integer> numberColumns = getStudentColumnForSearch(searchString);
-					System.out.println(str[0]);
-					
-					int brojac = 0;
-					for(Integer i : numberColumns) {
-						list.add(RowFilter.regexFilter(values.get(brojac++),i));
+				}else if(MyMainFrame.getInstance().getSelectedTabbedPane() == 1) {
+					List<RowFilter<AbstractTableModelSubject, Integer>> list = new ArrayList<RowFilter<AbstractTableModelSubject, Integer>>();
+					@SuppressWarnings("unchecked")
+					TableRowSorter<AbstractTableModelSubject> sorter = (TableRowSorter<AbstractTableModelSubject>)MyMainFrame.getInstance().getSubjectJTable().getRowSorter();
+					if(!searchString.equals("Type here to search") && !searchString.isEmpty()) {
+						searchString.trim();
+						System.out.println(searchString);
+						String[] str = searchString.split(";");
+						List<String> values = new ArrayList<String>();
+						for(String s : str) {
+							String[] string = s.split(":");
+							values.add(string[1]);
+						}
+						List<Integer> numberColumns = getSubjectColumnForSearch(searchString);
+						System.out.println(str[0]);
+						
+						int brojac = 0;
+						for(Integer i : numberColumns) {
+							list.add(RowFilter.regexFilter(values.get(brojac++),i));
+						}
+						sorter.setRowFilter(RowFilter.andFilter(list));
+						
+					}else {
+						sorter.setRowFilter(null);
 					}
-					sorter.setRowFilter(RowFilter.andFilter(list));
-					
 				}else {
-					sorter.setRowFilter(null);
+					List<RowFilter<AbstractTableModelStudent, Integer>> list = new ArrayList<RowFilter<AbstractTableModelStudent, Integer>>();
+					@SuppressWarnings("unchecked")
+					TableRowSorter<AbstractTableModelStudent> sorter = (TableRowSorter<AbstractTableModelStudent>)MyMainFrame.getInstance().getStudentJTable().getRowSorter();
+					if(!searchString.equals("Type here to search") && !searchString.isEmpty()) {
+						searchString.trim();
+						System.out.println(searchString);
+						String[] str = searchString.split(";");
+						List<String> values = new ArrayList<String>();
+						for(String s : str) {
+							String[] string = s.split(":");
+							values.add(string[1]);
+						}
+						List<Integer> numberColumns = getStudentColumnForSearch(searchString);
+						System.out.println(str[0]);
+						
+						int brojac = 0;
+						for(Integer i : numberColumns) {
+							list.add(RowFilter.regexFilter(values.get(brojac++),i));
+						}
+						sorter.setRowFilter(RowFilter.andFilter(list));
+						
+					}else {
+						sorter.setRowFilter(null);
+					}
 				}
+				
 				MyMainFrame.getInstance().azurirajPrikaz();
 			}
 		});
@@ -366,6 +421,83 @@ public class MyToolBar extends JToolBar{
 				break;
 			case "Spisak predmeta koje student slusa":	
 				columns.add(11);
+				break;
+			}
+		}
+		return columns;
+	}
+	
+	public List<Integer> getProfessorColumnForSearch(String userInput) {
+		userInput.trim();
+		String[] kolone = userInput.split(";");
+
+		List<Integer> columns = new ArrayList<Integer>();
+		for(String str : kolone) {
+			String[] value = str.split(":");
+			switch(value[0]) {
+			case "ID broj":
+				columns.add(0);
+				break;
+			case "Ime":
+				columns.add(1);
+				break;
+			case "Prezime":
+				columns.add(2);
+				break;
+			case "Datum rodjenja":
+				columns.add(3);
+				break;
+			case "Adresa stanovanja":
+				columns.add(4);
+				break;
+			case "Broj telefona":
+				columns.add(5);
+				break;
+			case "Email adresa":
+				columns.add(6);
+				break;
+			case "Radno mesto":
+				columns.add(7);
+				break;
+			case "Zvanje":
+				columns.add(8);
+				break;
+			case "Rang u hijerarhiji":
+				columns.add(9);
+				break;
+			case "Predmeti":
+				columns.add(10);
+				break;
+			}
+		}
+		return columns;
+	}
+	
+	public List<Integer> getSubjectColumnForSearch(String userInput) {
+		userInput.trim();
+		String[] kolone = userInput.split(";");
+
+		List<Integer> columns = new ArrayList<Integer>();
+		for(String str : kolone) {
+			String[] value = str.split(":");
+			switch(value[0]) {
+			case "Sifra predmeta":
+				columns.add(0);
+				break;
+			case "Naziv predmeta":
+				columns.add(1);
+				break;
+			case "Semestar":
+				columns.add(2);
+				break;
+			case "Na Godini studiji":
+				columns.add(3);
+				break;
+			case "Profesor":
+				columns.add(4);
+				break;
+			case "Studenti":
+				columns.add(5);
 				break;
 			}
 		}

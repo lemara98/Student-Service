@@ -100,15 +100,15 @@ public class Subject {
 	public String toString() {
 		StringBuilder stud = new StringBuilder();
 		for (Student s : students) {
-			stud.append(", " + s.getBrojIndeksa());
+			stud.append("; " + s.getBrojIndeksa());
 		}
 		
 		if (professor != null)
-			return  code + ", " + name + ", " + semester + ", "
-					+ yearOfStuding + ", " + professor.getIdNumber() + stud;
+			return  code + "; " + name + "; " + semester + "; "
+					+ yearOfStuding + "; " + professor.getIdNumber() + stud;
 		else
-			return  code + ", " + name + ", " + semester + ", "
-			+ yearOfStuding + ", " + stud;
+			return  code + "; " + name + "; " + semester + "; "
+			+ yearOfStuding + "; " + stud;
 	}
 
 	@Override

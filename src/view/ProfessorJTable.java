@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableRowSorter;
 
 import model.MyBase;
 import model.MyMainFrame;
@@ -34,6 +35,8 @@ public class ProfessorJTable extends JTable {
 		AbstractTableModelProfessor absModel = new AbstractTableModelProfessor();
 		this.setModel(absModel);
 		this.setAutoCreateRowSorter(true);
+//		TableRowSorter<AbstractTableModelProfessor> sorter = (TableRowSorter<AbstractTableModelProfessor>)this.getRowSorter();
+
 		
 		this.addMouseMotionListener(new MouseMotionListener() {
 			

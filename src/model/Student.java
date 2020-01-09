@@ -171,21 +171,21 @@ public class Student {
 	@Override
 	public String toString() {
 		if (spisakPredmetaKojeStudentSlusa.isEmpty())
-			return ime + ", " + prezime + ", " + datumRodjenja
-				+ ", " + adresaStanovanje + ", " + kontaktTelefon + ", "
-				+ emailAdresa + ", " + brojIndeksa + ", " + datumUpisa
-				+ ", " + trenutnaGodinaStudija + ", " + status + ", "
+			return ime + "; " + prezime + "; " + datumRodjenja
+				+ "; " + adresaStanovanje + "; " + kontaktTelefon + "; "
+				+ emailAdresa + "; " + brojIndeksa + "; " + datumUpisa
+				+ "; " + trenutnaGodinaStudija + "; " + status + "; "
 				+ prosecnaOcena;
 		
 		String predmeti = "";
 		for (Subject i: spisakPredmetaKojeStudentSlusa) {
-			predmeti += ", " + i.getCode().toString();
+			predmeti += "; " + i.getCode().toString();
 		}
 		
-		return ime + ", " + prezime + ", " + datumRodjenja
-			+ ", " + adresaStanovanje + ", " + kontaktTelefon + ", "
-			+ emailAdresa + ", " + brojIndeksa + ", " + datumUpisa
-			+ ", " + trenutnaGodinaStudija + ", " + status + ", "
+		return ime + "; " + prezime + "; " + datumRodjenja
+			+ "; " + adresaStanovanje + "; " + kontaktTelefon + "; "
+			+ emailAdresa + "; " + brojIndeksa + "; " + datumUpisa
+			+ "; " + trenutnaGodinaStudija + "; " + status + "; "
 			+ prosecnaOcena + predmeti;
 			
 	}
