@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,9 +21,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import controller.MyController;
+import view.AbstractTableModelStudent;
 
 public class MyToolBar extends JToolBar{
 
@@ -166,10 +172,48 @@ public class MyToolBar extends JToolBar{
 				});
 		
 		// Button Search treba da highlightuje sve pronadjene na stringove u bazi
+		JTextField textField = new JTextField("Type here to search");
+		
 		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\search_left [#1504].png");
 		JButton btnSearch= new JButton(icon);
 		btnSearch.setPreferredSize(new Dimension(30,30));
 		btnSearch.setToolTipText("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String searchString = textField.getText();
+				searchString.trim();
+				String[] str = searchString.split(";");
+				System.out.println(str[0]);
+				List<RowFilter<AbstractTableModelStudent, Integer>> list = new ArrayList<RowFilter<AbstractTableModelStudent, Integer>>();
+				for(int i = 0; i < str.length; i++) {
+					list.add(RowFilter.regexFilter(str[i],i));
+				}
+//				RowFilter<AbstractTableModelStudent, Integer> rowFilterStudent = new RowFilter<AbstractTableModelStudent, Integer>(){
+//				
+//					@Override
+//					public boolean include(Entry<? extends AbstractTableModelStudent, ? extends Integer> entry) {
+//						AbstractTableModelStudent studentModel = entry.getModel();
+//						for (int i = entry.getValueCount() - 1; i >= 0; i--) {
+//					       if (entry.getStringValue(i).startsWith(str[i])) {
+//					         return true;
+//					       }
+//						}
+//						return false;
+//					}
+//					
+//				};
+				
+//				TableModel model = MyMainFrame.getInstance().getStudentJTable().getModel();
+//				TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+//				MyMainFrame.getInstance().getStudentJTable().setRowSorter(sorter);
+				TableRowSorter<AbstractTableModelStudent> sorter = (TableRowSorter<AbstractTableModelStudent>)MyMainFrame.getInstance().getStudentJTable().getRowSorter();
+				sorter.setRowFilter(RowFilter.andFilter(list));
+				MyMainFrame.getInstance().azurirajPrikaz();
+				
+			}
+		});
 		
 //		// Button addStudent treba da doda studente na predmet!
 //		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_plus [#1357].png");
@@ -184,7 +228,7 @@ public class MyToolBar extends JToolBar{
 //		btnAddProfessor.setPreferredSize(new Dimension(30,30));
 //		btnAddProfessor.setToolTipText("Add Professor to subject");
 		
-		JTextField textField = new JTextField("Type here to search");
+		
 		Font f1 = textField.getFont();
 		Font f = new Font("Verdana", Font.ITALIC, 12);
 		textField.setFont(f);
