@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class EditFrameProfessor extends JDialog {
 		//Ovo su polja menjanog profesora, da bi inicijalno kad udjemo u frame bilo sve ispunjeno
 		String firstName = menjaniProfesor.getFirstName();
 		String lastName = menjaniProfesor.getLastName();
-		String date = menjaniProfesor.getDate();
+		String date = new SimpleDateFormat("dd.MM.yyyy.").format(menjaniProfesor.getDate());
 		String livingAdress = menjaniProfesor.getLivingAdress();
 		String number = menjaniProfesor.getNumber();
 		String email = menjaniProfesor.getEmail();

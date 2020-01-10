@@ -1,6 +1,10 @@
 package model;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 enum StatusStudenta {B, S}
 
@@ -10,12 +14,12 @@ public class Student {
 
 	private String ime;
 	private String prezime;
-	private String datumRodjenja;
+	private Date datumRodjenja;
 	private String adresaStanovanje;
 	private String kontaktTelefon;
 	private String emailAdresa;
 	private String brojIndeksa;
-	private String datumUpisa;
+	private Date datumUpisa;
 	private Integer trenutnaGodinaStudija;
 	private StatusStudenta status;
 	private Double prosecnaOcena;
@@ -26,20 +30,23 @@ public class Student {
 	
 	public Student(String ime, String prezime, String datumRodjenja, String adresaStanovanje, String kontaktTelefon,
 			String emailAdresa, String brojIndeksa, String datumUpisa, Integer trenutnaGodinaStudija,
-			StatusStudenta status, Double prosecnaOcena) {
+			StatusStudenta status, Double prosecnaOcena) throws Exception {
 		super();
+		
 		this.ime = ime;
 		this.prezime = prezime;
-		this.datumRodjenja = datumRodjenja;
+		this.datumRodjenja = new SimpleDateFormat("dd.MM.yyyy.").parse(datumRodjenja);
 		this.adresaStanovanje = adresaStanovanje;
 		this.kontaktTelefon = kontaktTelefon;
 		this.emailAdresa = emailAdresa;
 		this.brojIndeksa = brojIndeksa;
-		this.datumUpisa = datumUpisa;
+		this.datumUpisa = new SimpleDateFormat("dd.MM.yyyy.").parse(datumUpisa);
 		this.trenutnaGodinaStudija = trenutnaGodinaStudija;
 		this.status = status;
 		this.prosecnaOcena = prosecnaOcena;
 		this.spisakPredmetaKojeStudentSlusa = new ArrayList<Subject>();
+		
+		if (this.datumRodjenja.compareTo(this.datumUpisa) > 0) throw new Exception();
 	}
 
 	public Student() {}	//Dodao sam prazan konstruktor Sale.
@@ -79,13 +86,13 @@ public class Student {
 	}
 
 
-	public String getDatumRodjenja() {
+	public Date getDatumRodjenja() {
 		return datumRodjenja;
 	}
 
 
-	public void setDatumRodjenja(String datumRodjenja) {
-		this.datumRodjenja = datumRodjenja;
+	public void setDatumRodjenja(String datumRodjenja) throws ParseException {
+		this.datumRodjenja = new SimpleDateFormat("dd.MM.yyyy.").parse(datumRodjenja);
 	}
 
 
@@ -129,13 +136,13 @@ public class Student {
 	}
 
 
-	public String getDatumUpisa() {
+	public Date getDatumUpisa() {
 		return datumUpisa;
 	}
 
 
-	public void setDatumUpisa(String datumUpisa) {
-		this.datumUpisa = datumUpisa;
+	public void setDatumUpisa(String datumUpisa) throws ParseException {
+		this.datumUpisa = new SimpleDateFormat("dd.MM.yyyy.").parse(datumUpisa);
 	}
 
 
@@ -170,21 +177,22 @@ public class Student {
 
 	@Override
 	public String toString() {
+		DateFormat df = new SimpleDateFormat("dd.MM.yyyy.");
 		if (spisakPredmetaKojeStudentSlusa.isEmpty())
-			return ime + "; " + prezime + "; " + datumRodjenja
+			return ime + "; " + prezime + "; " + df.format(datumRodjenja)
 				+ "; " + adresaStanovanje + "; " + kontaktTelefon + "; "
-				+ emailAdresa + "; " + brojIndeksa + "; " + datumUpisa
+				+ emailAdresa + "; " + brojIndeksa + "; " + df.format(datumUpisa)
 				+ "; " + trenutnaGodinaStudija + "; " + status + "; "
 				+ prosecnaOcena;
 		
-		String predmeti = "";
+		StringBuilder predmeti = new StringBuilder();
 		for (Subject i: spisakPredmetaKojeStudentSlusa) {
-			predmeti += "; " + i.getCode().toString();
+			predmeti.append("; " + i.getCode().toString());
 		}
 		
-		return ime + "; " + prezime + "; " + datumRodjenja
+		return ime + "; " + prezime + "; " + df.format(datumRodjenja)
 			+ "; " + adresaStanovanje + "; " + kontaktTelefon + "; "
-			+ emailAdresa + "; " + brojIndeksa + "; " + datumUpisa
+			+ emailAdresa + "; " + brojIndeksa + "; " + df.format(datumUpisa)
 			+ "; " + trenutnaGodinaStudija + "; " + status + "; "
 			+ prosecnaOcena + predmeti;
 			

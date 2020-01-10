@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -46,19 +47,22 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 	private static final long serialVersionUID = -822368112626186686L;
 	
 	private static MyMenuBar instance = null;
+	public static JMenu file;
+	public static JMenu edit;
+	public static JMenu help;
 	
 	private MyMenuBar() {
 		// JMenuBar osnova
 		super();
 		
 		// JMenu dugmici u vrsti
-		JMenu file = new JMenu("File");
+		file = new JMenu("File");
 		file.setMnemonic(KeyEvent.VK_F);
 		
-		JMenu edit = new JMenu("Edit");
+		edit = new JMenu("Edit");
 		edit.setMnemonic(KeyEvent.VK_E);
 		
-		JMenu help = new JMenu("Help");
+		help = new JMenu("Help");
 		help.setMnemonic(KeyEvent.VK_H);
 		
 		// Ikonice za sve dugmice meni bara u opadajucem meniju
@@ -248,6 +252,8 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 		file.add(novi);
 		file.add(close);
 		
+		
+		
 		// Edit - opadajuci meni
 		edit.add(izmeni);
 		edit.add(obrisi);
@@ -260,6 +266,51 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 		this.add(file);
 		this.add(edit);
 		this.add(help);
+		
+	}
+	
+	
+		/**
+		 * Necu nikad prezaliti sto nece da mi se pojavi opadajuci meni
+		 * NE RADI ALI BITNO JE POKUSATI!
+		 */
+	public static void showMenus(Component c) {
+			
+		//	System.out.println(edit == c);
+		//	System.out.println(help == c);
+			if (file == c) {
+				file.getPopupMenu().setVisible(true);
+				file.setSelected(true);
+			}
+			if (edit == c) {
+				edit.getPopupMenu().setVisible(true);
+				edit.setSelected(true);
+			}
+			if (help == c) {
+				help.getPopupMenu().setVisible(true);
+				help.setSelected(true);
+			}
+	}
+
+		/**
+		 * Necu nikad prezaliti sto nece da mi se skloni opadajuci meni
+		 * NE RADI ALI BITNO JE POKUSATI!
+		 */
+	public static void hideMenus(Component c) {
+		
+		if (!(file.isFocusOwner() || file.getPopupMenu().isFocusOwner())) {
+			file.getPopupMenu().setVisible(false);
+			file.setSelected(false);
+		}
+		if (!(edit.isFocusOwner() || edit.getPopupMenu().isFocusOwner())) {
+			edit.getPopupMenu().setVisible(false);
+			edit.setSelected(false);
+		}
+		if (!(help.isFocusOwner() || help.getPopupMenu().isFocusOwner())) {
+			help.getPopupMenu().setVisible(false);
+			help.setSelected(false);
+		}
+		
 	}
 	
 	/**
@@ -297,6 +348,8 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 	}
 
 }
+
+
 
 /**
  * Klasa Prozor koja ce biti upotrebljena kad se pritisne dugme About

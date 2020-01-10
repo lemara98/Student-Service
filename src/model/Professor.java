@@ -1,12 +1,16 @@
 package model;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Professor {
 	private String firstName;
 	private String lastName;
-	private String date;
+	private Date date;
 	private String livingAdress;
 	private String number;
 	private String email;
@@ -18,12 +22,12 @@ public class Professor {
 	//SimpleDateFormat df;
 	
 	public Professor(String idNumber, String firstName, String lastName, String date, String livingAdress, String number, String email,
-			String workAdress, String title, String rank, List<Subject> subjects) {
+			String workAdress, String title, String rank, List<Subject> subjects) throws ParseException {
 		super();
 		this.idNumber = idNumber;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.date = date;
+		this.date = new SimpleDateFormat("dd.MM.yyyy.").parse(date);
 		this.livingAdress = livingAdress;
 		this.number = number;
 		this.email = email;
@@ -35,12 +39,12 @@ public class Professor {
 	}	
 	
 	public Professor(String idNumber, String firstName, String lastName, String date, String livingAdress, String number, String email,
-			String workAdress, String title, String rank) {
+			String workAdress, String title, String rank) throws ParseException {
 		super();
 		this.idNumber = idNumber;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.date = date;
+		this.date = new SimpleDateFormat("dd.MM.yyyy.").parse(date);
 		this.livingAdress = livingAdress;
 		this.number = number;
 		this.email = email;
@@ -55,11 +59,11 @@ public class Professor {
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		
+		DateFormat df = new SimpleDateFormat("dd.MM.yyyy."); 
 		for (Subject s : subjects)  {
 			str.append("; " + s.getCode());
 		}
-		return  idNumber + "; " + firstName + "; " + lastName + "; " + date + "; "
+		return  idNumber + "; " + firstName + "; " + lastName + "; " + df.format(date) + "; "
 				+ livingAdress + "; " + number + "; " + email + "; " + workAdress
 				+ "; " + title + "; " + rank + str;
 	}
@@ -83,11 +87,11 @@ public class Professor {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setDate(String date) throws ParseException {
+		this.date = new SimpleDateFormat("dd.MM.yyyy.").parse(date);;
 	}
 	public String getLivingAdress() {
 		return livingAdress;

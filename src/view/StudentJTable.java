@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.Comparator;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -17,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import model.MyBase;
 import model.MyMainFrame;
@@ -34,9 +37,30 @@ public class StudentJTable extends JTable{
 		setColumnSelectionAllowed(true);
 		setRowSelectionAllowed(true);
 		AbstractTableModelStudent absStudent = new AbstractTableModelStudent();
-		setAutoCreateRowSorter(true);	// za sortiranje (Radi) !
+	//	setAutoCreateRowSorter(true);	// za sortiranje (Radi) !
 		setModel(absStudent);
 		getTableHeader().setReorderingAllowed(false);
+		
+		
+		// Dodajem Student Sorter
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(getModel());
+		int zaSortiranje[] = {0,1,2,3,7,8,9,10};
+		
+		for(int i : zaSortiranje) {
+			sorter.setSortable(i, true);
+			if (i == 0)
+				sorter.setComparator(i, new IndexComparator());
+			else if (i ==3 || i == 7)
+				sorter.setComparator(i, new DateComparator());
+		}
+		int neSortirati[] = {4,5,6,11};
+		
+		for(int i : neSortirati) 
+			sorter.setSortable(i, false);
+		
+		setRowSorter(sorter);
+		
+		// Podesavanje misa
 		this.addMouseMotionListener(new MouseMotionListener() {
 			
 			@Override
@@ -57,6 +81,7 @@ public class StudentJTable extends JTable{
 			}
 		});
 		
+		// dijalog sa predmetima
 		this.addMouseListener(new MouseAdapter() {
 			  public void mouseClicked(MouseEvent e) {
 			    if (e.getClickCount() == 1) {
@@ -121,6 +146,28 @@ public class StudentJTable extends JTable{
 		return c;
 	}
 	
+	
+	public static class IndexComparator implements Comparator<String>{
+
+		@Override
+		public int compare(String o1, String o2) {
+			String podString1[] = o1.split("/");
+			String podString2[] = o2.split("/");
+			
+			if (Integer.parseInt(podString1[1]) > Integer.parseInt(podString2[1]))
+				return 1;
+			else if (Integer.parseInt(podString1[1]) < Integer.parseInt(podString2[1]))
+				return -1;
+			else {
+				String podString11[] = podString1[0].split(" ");
+				String podString22[] = podString2[0].split(" ");
+				if (Integer.parseInt(podString11[1]) > Integer.parseInt(podString22[1]))
+					return 1;
+				else
+					return -1;
+			}
+		}
+	}
 	
 
 }

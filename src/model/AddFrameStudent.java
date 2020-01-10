@@ -150,7 +150,7 @@ public class AddFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel bri = new JLabel("Broj indeksa* [XXnnn/yyyy]");
+		JLabel bri = new JLabel("Broj indeksa* [XX nnn/yyyy]");
 		
 		panel.add(bri, gbc);
 		

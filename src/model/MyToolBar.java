@@ -175,7 +175,7 @@ public class MyToolBar extends JToolBar{
 					}
 				});
 		
-		// Button Search treba da highlightuje sve pronadjene na stringove u bazi
+		// Button Search treba da preuzme tekst iz searchBara i da pretrazi kartgicu tabele u kojoj se nalazi
 		JTextField textField = new JTextField("Type here to search");
 		
 		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\search_left [#1504].png");
@@ -193,15 +193,13 @@ public class MyToolBar extends JToolBar{
 					TableRowSorter<AbstractTableModelProfessor> sorter = (TableRowSorter<AbstractTableModelProfessor>)MyMainFrame.getInstance().getProfessorJTable().getRowSorter();
 					if(!searchString.equals("Type here to search") && !searchString.isEmpty()) {
 						searchString.trim();
-						System.out.println(searchString);
 						String[] str = searchString.split(";");
 						List<String> values = new ArrayList<String>();
 						for(String s : str) {
 							String[] string = s.split(":");
-							values.add(string[1]);
+							values.add(string[1].trim());
 						}
 						List<Integer> numberColumns = getProfessorColumnForSearch(searchString);
-						System.out.println(str[0]);
 						
 						int brojac = 0;
 						for(Integer i : numberColumns) {
@@ -218,15 +216,14 @@ public class MyToolBar extends JToolBar{
 					TableRowSorter<AbstractTableModelSubject> sorter = (TableRowSorter<AbstractTableModelSubject>)MyMainFrame.getInstance().getSubjectJTable().getRowSorter();
 					if(!searchString.equals("Type here to search") && !searchString.isEmpty()) {
 						searchString.trim();
-						System.out.println(searchString);
+
 						String[] str = searchString.split(";");
 						List<String> values = new ArrayList<String>();
 						for(String s : str) {
-							String[] string = s.split(":");
-							values.add(string[1]);
+							String[] string = s.trim().split(":");
+							values.add(string[1].trim());
 						}
 						List<Integer> numberColumns = getSubjectColumnForSearch(searchString);
-						System.out.println(str[0]);
 						
 						int brojac = 0;
 						for(Integer i : numberColumns) {
@@ -247,7 +244,7 @@ public class MyToolBar extends JToolBar{
 						List<String> values = new ArrayList<String>();
 						for(String s : str) {
 							String[] string = s.split(":");
-							values.add(string[1]);
+							values.add(string[1].trim());
 						}
 						List<Integer> numberColumns = getStudentColumnForSearch(searchString);
 						
@@ -383,7 +380,7 @@ public class MyToolBar extends JToolBar{
 		List<Integer> columns = new ArrayList<Integer>();
 		for(String str : kolone) {
 			String[] value = str.split(":");
-			switch(value[0]) {
+			switch(value[0].trim()) {
 			case "Broj indeksa":
 				columns.add(0);
 				break;
@@ -432,7 +429,7 @@ public class MyToolBar extends JToolBar{
 		List<Integer> columns = new ArrayList<Integer>();
 		for(String str : kolone) {
 			String[] value = str.split(":");
-			switch(value[0]) {
+			switch(value[0].trim()) {
 			case "ID broj":
 				columns.add(0);
 				break;
@@ -478,7 +475,7 @@ public class MyToolBar extends JToolBar{
 		List<Integer> columns = new ArrayList<Integer>();
 		for(String str : kolone) {
 			String[] value = str.split(":");
-			switch(value[0]) {
+			switch(value[0].trim()) {
 			case "Sifra predmeta":
 				columns.add(0);
 				break;

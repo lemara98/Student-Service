@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,15 @@ public class MyBase {
 	
 	public static MyBase getInstance() {
 		if(instance == null)
-			instance = new MyBase();
+			try {
+				instance = new MyBase();
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		return instance;
 	}
@@ -36,7 +46,7 @@ public class MyBase {
 	private List<Subject> subjects = new ArrayList<Subject>();
 	private List<String> columnsSubject;
 	
-	private MyBase() {
+	private MyBase() throws NumberFormatException, Exception {
 		initProfessors();		//na Pocetku inicijalizujemo listu profesora
 		initStudents();
 		initSubjects();
@@ -45,7 +55,7 @@ public class MyBase {
 	
 	///////////////////////////////////////////////PROFESSOR////////////////////////////////////////////////
 	
-	private void initProfessors() {
+	private void initProfessors() throws NumberFormatException, Exception {
 		
 		
 		readFromFile(profesori);
@@ -83,7 +93,8 @@ public class MyBase {
 	}
 
 	public String getProfessorValueAt(int row, int column) {		//returns the string of one table field
-			Professor prof = this.professors.get(row);
+		DateFormat df = new SimpleDateFormat("dd.MM.yyyy.");
+		Professor prof = this.professors.get(row);
 			switch(column) {
 			case 0:
 				return prof.getIdNumber();
@@ -92,7 +103,7 @@ public class MyBase {
 			case 2:
 				return prof.getLastName();
 			case 3:
-				return prof.getDate();
+				return df.format(prof.getDate());
 			case 4:
 				return prof.getLivingAdress();
 			case 5:
@@ -143,7 +154,7 @@ public class MyBase {
 	}
 	
 	//////////////////////////////////////////////////SUBJECT/////////////////////////////////////////////////
-	public void initSubjects() {
+	public void initSubjects() throws NumberFormatException, Exception {
 		
 		readFromFile(predmeti);
 		
@@ -271,7 +282,7 @@ public class MyBase {
 	/////////////////	Studenti	/////////////////
 
 	
-	private void initStudents() {
+	private void initStudents() throws NumberFormatException, Exception {
 		
 		columnsStudent = new ArrayList<String>();
 		
@@ -315,6 +326,7 @@ public class MyBase {
 	}
 	public String getStudentsValueAt(int row, int column) {		//returns the string of one table field
 			Student stud = this.students.get(row);
+			DateFormat df = new SimpleDateFormat("dd.MM.yyyy.");
 			switch(column) {
 			case 0:
 				return stud.getBrojIndeksa();
@@ -323,7 +335,7 @@ public class MyBase {
 			case 2:
 				return stud.getPrezime();
 			case 3:
-				return stud.getDatumRodjenja().toString();
+				return df.format(stud.getDatumRodjenja());
 			case 4:
 				return stud.getAdresaStanovanje();
 			case 5:
@@ -331,7 +343,7 @@ public class MyBase {
 			case 6:
 				return stud.getEmailAdresa();
 			case 7:
-				return stud.getDatumUpisa();
+				return df.format(stud.getDatumUpisa());
 			case 8:
 				return Integer.toString(stud.getTrenutnaGodinaStudija());
 			case 9:
@@ -402,9 +414,18 @@ public class MyBase {
 	 * Uvozi podatke iz datoteke na lokaciji src\podaci u bazu podataka
 	 */
 	public void uvoz() {
-		readFromFile(studenti);	
-		readFromFile(profesori);
-		readFromFile(predmeti);
+		try {
+			readFromFile(studenti);
+			readFromFile(profesori);
+			readFromFile(predmeti);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
 	}
 	
 	/**
@@ -416,7 +437,7 @@ public class MyBase {
 		writeToFile(predmeti);
 	}
 	
-	private void readFromFile(File fajl) {
+	private void readFromFile(File fajl) throws NumberFormatException, Exception {
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fajl.getPath()), "UTF-8"))){
 				
 				String trenutni;

@@ -8,7 +8,10 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -52,6 +55,7 @@ public class EditFrameStudent extends JDialog {
 	public EditFrameStudent(Student temp) {
 		super();
 		
+		DateFormat df = new SimpleDateFormat("dd.MM.yyyy.");
 		try {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension ss = kit.getScreenSize();
@@ -68,12 +72,12 @@ public class EditFrameStudent extends JDialog {
 		
 		imet = new JTextField(temp.getIme());
 		pret = new JTextField(temp.getPrezime());
-		datrt = new JTextField(temp.getDatumRodjenja());
+		datrt = new JTextField(df.format(temp.getDatumRodjenja()));
 		adrst = new JTextField(temp.getAdresaStanovanje());
 		kontt = new JTextField(temp.getKontaktTelefon());
 		emat = new JTextField(temp.getEmailAdresa());
 		brit = new JTextField(temp.getBrojIndeksa());
-		datut = new JTextField(temp.getDatumUpisa());
+		datut = new JTextField(df.format(temp.getDatumUpisa()));
 		tgst = new JTextField(Integer.toString(temp.getTrenutnaGodinaStudija()));
 		stat = new String(temp.getStatus().toString());
 		prot = new JTextField(Double.toString(temp.getProsecnaOcena()));
@@ -195,7 +199,7 @@ public class EditFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		JLabel bri = new JLabel("Broj indeksa* [XXnnn/yyyy]");
+		JLabel bri = new JLabel("Broj indeksa* [XX nnn/yyyy]");
 		
 		panel.add(bri, gbc);
 		
@@ -413,6 +417,11 @@ public class EditFrameStudent extends JDialog {
 							brit.getText().equals(""))
 							throw new Exception();
 					
+					Date dr = new SimpleDateFormat("dd.MM.yyyy.").parse(datrt.getText());
+					Date du = new SimpleDateFormat("dd.MM.yyyy.").parse(datut.getText());
+					if (dr.after(du)) throw new Exception();
+					
+					
 					String[] datum = datrt.getText().split("\\.");
 					if (datum.length != 3) throw new Exception();
 					
@@ -425,6 +434,8 @@ public class EditFrameStudent extends JDialog {
 					
 					int god = Integer.parseInt(tgst.getText());
 					if (god < 1 || god > 4) throw new Exception();
+					
+					
 					
 					
 					List<Subject> razlika = menjaniStudent.getSpisakPredmetaKojeStudentSlusa();
@@ -441,6 +452,8 @@ public class EditFrameStudent extends JDialog {
 					menjaniStudent.setTrenutnaGodinaStudija(Integer.parseInt(tgst.getText()));
 					menjaniStudent.setStatus(n);
 					menjaniStudent.setProsecnaOcena(d);
+					
+					
 					
 					
 					
