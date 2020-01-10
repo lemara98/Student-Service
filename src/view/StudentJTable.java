@@ -36,7 +36,7 @@ public class StudentJTable extends JTable{
 		AbstractTableModelStudent absStudent = new AbstractTableModelStudent();
 		setAutoCreateRowSorter(true);	// za sortiranje (Radi) !
 		setModel(absStudent);
-		
+		getTableHeader().setReorderingAllowed(false);
 		this.addMouseMotionListener(new MouseMotionListener() {
 			
 			@Override

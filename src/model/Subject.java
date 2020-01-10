@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Subject {
 
-	private static int codeCnt = 0;
 	private String code;
 	private String name;
 	private int semester;
@@ -16,11 +15,10 @@ public class Subject {
 	
 	public Subject() {}
 	
-	public Subject(String codeCnt, String name, int semester, int yearOfStuding, Professor professor,
+	public Subject(String code, String name, int semester, int yearOfStuding, Professor professor,
 			ArrayList<Student> students) {
 		super();
-		this.code = codeCnt;
-		Subject.codeCnt = Integer.parseInt(codeCnt);
+		this.code = code;
 		this.name = name;
 		this.semester = semester;
 		this.yearOfStuding = yearOfStuding;
@@ -28,22 +26,21 @@ public class Subject {
 		this.students = students;
 	}
 	
-	public Subject(String name, int semester, int yearOfStuding, Professor professor,
-			ArrayList<Student> students) {
-		super();
-		++codeCnt;
-		this.code = Integer.toString(codeCnt);
-		this.name = name;
-		this.semester = semester;
-		this.yearOfStuding = yearOfStuding;
-		this.professor = professor;
-		this.students = students;
-	}
+//	public Subject(String name, int semester, int yearOfStuding, Professor professor,
+//			ArrayList<Student> students) {
+//		super();
+//		++codeCnt;
+//		this.code = Integer.toString(codeCnt);
+//		this.name = name;
+//		this.semester = semester;
+//		this.yearOfStuding = yearOfStuding;
+//		this.professor = professor;
+//		this.students = students;
+//	}
 	
-	public Subject(String name, int semester, int yearOfStuding, Professor professor) {
+	public Subject(String code, String name, int semester, int yearOfStuding, Professor professor) {
 		super();
-		++codeCnt;
-		this.code = Integer.toString(codeCnt);
+		this.code = code;
 		this.name = name;
 		this.semester = semester;
 		this.yearOfStuding = yearOfStuding;

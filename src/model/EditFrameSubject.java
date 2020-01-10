@@ -44,7 +44,11 @@ public class EditFrameSubject extends JDialog {
 		this.setTitle("Edit subject: " + menjaniPredmet.getCode() + " " + menjaniPredmet.getName());
 		this.setIconImage(new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\pen [#1319].png").getImage());
 		
+		
 		setModal(true);
+		
+		
+		
 		
 		//List of students on course
 		listaCekBoxova = new ArrayList<JCheckBox>();
@@ -59,7 +63,7 @@ public class EditFrameSubject extends JDialog {
 		for (Student i : menjaniPredmet.getStudents()) {
 			for (JCheckBox j : listaCekBoxova) {
 				text = j.getText();
-				kod = text.split(" | ");
+				kod = text.split(" \\| ");
 				if (i.getBrojIndeksa().equals(kod[0]))
 					j.setSelected(true);
 			}
@@ -93,13 +97,38 @@ public class EditFrameSubject extends JDialog {
 		
 		gbc.anchor = GridBagConstraints.CENTER;
 		
+		JLabel codeLabel = new JLabel("Code*");
+		leftPanel.add(codeLabel,gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		
+		gbc.anchor = GridBagConstraints.CENTER;
+		
+		JTextField codeTextField = new JTextField(menjaniPredmet.getCode());
+		codeTextField.setPreferredSize(new Dimension(150,20));
+		leftPanel.add(codeTextField,gbc);
+		
+		gbc = new GridBagConstraints();
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		
+		gbc.anchor = GridBagConstraints.CENTER;
+		
 		JLabel nameLabel = new JLabel("Name*");
 		leftPanel.add(nameLabel,gbc);
 		
 		GridBagConstraints gbc2 = new GridBagConstraints();
 		
 		gbc2.gridx = 1;
-		gbc2.gridy = 0;
+		gbc2.gridy = 1;
 		
 		gbc2.gridwidth = 1;
 		gbc2.gridheight = 1;
@@ -113,20 +142,20 @@ public class EditFrameSubject extends JDialog {
 		GridBagConstraints gbc3 = new GridBagConstraints();
 		
 		gbc3.gridx = 0;
-		gbc3.gridy = 1;
+		gbc3.gridy = 2;
 		
 		gbc3.gridwidth = 1;
 		gbc3.gridheight = 1;
 		
 		gbc3.anchor = GridBagConstraints.CENTER;
 		
-		JLabel semesterLabel = new JLabel("Semester* [1-2]");
+		JLabel semesterLabel = new JLabel("Semester* [1-8]");
 		leftPanel.add(semesterLabel,gbc3);
 		
 		GridBagConstraints gbc4 = new GridBagConstraints();
 		
 		gbc4.gridx = 1;
-		gbc4.gridy = 1;
+		gbc4.gridy = 2;
 		
 		gbc4.gridwidth = 1;
 		gbc4.gridheight = 1;
@@ -141,7 +170,7 @@ public class EditFrameSubject extends JDialog {
 		GridBagConstraints gbc5 = new GridBagConstraints();
 		
 		gbc5.gridx = 0;
-		gbc5.gridy = 2;
+		gbc5.gridy = 3;
 		
 		gbc5.gridwidth = 1;
 		gbc5.gridheight = 1;
@@ -154,7 +183,7 @@ public class EditFrameSubject extends JDialog {
 		GridBagConstraints gbc6 = new GridBagConstraints();
 		
 		gbc6.gridx = 1;
-		gbc6.gridy = 2;
+		gbc6.gridy = 3;
 		
 		gbc6.gridwidth = 1;
 		gbc6.gridheight = 1;
@@ -169,7 +198,7 @@ public class EditFrameSubject extends JDialog {
 		GridBagConstraints gbc7 = new GridBagConstraints();
 		
 		gbc7.gridx = 0;
-		gbc7.gridy = 3;
+		gbc7.gridy = 4;
 		
 		gbc7.gridwidth = 1;
 		gbc7.gridheight = 1;
@@ -182,7 +211,7 @@ public class EditFrameSubject extends JDialog {
 		GridBagConstraints gbc8 = new GridBagConstraints();
 		
 		gbc8.gridx = 1;
-		gbc8.gridy = 3;
+		gbc8.gridy = 4;
 		
 		gbc8.gridwidth = 1;
 		gbc8.gridheight = 1;
@@ -218,9 +247,10 @@ public class EditFrameSubject extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					//baca error ako nista ne unesemo zbog parseInt
+					if (codeTextField.getText().isEmpty()) throw new Exception();
 					if (nameTextField.getText().isEmpty()) throw new Exception();
 					int w = Integer.parseInt(semesterTextField.getText());
-					if (!(w == 1 || w == 2)) throw new Exception();
+					if (w < 1 || w > 8) throw new Exception();
 					int q =	Integer.parseInt(yearTextField.getText());
 					if (q < 1 || q > 4) throw new Exception();
 					
@@ -243,6 +273,7 @@ public class EditFrameSubject extends JDialog {
 						menjaniPredmet.setProfessor(pr);
 					}
 					
+					menjaniPredmet.setCode(codeTextField.getText());
 					menjaniPredmet.setName(nameTextField.getText());
 					menjaniPredmet.setSemester(Integer.parseInt(semesterTextField.getText()));
 					menjaniPredmet.setYearOfStuding(Integer.parseInt(yearTextField.getText()));
@@ -338,8 +369,8 @@ public class EditFrameSubject extends JDialog {
 	            JCheckBox box = (JCheckBox) comp;
 	            if (box.isSelected()) {
 	                String text = box.getText();
-	                String[] temp = text.split(" | ");
-	                Student st = MyBase.getInstance().getStudentIndex(temp[0]);//uzimam studenta i ubacujem u listu
+	                String[] temp = text.split(" \\| ");
+	                Student st = MyBase.getInstance().getStudentIndex(temp[0].trim());//uzimam studenta i ubacujem u listu
 	                checkedStudents.add(st);
 	                st.dodajPredmetUSpisak(menjaniPredmet);
 	            }

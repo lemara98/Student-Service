@@ -34,6 +34,7 @@ public class SubjectJTable extends JTable {
 		AbstractTableModelSubject abs = new AbstractTableModelSubject();
 		setModel(abs);
 		setAutoCreateRowSorter(true);
+		getTableHeader().setReorderingAllowed(false);
 
 	
 	this.addMouseMotionListener(new MouseMotionListener() {

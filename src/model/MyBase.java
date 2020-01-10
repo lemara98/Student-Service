@@ -423,7 +423,7 @@ public class MyBase {
 				while ((trenutni = br.readLine()) != null) {
 					boolean jedinstven = true;
 					trenutni.trim();
-					String[] podStud = trenutni.split(", ");
+					String[] podStud = trenutni.split("; ");
 					if(fajl == studenti) {
 						if (podStud.length > 10) {
 							Student ucitani = new Student(podStud[0], 
@@ -457,15 +457,14 @@ public class MyBase {
 							students.add(ucitani);
 						}
 					} else if(fajl == profesori) {
-						if(podStud.length > 9 ) {
+						if(podStud.length > 9) {
 							
-							List<Subject> sub = new ArrayList<Subject>();
-							for(int i = 9; i < podStud.length; i++) {
-								sub.add(getSubjectByCode(podStud[i]));
-							}
+
+							if (!Character.isDigit(podStud[0].charAt(0)))
+								podStud[0] = podStud[0].substring(1);
 							
 							
-							Professor ucitani = new Professor(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], podStud[7], podStud[8], podStud[9], sub);
+							Professor ucitani = new Professor(podStud[0], podStud[1], podStud[2], podStud[3], podStud[4], podStud[5], podStud[6], podStud[7], podStud[8], podStud[9]);
 							for (Professor provera : professors) {
 								if (provera.equals(ucitani)) {
 									jedinstven = false;
@@ -477,9 +476,10 @@ public class MyBase {
 							professors.add(ucitani);
 						}
 					}else if(fajl == predmeti){
-						if (podStud.length > 3) {
+						if (podStud.length > 4) {
 							Professor pr = null;
-							if(podStud[4] != "") { 
+							
+							if(!podStud[4].equals("")) { 
 								String idProf = podStud[4];
 								pr = getProfessorById(idProf);
 							}
@@ -492,6 +492,7 @@ public class MyBase {
 									st.add(student); //dodajemo studente
 								}
 							}
+							
 							Subject ucitani = new Subject(podStud[0], podStud[1], Integer.parseInt(podStud[2]), Integer.parseInt(podStud[3]), pr, st);
 							for (Subject provera : subjects) {
 								if (provera.equals(ucitani)) {
@@ -501,15 +502,14 @@ public class MyBase {
 							}
 							if (jedinstven) {
 								subjects.add(ucitani);
-								
 								if(podStud.length >= 6) {
 									for(int i = 5; i < podStud.length; i++) {
 										student = getStudentIndex(podStud[i]);
 										student.dodajPredmetUSpisak(ucitani);
 									}
+								}
 								if (pr != null)	
 									pr.addSubjectToSubjects(ucitani);
-								}
 							}
 						}
 					}

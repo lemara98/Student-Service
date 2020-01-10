@@ -31,15 +31,37 @@ public class Professor {
 		this.title = title;
 		this.rank = rank;
 		this.subjects = subjects;
+	//	this.subjects = new ArrayList<Subject>();
+	}	
+	
+	public Professor(String idNumber, String firstName, String lastName, String date, String livingAdress, String number, String email,
+			String workAdress, String title, String rank) {
+		super();
+		this.idNumber = idNumber;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.date = date;
+		this.livingAdress = livingAdress;
+		this.number = number;
+		this.email = email;
+		this.workAdress = workAdress;
+		this.title = title;
+		this.rank = rank;
+	//	this.subjects = subjects;
 		this.subjects = new ArrayList<Subject>();
 	}	
 	
 	
 	@Override
 	public String toString() {
-		return  idNumber + ", " + firstName + ", " + lastName + ", " + date + ", "
-				+ livingAdress + ", " + number + ", " + email + ", " + workAdress
-				+ ", " + title + ", " + rank;
+		StringBuilder str = new StringBuilder();
+		
+		for (Subject s : subjects)  {
+			str.append("; " + s.getCode());
+		}
+		return  idNumber + "; " + firstName + "; " + lastName + "; " + date + "; "
+				+ livingAdress + "; " + number + "; " + email + "; " + workAdress
+				+ "; " + title + "; " + rank + str;
 	}
 
 

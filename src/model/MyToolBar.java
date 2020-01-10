@@ -243,7 +243,6 @@ public class MyToolBar extends JToolBar{
 					TableRowSorter<AbstractTableModelStudent> sorter = (TableRowSorter<AbstractTableModelStudent>)MyMainFrame.getInstance().getStudentJTable().getRowSorter();
 					if(!searchString.equals("Type here to search") && !searchString.isEmpty()) {
 						searchString.trim();
-						System.out.println(searchString);
 						String[] str = searchString.split(";");
 						List<String> values = new ArrayList<String>();
 						for(String s : str) {
@@ -251,7 +250,6 @@ public class MyToolBar extends JToolBar{
 							values.add(string[1]);
 						}
 						List<Integer> numberColumns = getStudentColumnForSearch(searchString);
-						System.out.println(str[0]);
 						
 						int brojac = 0;
 						for(Integer i : numberColumns) {
