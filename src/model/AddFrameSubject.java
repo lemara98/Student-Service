@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -250,13 +251,45 @@ public class AddFrameSubject extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				boolean c = true, n = true, sb = true, yos = true, p = true;
+				codeLabel.setForeground(Color.BLACK);
+				nameLabel.setForeground(Color.BLACK);
+				yearLabel.setForeground(Color.BLACK);
+				semesterLabel.setForeground(Color.BLACK);
+				professorLabel.setForeground(Color.BLACK);
+				
 				try {
+					
+					if (codeTextField.getText().equals("")) c = false;
+					if (nameTextField.getText().equals("")) n = false;
+					if (yearTextField.getText().equals("")) sb = false;
+					if (semesterTextField.getText().equals("")) yos = false;
+					if (professorComboBox.getSelectedItem() == null) p = false;
+					
 					//baca error ako nista ne unesemo zbog parseInt
-					if (nameTextField.getText().isEmpty()) throw new Exception();
-					int w = Integer.parseInt(semesterTextField.getText());
-					if (w < 1 || w > 8) throw new Exception();
 					int q =	Integer.parseInt(yearTextField.getText());
-					if (q < 1 || q > 4) throw new Exception();
+					if (q < 1 || q > 4) yos = false;
+					int w = Integer.parseInt(semesterTextField.getText());
+					if ( q == 1 ) {
+						if (!(w == 1 || w == 2))
+							sb = false;
+					}	
+					else if ( q == 2 ) {
+						if (!(w == 3 || w == 4))
+							sb = false;
+					}
+					else if ( q == 3 ) {
+						if (!(w == 5 || w == 6))
+							sb = false;
+					}
+					else if ( q == 4 )  {
+						if (!(w == 7 || w == 8))
+							sb = false;
+					}
+					
+					if (w < 1 || w > 8)
+						sb = false;
+					
 					
 					
 					ArrayList<Student> studentsOnSubject = new ArrayList<Student>();
@@ -275,7 +308,8 @@ public class AddFrameSubject extends JDialog {
 											nameTextField.getText(),
 											Integer.parseInt(semesterTextField.getText()),
 											Integer.parseInt(yearTextField.getText()),
-											pr, studentsOnSubject);
+											pr, 
+											studentsOnSubject);
 					
 					studentsOnSubject = manageCheckedCheckboxes(rightPanel, s);
 					
@@ -294,6 +328,12 @@ public class AddFrameSubject extends JDialog {
 							break;
 						}
 					}
+				//	boolean c = true, n = true, sb = true, yos = true, p = true;
+					if (!(c && n && sb && yos && p)) {
+						greska = true;
+						throw new Exception();
+					}
+					
 					if (!greska) {
 						MyBase.getInstance().addSubject(s);
 						setVisible(false);
@@ -301,6 +341,12 @@ public class AddFrameSubject extends JDialog {
 					//Potrebno dodati opadajuci meni za listu studenata na predmetu, takodje za profesora dugme!
 					
 				}catch(Exception ex) {
+					if (!c) codeLabel.setForeground(Color.RED);
+					if (!n) nameLabel.setForeground(Color.RED);
+					if (!yos) yearLabel.setForeground(Color.RED);
+					if (!sb) semesterLabel.setForeground(Color.RED);
+					if (!p) professorLabel.setForeground(Color.RED);
+					
 					JOptionPane.showMessageDialog(leftPanel, "Ubacili ste neodgovarajuce podatke!", "ERROR IN ADDDING NEW SUBJECT", JOptionPane.ERROR_MESSAGE);
 				}
 				

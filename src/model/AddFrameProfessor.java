@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -400,21 +401,34 @@ public class AddFrameProfessor extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				boolean id = true, fn = true, ln = true, tit = true, y = true, la = true, cn = true, em = true, wa = true, r = true;
+				IDNumberLabel.setForeground(Color.BLACK);
+				firstNameLabel.setForeground(Color.BLACK);
+				lastNameLabel.setForeground(Color.BLACK);
+				yearLabel.setForeground(Color.BLACK);
+				livingAdressLabel.setForeground(Color.BLACK);
+				contactNumberLabel.setForeground(Color.BLACK);
+				emailLabel.setForeground(Color.BLACK);
+				workAdressLabel.setForeground(Color.BLACK);
+				titleLabel.setForeground(Color.BLACK);
+				rankLabel.setForeground(Color.BLACK);
 				try {
+					
+					 
 					//baca error ako nista ne unesemo zbog parseInt
-					if (IDNumberTextField.getText().equals("") ||
-							firstnameTextField.getText().equals("")||
-							lastNameTextField.getText().equals("") ||
-							yearTextField.getText().equals("") ||
-							livingAdressTextField.getText().equals("") ||
-							contactNumberTextField.getText().equals("") ||
-							emailTextField.getText().equals("") ||
-							workAdressTextField.getText().equals("") ||
-							rankTextField.getText().equals(""))
-							throw new Exception();
+					if (IDNumberTextField.getText().equals(""))  id = false;
+					if (firstnameTextField.getText().equals("")) fn = false;
+					if (lastNameTextField.getText().equals("")) ln = false;
+					if (yearTextField.getText().equals("")) y = false;
+					if (livingAdressTextField.getText().equals("")) la = false;
+					if (contactNumberTextField.getText().equals("")) cn = false;
+					if (emailTextField.getText().equals("")) em = false;
+					if (workAdressTextField.getText().equals("")) wa = false;
+					if (rankTextField.getText().equals("")) r = false;
+					if (titleTextField.getText().equals("")) tit = false;
 					
 					String[] datum = yearTextField.getText().split("\\.");
-					if (datum.length != 3) throw new Exception();
+					if (datum.length != 3) y = false;
 					
 					List<Subject> checkedSubjects = new ArrayList<Subject>();
 					
@@ -446,6 +460,12 @@ public class AddFrameProfessor extends JDialog {
 							break;
 						}
 					}
+					
+					if (!(id && fn && ln && y && la && cn && em && wa && r && tit)) {
+						greska = true;
+						throw new Exception();
+					}
+					
 					if (!greska) {
 						MyBase.getInstance().addProfessor(p);
 						setVisible(false);
@@ -453,6 +473,17 @@ public class AddFrameProfessor extends JDialog {
 					//Potrebno dodati opadajuci meni za listu studenata na predmetu, takodje za profesora dugme!
 					
 				}catch(Exception ex) {
+					if (!id) IDNumberLabel.setForeground(Color.RED);
+					if (!fn) firstNameLabel.setForeground(Color.RED);
+					if (!ln) lastNameLabel.setForeground(Color.RED);
+					if (!y)  yearLabel.setForeground(Color.RED);
+					if (!la) livingAdressLabel.setForeground(Color.RED);
+					if (!cn) contactNumberLabel.setForeground(Color.RED);
+					if (!em) emailLabel.setForeground(Color.RED);
+					if (!wa) workAdressLabel.setForeground(Color.RED);
+					if (!r) rankLabel.setForeground(Color.RED);
+					if (!tit) titleLabel.setForeground(Color.RED);
+					
 					JOptionPane.showMessageDialog(leftPanel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN ADDDING NEW PROFESSOR", JOptionPane.ERROR_MESSAGE);
 				}
 				

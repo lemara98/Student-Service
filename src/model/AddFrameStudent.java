@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -8,7 +9,9 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -366,8 +369,31 @@ public class AddFrameStudent extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				boolean im = true, pr = true, da = true, dub = true, ad = true, ko = true, br = true, prs = true, st = true, godb = true;
+				ime.setForeground(Color.BLACK);
+				pre.setForeground(Color.BLACK);
+				datr.setForeground(Color.BLACK);
+				adrs.setForeground(Color.BLACK);
+				kont.setForeground(Color.BLACK);
+				bri.setForeground(Color.BLACK);
+				pro.setForeground(Color.BLACK);
+				ema.setForeground(Color.BLACK);
+				datu.setForeground(Color.BLACK);
+				tgs.setForeground(Color.BLACK);
+				budzet.setForeground(Color.BLACK);
+				samofinansiranje.setForeground(Color.BLACK);
+				
+				
 				try {
-					// TODO Auto-generated method stub
+					
+					if (imet.getText().equals(""))  im = false;
+					if (pret.getText().equals("")) pr = false;
+					if (datrt.getText().equals("")) da = false;
+					if (adrst.getText().equals("")) ad = false;
+					if (kontt.getText().equals("")) ko = false;
+					if (brit.getText().equals("")) br = false;
+					
+					
 					List<Student> ls;
 					boolean greska = false;
 					
@@ -379,31 +405,43 @@ public class AddFrameStudent extends JDialog {
 						n = StatusStudenta.S;
 					}
 					
-					if (n == null) throw new Exception();
-					
-					if (imet.getText().equals("") ||
-						pret.getText().equals("") ||
-						datrt.getText().equals("") ||
-						adrst.getText().equals("") ||
-						kontt.getText().equals("") ||
-						brit.getText().equals(""))
-						throw new Exception();
+					if (n == null) st = false;
 					
 					String[] datum = datrt.getText().split("\\.");
-					if (datum.length != 3) throw new Exception();
+					if (datum.length != 3) da = false;
+					
+					datum = datut.getText().split("\\.");
+					if (datum.length != 3) dub = false;
+					
+					Date dr = new SimpleDateFormat("dd.MM.yyyy.").parse(datrt.getText());
+					Date du = new SimpleDateFormat("dd.MM.yyyy.").parse(datut.getText());
+					if (dr.after(du)) {
+						da = false;
+						dub = false;
+					}
+					
+					
+					
 					
 					String[] index = brit.getText().split("/");
-					if(index.length != 2) throw new Exception();
+					if(index.length != 2) br = false;
 					
 					double d = 0.00;
 					if (!prot.getText().equals("")) {
 						d = Double.parseDouble(prot.getText());
-						if (d != 0.0)
-							if (d < 6.0 || d > 10.0) throw new Exception();
+						if (d != 0.0) 
+							if (d < 6.0 || d > 10.0) prs = false;
 					}
 					
+					
 					int god = Integer.parseInt(tgst.getText());
-					if (god < 1 || god > 4) throw new Exception();
+					if (god < 1 || god > 4) godb = false;
+					
+					if (d == 0 && god != 1) {
+						godb = false;
+						prs = false;
+					}
+					
 					
 					Student s = new Student(imet.getText(),
 											pret.getText(),
@@ -412,7 +450,8 @@ public class AddFrameStudent extends JDialog {
 											kontt.getText(),
 											emat.getText(),
 											brit.getText(),
-											datut.getText(),Integer.parseInt(tgst.getText()),
+											datut.getText(),
+											Integer.parseInt(tgst.getText()),
 											n,
 											d
 											);
@@ -438,12 +477,32 @@ public class AddFrameStudent extends JDialog {
 							break;
 						}
 					}
+					// boolean im = true, pr = true, da = true, ad = true, ko = true, br = true, prs = true, st = true, godb = true;
+					if (!(im && pr && da && ad && ko && br && prs && st && godb && dub)) {
+						greska = true;
+						throw new Exception();
+					}
+					
 					if (!greska) {
 						MyBase.getInstance().addStudent(s);
 						setVisible(false);
 					}
 				}
 				catch (Exception er) {
+					if (!im) ime.setForeground(Color.RED);
+					if (!pr) pre.setForeground(Color.RED);
+					if (!da) datr.setForeground(Color.RED);
+					if (!ad) adrs.setForeground(Color.RED);
+					if (!ko) kont.setForeground(Color.RED);
+					if (!br) bri.setForeground(Color.RED);
+					if (!prs) pro.setForeground(Color.RED);
+					if (!st)  {
+						budzet.setForeground(Color.RED);
+						samofinansiranje.setForeground(Color.RED);
+					}
+					if (!godb) tgs.setForeground(Color.RED);
+					if (!dub) datu.setForeground(Color.RED);
+					
 					JOptionPane.showMessageDialog(panel, "Ubacili ste neodgovarajuce podatke!", "ERROR IN ADDDING NEW STUDENT", JOptionPane.ERROR_MESSAGE);
 				}
 			}

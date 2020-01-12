@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -61,6 +62,7 @@ public class EditFrameProfessor extends JDialog {
 		setLayout(new BorderLayout());	//glavni prozor mi je borderlayout
 		
 		//Ovo su polja menjanog profesora, da bi inicijalno kad udjemo u frame bilo sve ispunjeno
+		String idNumber = menjaniProfesor.getIdNumber();
 		String firstName = menjaniProfesor.getFirstName();
 		String lastName = menjaniProfesor.getLastName();
 		String date = new SimpleDateFormat("dd.MM.yyyy.").format(menjaniProfesor.getDate());
@@ -113,7 +115,7 @@ public class EditFrameProfessor extends JDialog {
 		
 		gbc1.anchor = GridBagConstraints.CENTER;
 		
-		JTextField IDNumberTextField = new JTextField(number);
+		JTextField IDNumberTextField = new JTextField(idNumber);
 		IDNumberTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(IDNumberTextField,gbc1);
 		
@@ -418,23 +420,54 @@ public class EditFrameProfessor extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				boolean id = true, fn = true, ln = true, y = true, la = true, tit = true, cn = true, em = true, wa = true, r = true;
+				IDNumberLabel.setForeground(Color.BLACK);
+				firstNameLabel.setForeground(Color.BLACK);
+				lastNameLabel.setForeground(Color.BLACK);
+				yearLabel.setForeground(Color.BLACK);
+				livingAdressLabel.setForeground(Color.BLACK);
+				contactNumberLabel.setForeground(Color.BLACK);
+				emailLabel.setForeground(Color.BLACK);
+				workAdressLabel.setForeground(Color.BLACK);
+				titleLabel.setForeground(Color.BLACK);
+				rankLabel.setForeground(Color.BLACK);
 				try {
 					//baca error ako nista ne unesemo zbog parseInt
-					if (IDNumberTextField.getText().equals("") ||
-							firstnameTextField.getText().equals("")||
-							lastNameTextField.getText().equals("") ||
-							yearTextField.getText().equals("") ||
-							livingAdressTextField.getText().equals("") ||
-							contactNumberTextField.getText().equals("") ||
-							emailTextField.getText().equals("") ||
-							workAdressTextField.getText().equals("") ||
-							rankTextField.getText().equals(""))
-							throw new Exception();
+					if (IDNumberTextField.getText().equals(""))  id = false;
+					if (firstnameTextField.getText().equals("")) fn = false;
+					if (lastNameTextField.getText().equals("")) ln = false;
+					if (yearTextField.getText().equals("")) y = false;
+					if (livingAdressTextField.getText().equals("")) la = false;
+					if (contactNumberTextField.getText().equals("")) cn = false;
+					if (emailTextField.getText().equals("")) em = false;
+					if (workAdressTextField.getText().equals("")) wa = false;
+					if (rankTextField.getText().equals("")) r = false;
+					if (titleTextField.getText().equals("")) tit = false;
 					
 					String[] datum = yearTextField.getText().split("\\.");
-					if (datum.length != 3) throw new Exception();
+					if (datum.length != 3) y = false;
+					
+					if (!(id && fn && ln && y && la && cn && em && wa && r && tit)) {
+						
+						throw new Exception();
+					}
+					
+					Professor temp = new Professor();
+					
+					temp.setIdNumber(IDNumberTextField.getText());
 					
 					
+					boolean greska = false;
+					for(Professor i : MyBase.getInstance().getProfessors()) {
+						if (i == temp) continue;
+						if (i.equals(temp)) {	
+								greska = true;
+								JOptionPane.showMessageDialog(leftPanel, "THERE ALREADY IS ALREADY SAME PROFESSOR", "ERROR", JOptionPane.ERROR_MESSAGE);
+								break;
+							}
+						}
+					
+					if (!greska) {
 					List<Subject> checkedSubjects = new ArrayList<Subject>();
 					
 					List<Subject> zaBrisanje = listOfsubjects;
@@ -443,42 +476,55 @@ public class EditFrameProfessor extends JDialog {
 					
 					zaBrisanje.removeAll(checkedSubjects);
 
-					menjaniProfesor.setFirstName(firstnameTextField.getText());
-					menjaniProfesor.setLastName(lastNameTextField.getText());
-					menjaniProfesor.setDate(yearTextField.getText());
-					menjaniProfesor.setLivingAdress(livingAdressTextField.getText());
-					menjaniProfesor.setNumber(contactNumberTextField.getText());
-					menjaniProfesor.setEmail(emailTextField.getText());
-					menjaniProfesor.setWorkAdress(workAdressTextField.getText());
-					menjaniProfesor.setTitle(titleTextField.getText());
-					menjaniProfesor.setRank(rankTextField.getText());
-					menjaniProfesor.setSubjects(checkedSubjects);
+					
+					temp.setFirstName(firstnameTextField.getText());
+					temp.setLastName(lastNameTextField.getText());
+					temp.setDate(yearTextField.getText());
+					temp.setLivingAdress(livingAdressTextField.getText());
+					temp.setNumber(contactNumberTextField.getText());
+					temp.setEmail(emailTextField.getText());
+					temp.setWorkAdress(workAdressTextField.getText());
+					temp.setTitle(titleTextField.getText());
+					temp.setRank(rankTextField.getText());
+					temp.setSubjects(checkedSubjects);
 					
 					
 					
 					for(Subject sub : zaBrisanje) {
-						MyBase.getInstance().getProfessorById(menjaniProfesor.getIdNumber()).deleteSubjectFromSubjects(sub);
+						MyBase.getInstance().getProfessorById(temp.getIdNumber()).deleteSubjectFromSubjects(sub);
 						sub.setProfessor(null);
 					}
 					
 					//Potrebno dodati opadajuci meni za listu studenata na predmetu, takodje za profesora dugme!
 					
-					boolean greska = false;
-					for(Professor i : MyBase.getInstance().getProfessors()) {
-						if (i == menjaniProfesor) continue;
-						if (i.equals(menjaniProfesor)) {	
-								greska = true;
-								JOptionPane.showMessageDialog(leftPanel, "THERE ALREADY IS ALREADY SAME PROFESSOR", "ERROR", JOptionPane.ERROR_MESSAGE);
-								break;
-							}
-						}
 					
-					if (!greska) {
+					menjaniProfesor.setIdNumber(temp.getIdNumber());
+					menjaniProfesor.setFirstName(temp.getFirstName());
+					menjaniProfesor.setLastName(temp.getLastName());
+					menjaniProfesor.setDate(temp.getDate());
+					menjaniProfesor.setLivingAdress(temp.getLivingAdress());
+					menjaniProfesor.setNumber(temp.getNumber());
+					menjaniProfesor.setEmail(temp.getEmail());
+					menjaniProfesor.setWorkAdress(temp.getWorkAdress());
+					menjaniProfesor.setTitle(temp.getTitle());
+					menjaniProfesor.setRank(temp.getRank());
+					menjaniProfesor.setSubjects(temp.getSubjects());
 					MyMainFrame.getInstance().azurirajPrikaz();
 					setVisible(false);
 					}
 					
 				}catch(Exception ex) {
+					if (!id) IDNumberLabel.setForeground(Color.RED);
+					if (!fn) firstNameLabel.setForeground(Color.RED);
+					if (!ln) lastNameLabel.setForeground(Color.RED);
+					if (!y)  yearLabel.setForeground(Color.RED);
+					if (!la) livingAdressLabel.setForeground(Color.RED);
+					if (!cn) contactNumberLabel.setForeground(Color.RED);
+					if (!em) emailLabel.setForeground(Color.RED);
+					if (!wa) workAdressLabel.setForeground(Color.RED);
+					if (!r) rankLabel.setForeground(Color.RED);
+					if (!tit) titleLabel.setForeground(Color.RED);
+					
 					JOptionPane.showMessageDialog(leftPanel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN EDITTING PROFESSOR", JOptionPane.ERROR_MESSAGE);
 				}
 				

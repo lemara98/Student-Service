@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -405,10 +406,29 @@ public class EditFrameStudent extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				boolean im = true, pr = true, da = true, dub = true, ad = true, ko = true, br = true, prs = true, st = true, godb = true;
+				ime.setForeground(Color.BLACK);
+				pre.setForeground(Color.BLACK);
+				datr.setForeground(Color.BLACK);
+				adrs.setForeground(Color.BLACK);
+				kont.setForeground(Color.BLACK);
+				bri.setForeground(Color.BLACK);
+				pro.setForeground(Color.BLACK);
+				budzet.setForeground(Color.BLACK);
+				samofinansiranje.setForeground(Color.BLACK);
+				
 				try {
-					// TODO Auto-generated method stub
+					
+					if (imet.getText().equals(""))  im = false;
+					if (pret.getText().equals("")) pr = false;
+					if (datrt.getText().equals("")) da = false;
+					if (adrst.getText().equals("")) ad = false;
+					if (kontt.getText().equals("")) ko = false;
+					if (brit.getText().equals("")) br = false;
+					
+					
 					List<Student> ls;
-					boolean greska = false;
+					
 					
 					StatusStudenta n;
 					if (budzet.isSelected()) {
@@ -417,50 +437,76 @@ public class EditFrameStudent extends JDialog {
 					else {
 						n = StatusStudenta.S;
 					}
+					if (n == null) st = false;
 					
-					if (imet.getText().equals("") ||
-							pret.getText().equals("") ||
-							datrt.getText().equals("") ||
-							adrst.getText().equals("") ||
-							kontt.getText().equals("") ||
-							brit.getText().equals(""))
-							throw new Exception();
+					String[] datum = datrt.getText().split("\\.");
+					if (datum.length != 3) da = false;
+					
+					datum = datut.getText().split("\\.");
+					if (datum.length != 3) dub = false;
 					
 					Date dr = new SimpleDateFormat("dd.MM.yyyy.").parse(datrt.getText());
 					Date du = new SimpleDateFormat("dd.MM.yyyy.").parse(datut.getText());
-					if (dr.after(du)) throw new Exception();
+					if (dr.after(du))  {
+						da = false;
+						dub = false;
+					}
 					
-					
-					String[] datum = datrt.getText().split("\\.");
-					if (datum.length != 3) throw new Exception();
+					String[] index = brit.getText().split("/");
+					if(index.length != 2) br = false;
 					
 					double d = 0.00;
 					if (!prot.getText().equals("")) {
 						d = Double.parseDouble(prot.getText());
 						if (d != 0.0)
-							if (d < 6.0 || d > 10.0) throw new Exception();
+							if (d < 6.0 || d > 10.0) prs = false;
 					}
 					
 					int god = Integer.parseInt(tgst.getText());
-					if (god < 1 || god > 4) throw new Exception();
+					if (god < 1 || god > 4) godb = false;
+					
+					if (d == 0 && god != 1) {
+						godb = false;
+						prs = false;
+					}
 					
 					
+					if (!(im && pr && da && ad && ko && br && prs && st && godb && dub)) {
+						throw new Exception();
+					}
+					
+					boolean greska = false;
+					
+					Student temp = new Student();
+					temp.setBrojIndeksa(brit.getText());
+					
+					ls = MyBase.getInstance().getStudents();
+					
+					for(Student i : ls) {
+						if (i == menjaniStudent) continue;
+						if (i.equals(temp)) {	
+								greska = true;
+								JOptionPane.showMessageDialog(panel, "THERE ALREADY IS A STUDENT WITH THAT INDEX!", "ERROR", JOptionPane.ERROR_MESSAGE);
+								break;
+							}
+						}
 					
 					
+					if (!greska) {
 					List<Subject> razlika = menjaniStudent.getSpisakPredmetaKojeStudentSlusa();
 					
 					
-					menjaniStudent.setIme(imet.getText());
-					menjaniStudent.setPrezime(pret.getText());
-					menjaniStudent.setDatumRodjenja(datrt.getText());
-					menjaniStudent.setAdresaStanovanje(adrst.getText());
-					menjaniStudent.setKontaktTelefon(kontt.getText());
-					menjaniStudent.setEmailAdresa(emat.getText());
-					menjaniStudent.setBrojIndeksa(brit.getText());
-					menjaniStudent.setDatumUpisa(datut.getText());
-					menjaniStudent.setTrenutnaGodinaStudija(Integer.parseInt(tgst.getText()));
-					menjaniStudent.setStatus(n);
-					menjaniStudent.setProsecnaOcena(d);
+					temp.setIme(imet.getText());
+					temp.setPrezime(pret.getText());
+					temp.setDatumRodjenja(datrt.getText());
+					temp.setAdresaStanovanje(adrst.getText());
+					temp.setKontaktTelefon(kontt.getText());
+					temp.setEmailAdresa(emat.getText());
+					
+					temp.setDatumUpisa(datut.getText());
+					temp.setTrenutnaGodinaStudija(Integer.parseInt(tgst.getText()));
+					temp.setStatus(n);
+					temp.setProsecnaOcena(d);
 					
 					
 					
@@ -474,37 +520,57 @@ public class EditFrameStudent extends JDialog {
 						sifra = tekst.split(" | ");
 						if (k.isSelected()) {
 							izmenjeniSpisak.add(MyBase.getInstance().getSubject(sifra[0]));
-							MyBase.getInstance().getSubject(sifra[0]).addStudentToSubject(menjaniStudent);
+							MyBase.getInstance().getSubject(sifra[0]).addStudentToSubject(temp);
 						}
 					}
 					
-					menjaniStudent.setSpisakPredmetaKojeStudentSlusa(izmenjeniSpisak);
+					temp.setSpisakPredmetaKojeStudentSlusa(izmenjeniSpisak);
 					
 					razlika.removeAll(izmenjeniSpisak);
 					
 					
 					for(Subject sub: razlika) {
-							MyBase.getInstance().getSubject(sub.getCode()).deleteStudentFromSubject(menjaniStudent);
+							MyBase.getInstance().getSubject(sub.getCode()).deleteStudentFromSubject(temp);
 					}
 					
 
-					ls = MyBase.getInstance().getStudents();
 					
-					for(Student i : ls) {
-						if (i == menjaniStudent) continue;
-						if (i.equals(menjaniStudent)) {	
-								greska = true;
-								JOptionPane.showMessageDialog(panel, "THERE ALREADY IS A STUDENT WITH THAT INDEX!", "ERROR", JOptionPane.ERROR_MESSAGE);
-								break;
-							}
-						}
 					
-					if (!greska) {
-					MyMainFrame.getInstance().azurirajPrikaz();
-					setVisible(false);
+					// boolean im = true, pr = true, da = true, ad = true, ko = true, br = true, prs = true, st = true, godb = true;
+					
+					
+					
+						menjaniStudent.setIme(imet.getText());
+						menjaniStudent.setPrezime(pret.getText());
+						menjaniStudent.setDatumRodjenja(datrt.getText());
+						menjaniStudent.setAdresaStanovanje(adrst.getText());
+						menjaniStudent.setKontaktTelefon(kontt.getText());
+						menjaniStudent.setEmailAdresa(emat.getText());
+						menjaniStudent.setBrojIndeksa(brit.getText());
+						menjaniStudent.setDatumUpisa(datut.getText());
+						menjaniStudent.setTrenutnaGodinaStudija(Integer.parseInt(tgst.getText()));
+						menjaniStudent.setStatus(n);
+						menjaniStudent.setProsecnaOcena(d);	
+						
+						MyMainFrame.getInstance().azurirajPrikaz();
+						setVisible(false);
 					}
 				}
 				catch (Exception er) {
+					if (!im) ime.setForeground(Color.RED);
+					if (!pr) pre.setForeground(Color.RED);
+					if (!da) datr.setForeground(Color.RED);
+					if (!ad) adrs.setForeground(Color.RED);
+					if (!ko) kont.setForeground(Color.RED);
+					if (!br) bri.setForeground(Color.RED);
+					if (!prs) pro.setForeground(Color.RED);
+					if (!st)  {
+						budzet.setForeground(Color.RED);
+						samofinansiranje.setForeground(Color.RED);
+					}
+					if (!godb) tgs.setForeground(Color.RED);
+					if (!dub) datu.setForeground(Color.RED);
+					
 					JOptionPane.showMessageDialog(panel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN EDITTING STUDENT", JOptionPane.ERROR_MESSAGE);
 				}
 			}

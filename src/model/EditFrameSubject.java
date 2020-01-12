@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -277,16 +278,64 @@ public class EditFrameSubject extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				boolean c = true, n = true, sb = true, yos = true, p = true;
+				codeLabel.setForeground(Color.BLACK);
+				nameLabel.setForeground(Color.BLACK);
+				yearLabel.setForeground(Color.BLACK);
+				semesterLabel.setForeground(Color.BLACK);
+				professorLabel.setForeground(Color.BLACK);
+				
 				try {
 					//baca error ako nista ne unesemo zbog parseInt
-					if (codeTextField.getText().isEmpty()) throw new Exception();
-					if (nameTextField.getText().isEmpty()) throw new Exception();
-					int w = Integer.parseInt(semesterTextField.getText());
-					if (w < 1 || w > 8) throw new Exception();
+					if (codeTextField.getText().equals("")) c = false;
+					if (nameTextField.getText().equals("")) n = false;
+					if (yearTextField.getText().equals("")) sb = false;
+					if (semesterTextField.getText().equals("")) yos = false;
+					if (professorComboBox.getSelectedItem() == null) p = false;
+					
+					//baca error ako nista ne unesemo zbog parseInt
 					int q =	Integer.parseInt(yearTextField.getText());
-					if (q < 1 || q > 4) throw new Exception();
+					if (q < 1 || q > 4) yos = false;
+					int w = Integer.parseInt(semesterTextField.getText());
+					if ( q == 1 ) {
+						if (!(w == 1 || w == 2))
+							sb = false;
+					}	
+					else if ( q == 2 ) {
+						if (!(w == 3 || w == 4))
+							sb = false;
+					}
+					else if ( q == 3 ) {
+						if (!(w == 5 || w == 6))
+							sb = false;
+					}
+					else if ( q == 4 )  {
+						if (!(w == 7 || w == 8))
+							sb = false;
+					}
 					
+					if (w < 1 || w > 8)
+						sb = false;
 					
+					if (!(c && n && sb && yos && p)) {
+						throw new Exception();
+					}
+					
+					menjaniPredmet.setCode(codeTextField.getText());
+					
+					boolean greska = false;
+					List<Subject> ls = MyBase.getInstance().getSubjects();
+					for(Subject i : ls) {
+						if (i == menjaniPredmet) continue;
+						if (i.equals(menjaniPredmet)) {	
+							greska = true;
+							JOptionPane.showMessageDialog(leftPanel, "THERE ALREADY IS A SUBJECT WITH THAT CODE!", "ERROR", JOptionPane.ERROR_MESSAGE);
+							break;
+						}
+					}
+					
+					if (!greska) {
 					ArrayList<Student> studentsOnSubject = new ArrayList<Student>();
 					
 					studentsOnSubject = manageCheckedCheckboxes(rightPanel, menjaniPredmet);
@@ -305,7 +354,7 @@ public class EditFrameSubject extends JDialog {
 						menjaniPredmet.setProfessor(pr);
 					}
 					
-					menjaniPredmet.setCode(codeTextField.getText());
+					
 					menjaniPredmet.setName(nameTextField.getText());
 					menjaniPredmet.setSemester(Integer.parseInt(semesterTextField.getText()));
 					menjaniPredmet.setYearOfStuding(Integer.parseInt(yearTextField.getText()));
@@ -321,22 +370,18 @@ public class EditFrameSubject extends JDialog {
 						MyBase.getInstance().getStudentIndex(stud.getBrojIndeksa()).ukloniStudentaSaPredmeta(menjaniPredmet);
 					
 					
-					boolean greska = false;
-					List<Subject> ls = MyBase.getInstance().getSubjects();
-					for(Subject i : ls) {
-						if (i == menjaniPredmet) continue;
-						if (i.equals(menjaniPredmet)) {	
-							greska = true;
-							JOptionPane.showMessageDialog(leftPanel, "THERE ALREADY IS A SUBJECT WITH THAT CODE!", "ERROR", JOptionPane.ERROR_MESSAGE);
-							break;
-						}
-					}
-					if (!greska) {
 						setVisible(false);
 					}
 					//Potrebno dodati opadajuci meni za listu studenata na predmetu, takodje za profesora dugme!
 					
 				}catch(Exception ex) {
+					if (!c) codeLabel.setForeground(Color.RED);
+					if (!n) nameLabel.setForeground(Color.RED);
+					if (!yos) yearLabel.setForeground(Color.RED);
+					if (!sb) semesterLabel.setForeground(Color.RED);
+					if (!p) professorLabel.setForeground(Color.RED);
+
+					
 					JOptionPane.showMessageDialog(leftPanel, "Ubacili ste neodgovarajuce podatke!", "ERROR IN EDITTING SUBJECT", JOptionPane.ERROR_MESSAGE);
 				}
 				

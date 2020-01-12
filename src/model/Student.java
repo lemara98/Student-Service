@@ -77,20 +77,7 @@ public class Student {
 	 * Konstruktor kopije studenta
 	 * @param s
 	 */
-	public Student(Student s) {
-		this.ime = s.ime;
-		this.prezime = s.prezime;
-		this.datumRodjenja = s.datumRodjenja;
-		this.adresaStanovanje = s.adresaStanovanje;
-		this.kontaktTelefon = s.kontaktTelefon;
-		this.emailAdresa = s.emailAdresa;
-		this.brojIndeksa = s.brojIndeksa;
-		this.datumUpisa = s.datumUpisa;
-		this.trenutnaGodinaStudija = s.trenutnaGodinaStudija;
-		this.status = s.status;
-		this.prosecnaOcena = s.prosecnaOcena;
-		this.spisakPredmetaKojeStudentSlusa = new ArrayList<Subject>(s.getSpisakPredmetaKojeStudentSlusa());
-	}
+	
 
 	public String getIme() {
 		return ime;

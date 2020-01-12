@@ -17,7 +17,25 @@ public class Subject {
 	private Professor professor;
 	private ArrayList<Student> students;
 	
+	/**
+	 * Prazan Konstruktor
+	 */
 	public Subject() {}
+	
+	/**
+	 * Konstruktor kopije
+	 * @param sub
+	 */
+	public Subject(Subject sub) {
+		super();
+		this.code = new String(sub.code);
+		this.name = new String(sub.name);
+		this.semester = sub.semester;
+		this.yearOfStuding = sub.yearOfStuding;
+		this.professor = sub.professor;
+		this.students = new ArrayList<Student>(sub.students);
+	}
+	
 	
 	/**
 	 * Konstruktor koji prima sve parametre

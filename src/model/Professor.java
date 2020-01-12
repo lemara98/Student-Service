@@ -115,6 +115,7 @@ public class Professor {
 
 
 
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -131,7 +132,10 @@ public class Professor {
 		return date;
 	}
 	public void setDate(String date) throws ParseException {
-		this.date = new SimpleDateFormat("dd.MM.yyyy.").parse(date);;
+		this.date = new SimpleDateFormat("dd.MM.yyyy.").parse(date);
+	}
+	public void setDate(Date date) throws ParseException {
+		this.date = date;
 	}
 	public String getLivingAdress() {
 		return livingAdress;
