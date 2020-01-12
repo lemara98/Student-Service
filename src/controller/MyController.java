@@ -89,8 +89,10 @@ public class MyController {
 	public void deleteProfessor(int rowSelected) {
 		try {
 			Professor pr = MyBase.getInstance().getProfessorRow(rowSelected);
+
 			for(Subject s : MyBase.getInstance().getSubjects()) {
-				if(s.getProfessor().equals(pr)) {
+				if(s.getProfessor() != null)
+					if (s.getProfessor().equals(pr)){
 					s.setProfessor(null);
 				}
 			}
