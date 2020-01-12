@@ -55,7 +55,7 @@ public class StudentJTable extends JTable{
 			sorter.setSortable(i, true);
 			if (i == 0)
 				sorter.setComparator(i, new IndexComparator());
-			else if (i ==3 || i == 7)
+			else if (i == 3 || i == 7)
 				sorter.setComparator(i, new DateComparator());
 		}
 		int neSortirati[] = {4,5,6,11};
@@ -103,8 +103,10 @@ public class StudentJTable extends JTable{
 			    	  JPanel panel = new JPanel(new GridBagLayout());
 			    	  panel.setPreferredSize(new Dimension(300,300));
 			    	  
+			    	  String index = (String) MyMainFrame.getInstance().getStudentJTable().getValueAt(row,0);
 			    	  
-			    	  Student s = MyBase.getInstance().getStudentRow(row);
+			    	  
+			    	  Student s = MyBase.getInstance().getStudentByIndex(index);
 			    	  prozor.setTitle("Spisak predmeta koje polaze student: " + s.getBrojIndeksa() + " " + s.getIme() + " " + s.getPrezime());
 
 			    	  if (s.getSpisakPredmetaKojeStudentSlusa().isEmpty()) {

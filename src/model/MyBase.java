@@ -400,7 +400,7 @@ public class MyBase {
 	}
 	
 	//vraca Studenta sa zadatim indexom
-	public Student getStudentIndex(String idx) {
+	public Student getStudentByIndex(String idx) {
 		for(Student st : students) {
 			if(st.getBrojIndeksa().equals(idx)) {
 				return st;
@@ -561,7 +561,7 @@ public class MyBase {
 							
 							if(podStud.length >= 6) {
 								for(int i = 5; i < podStud.length; i++) {
-									student = getStudentIndex(podStud[i]);
+									student = getStudentByIndex(podStud[i]);
 									st.add(student); //dodajemo studente
 								}
 							}
@@ -577,7 +577,7 @@ public class MyBase {
 								subjects.add(ucitani);
 								if(podStud.length >= 6) {
 									for(int i = 5; i < podStud.length; i++) {
-										student = getStudentIndex(podStud[i]);
+										student = getStudentByIndex(podStud[i]);
 										student.dodajPredmetUSpisak(ucitani);
 									}
 								}
