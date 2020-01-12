@@ -452,15 +452,14 @@ public class EditFrameProfessor extends JDialog {
 						throw new Exception();
 					}
 					
-					Professor temp = new Professor();
 					
-					temp.setIdNumber(IDNumberTextField.getText());
+					menjaniProfesor.setIdNumber(IDNumberTextField.getText());
 					
 					
 					boolean greska = false;
 					for(Professor i : MyBase.getInstance().getProfessors()) {
-						if (i == temp) continue;
-						if (i.equals(temp)) {	
+						if (i == menjaniProfesor) continue;
+						if (i.equals(menjaniProfesor)) {	
 								greska = true;
 								JOptionPane.showMessageDialog(leftPanel, "THERE ALREADY IS ALREADY SAME PROFESSOR", "ERROR", JOptionPane.ERROR_MESSAGE);
 								break;
@@ -477,38 +476,24 @@ public class EditFrameProfessor extends JDialog {
 					zaBrisanje.removeAll(checkedSubjects);
 
 					
-					temp.setFirstName(firstnameTextField.getText());
-					temp.setLastName(lastNameTextField.getText());
-					temp.setDate(yearTextField.getText());
-					temp.setLivingAdress(livingAdressTextField.getText());
-					temp.setNumber(contactNumberTextField.getText());
-					temp.setEmail(emailTextField.getText());
-					temp.setWorkAdress(workAdressTextField.getText());
-					temp.setTitle(titleTextField.getText());
-					temp.setRank(rankTextField.getText());
-					temp.setSubjects(checkedSubjects);
+					menjaniProfesor.setFirstName(firstnameTextField.getText());
+					menjaniProfesor.setLastName(lastNameTextField.getText());
+					menjaniProfesor.setDate(yearTextField.getText());
+					menjaniProfesor.setLivingAdress(livingAdressTextField.getText());
+					menjaniProfesor.setNumber(contactNumberTextField.getText());
+					menjaniProfesor.setEmail(emailTextField.getText());
+					menjaniProfesor.setWorkAdress(workAdressTextField.getText());
+					menjaniProfesor.setTitle(titleTextField.getText());
+					menjaniProfesor.setRank(rankTextField.getText());
+					menjaniProfesor.setSubjects(checkedSubjects);
 					
 					
 					
 					for(Subject sub : zaBrisanje) {
-						MyBase.getInstance().getProfessorById(temp.getIdNumber()).deleteSubjectFromSubjects(sub);
+						MyBase.getInstance().getProfessorById(menjaniProfesor.getIdNumber()).deleteSubjectFromSubjects(sub);
 						sub.setProfessor(null);
 					}
 					
-					//Potrebno dodati opadajuci meni za listu studenata na predmetu, takodje za profesora dugme!
-					
-					
-					menjaniProfesor.setIdNumber(temp.getIdNumber());
-					menjaniProfesor.setFirstName(temp.getFirstName());
-					menjaniProfesor.setLastName(temp.getLastName());
-					menjaniProfesor.setDate(temp.getDate());
-					menjaniProfesor.setLivingAdress(temp.getLivingAdress());
-					menjaniProfesor.setNumber(temp.getNumber());
-					menjaniProfesor.setEmail(temp.getEmail());
-					menjaniProfesor.setWorkAdress(temp.getWorkAdress());
-					menjaniProfesor.setTitle(temp.getTitle());
-					menjaniProfesor.setRank(temp.getRank());
-					menjaniProfesor.setSubjects(temp.getSubjects());
 					MyMainFrame.getInstance().azurirajPrikaz();
 					setVisible(false);
 					}

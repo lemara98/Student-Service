@@ -193,7 +193,7 @@ public class Professor {
 		
 		Professor p = (Professor)o;
 		
-		if (this.idNumber == p.idNumber)
+		if (this.idNumber.equals(p.idNumber))
 				return true;
 			
 		return false;
