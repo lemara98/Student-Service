@@ -214,7 +214,7 @@ public class AddFrameSubject extends JDialog {
 		
 		gbc7.anchor = GridBagConstraints.CENTER;
 		
-		JLabel professorLabel = new JLabel("Professor");
+		JLabel professorLabel = new JLabel("Professor*");
 		leftPanel.add(professorLabel,gbc7);
 		
 		//////////////////////////

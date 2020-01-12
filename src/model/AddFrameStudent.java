@@ -369,7 +369,7 @@ public class AddFrameStudent extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean im = true, pr = true, da = true, dub = true, ad = true, ko = true, br = true, prs = true, st = true, godb = true;
+				boolean im = true, pr = true, da = true, dub = true, ad = true, ko = true, br = true, prs = true, st = true, godb = true, tgb = true;
 				ime.setForeground(Color.BLACK);
 				pre.setForeground(Color.BLACK);
 				datr.setForeground(Color.BLACK);
@@ -380,6 +380,7 @@ public class AddFrameStudent extends JDialog {
 				ema.setForeground(Color.BLACK);
 				datu.setForeground(Color.BLACK);
 				tgs.setForeground(Color.BLACK);
+				ema.setForeground(Color.BLACK);
 				budzet.setForeground(Color.BLACK);
 				samofinansiranje.setForeground(Color.BLACK);
 				
@@ -392,6 +393,7 @@ public class AddFrameStudent extends JDialog {
 					if (adrst.getText().equals("")) ad = false;
 					if (kontt.getText().equals("")) ko = false;
 					if (brit.getText().equals("")) br = false;
+					if (tgst.getText().isEmpty()) tgb = false;
 					
 					
 					List<Student> ls;
@@ -478,7 +480,7 @@ public class AddFrameStudent extends JDialog {
 						}
 					}
 					// boolean im = true, pr = true, da = true, ad = true, ko = true, br = true, prs = true, st = true, godb = true;
-					if (!(im && pr && da && ad && ko && br && prs && st && godb && dub)) {
+					if (!(im && pr && da && ad && ko && br && prs && st && godb && dub && tgb)) {
 						greska = true;
 						throw new Exception();
 					}
@@ -496,6 +498,7 @@ public class AddFrameStudent extends JDialog {
 					if (!ko) kont.setForeground(Color.RED);
 					if (!br) bri.setForeground(Color.RED);
 					if (!prs) pro.setForeground(Color.RED);
+					if (!tgb) tgs.setForeground(Color.RED);
 					if (!st)  {
 						budzet.setForeground(Color.RED);
 						samofinansiranje.setForeground(Color.RED);
