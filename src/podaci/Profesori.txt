@@ -1,0 +1,6 @@
+007198721; Aleksa; Petković; 15.01.1965.; Temerinska 15, Novi Sad; 021/334-990; aleksa.petkovic@mailinator.com; Dositeja Obradovića 6, Novi Sad, MI 105; Prof. dr; Redovni profesor; OP301
+008431903; Jana; Lazarević; 25.02.1963.; Jovana Cvijića 26, Novi Sad; 021/435-891; jana.lazarevic@mailinator.com; Dositeja Obradovića 6, Novi Sad, Nastavni blok 206; Prof. dr; Redovni profesor; DM881
+005671007; Nađa; Aleksić; 23.03.1973.; Gundulićeva 75, Novi Sad; 021/730-172; nadja.aleksic@mailinator.com; Dositeja Obradovića 6, Novi Sad, NTP 307; Dr; Vanredni profesor; PP007
+009999331; Đorđe; Spasojević; 24.08.1978.; Šekspirova 44, Novi Sad; 021/514-893; djordje.spasojevic@mailinator.com; Dositeja Obradovića 6, Novi Sad, MI 118; Dr; Vanredni profesor; RVP33
+003330976; Elena; Milenković; 08.11.1985.; Tolstojeva 52, Novi Sad; 021/834-901; elena.milenkovic@mailinator.com; Dositeja Obradovića 6, Novi Sad, Nastavni blok 217; Dr; Docent
+007441998; Teodor; Mladenović; 14.12.1983.; Jovana Subotića 33, Novi Sad; 021/441-007; teodor.mladenovic@mailinator.com; Dositeja Obradovića 6, Novi Sad, NTP M35; Dr; Docent
