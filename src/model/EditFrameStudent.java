@@ -406,7 +406,7 @@ public class EditFrameStudent extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				boolean im = true, pr = true, da = true, dub = true, ad = true, ko = true, br = true, prs = true, st = true, godb = true;
+				boolean im = true, pr = true, da = true, dub = true, ad = true, ko = true, br = true, prs = true, st = true, godb = true, tgb = true;;
 				ime.setForeground(Color.BLACK);
 				pre.setForeground(Color.BLACK);
 				datr.setForeground(Color.BLACK);
@@ -414,6 +414,7 @@ public class EditFrameStudent extends JDialog {
 				kont.setForeground(Color.BLACK);
 				bri.setForeground(Color.BLACK);
 				pro.setForeground(Color.BLACK);
+				ema.setForeground(Color.BLACK);
 				budzet.setForeground(Color.BLACK);
 				samofinansiranje.setForeground(Color.BLACK);
 				
@@ -425,6 +426,7 @@ public class EditFrameStudent extends JDialog {
 					if (adrst.getText().equals("")) ad = false;
 					if (kontt.getText().equals("")) ko = false;
 					if (brit.getText().equals("")) br = false;
+					if (tgst.getText().isEmpty()) tgb = false;
 					
 					
 					List<Student> ls;
@@ -471,7 +473,7 @@ public class EditFrameStudent extends JDialog {
 					}
 					
 					
-					if (!(im && pr && da && ad && ko && br && prs && st && godb && dub)) {
+					if (!(im && pr && da && ad && ko && br && prs && st && godb && dub && tgb)) {
 						throw new Exception();
 					}
 					
@@ -570,6 +572,7 @@ public class EditFrameStudent extends JDialog {
 					}
 					if (!godb) tgs.setForeground(Color.RED);
 					if (!dub) datu.setForeground(Color.RED);
+					if (!tgb) tgs.setForeground(Color.RED);
 					
 					JOptionPane.showMessageDialog(panel, "Ubacili ste ne odgovarajuce podatke!", "ERROR IN EDITTING STUDENT", JOptionPane.ERROR_MESSAGE);
 				}
