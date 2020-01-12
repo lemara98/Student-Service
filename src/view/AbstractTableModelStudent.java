@@ -4,6 +4,12 @@ import javax.swing.table.AbstractTableModel;
 
 import model.MyBase;
 
+
+/**
+ * Znaci koja ce da uzima podatke iz tabele sa profesorima
+ * @author Mile
+ *
+ */
 public class AbstractTableModelStudent extends AbstractTableModel{
 
 	/**

@@ -25,7 +25,11 @@ import view.ProfessorJTable;
 import view.StudentJTable;
 import view.SubjectJTable;
 
-
+/**
+ * Klasa Glavnog prozora
+ * @author Mile, Aleksandar
+ *
+ */
 public class MyMainFrame extends JFrame {
 
 	private static final long serialVersionUID = -9032128792693493257L;
@@ -36,6 +40,9 @@ public class MyMainFrame extends JFrame {
 	private SubjectJTable subjectJTable;
 	private StudentJTable studentJTable;
 	
+	/**
+	 * Privatni konstruktor bez parametara
+	 */
 	private MyMainFrame() {
 		super();
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -54,12 +61,10 @@ public class MyMainFrame extends JFrame {
 		
 		
 		// Sigurnosni Prozor za izlaz iz programa
-		izlazniProzor();		// izuzetno dosadna opcija pri testiranju aplikacije! Otkomentarisati pri kraju i dugme exit obavezno!
-		
-		
-	// 	Odavde sam menjao tako da tu prilagodi. Od ove linije pa do 77
-		
+		izlazniProzor();		
 
+		
+		// Gotov uvod, krece razrada. Ide zurka, ide gas.
 		JPanel panelCentar = new JPanel();
 	
 		
@@ -98,24 +103,7 @@ public class MyMainFrame extends JFrame {
 		
 		kartice.addTab("Professors", professorPane);
 		kartice.addTab("Subjects", subjectPane);
-		//Listener that sets addProfessor button depending of selected tab in tabbed pane
-//		kartice.addChangeListener(new ChangeListener() {
-//			
-//			@Override
-//			public void stateChanged(ChangeEvent e) {
-//				if(kartice.getSelectedIndex() == 0 ) { 			// Proffesors
-//					myToolBar.getBtnAddProfessor().setEnabled(true);
-//					myToolBar.getBtnAddStudent().setEnabled(false);
-//				} else if (kartice.getSelectedIndex() == 1) {	// Subjects
-//					myToolBar.getBtnAddProfessor().setEnabled(false);
-//					myToolBar.getBtnAddStudent().setEnabled(true);
-//				} else {										// Students
-//					myToolBar.getBtnAddProfessor().setEnabled(false);
-//					myToolBar.getBtnAddStudent().setEnabled(false);
-//				}
-//				
-//			}
-//		});
+
 		
 		// Dodajemo karticu studenata
 		studentJTable = new StudentJTable();
@@ -137,10 +125,13 @@ public class MyMainFrame extends JFrame {
 			e.printStackTrace();
 		}
 		
-		
 		setVisible(true);
 	}
 	
+	/**
+	 * Singleton poziv glavnog prozora
+	 * @return
+	 */
 	public static  MyMainFrame getInstance() {
 		if (instance == null) 
 			instance = new MyMainFrame();
@@ -148,6 +139,10 @@ public class MyMainFrame extends JFrame {
 		return instance;
 	}
 	
+	/**
+	 * metoda koja vraca selektovanu karticu
+	 * @return vraca index
+	 */
 	public int getSelectedTabbedPane() {
 		return kartice.getSelectedIndex();
 	}
@@ -164,6 +159,9 @@ public class MyMainFrame extends JFrame {
 		return subjectJTable;
 	}
 	
+	/**
+	 * Azurira prikaz svih kartica
+	 */
 	public void azurirajPrikaz() {
 		AbstractTableModelProfessor modelProfessor = (AbstractTableModelProfessor)professorJTable.getModel();
 		AbstractTableModelSubject modelSubject = (AbstractTableModelSubject)subjectJTable.getModel();

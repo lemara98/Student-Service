@@ -12,9 +12,18 @@ import model.Professor;
 import model.Student;
 import model.Subject;
 
+/**
+ * Klasa kontroler
+ * @authors Aleksandar, Mile
+ *
+ */
 public class MyController {
 	private static MyController instance = null;
 	
+	/**
+	 * Singleton poziv za kreiranje konstruktra
+	 * @return
+	 */
 	public static MyController getInstance() {
 		if(instance == null)
 			instance = new MyController();
@@ -22,6 +31,9 @@ public class MyController {
 		return instance;
 	}
 	
+	/**
+	 * privatni konstruktor bez parametara
+	 */
 	private MyController() {}
 	
 	//////////////////////////////////////////////PREDMET/////////////////////////////////////////////////////

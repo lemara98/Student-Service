@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Klasa profesor
+ * @author Aleksandar, Mile
+ *
+ */
 public class Professor {
 	private String firstName;
 	private String lastName;
@@ -21,6 +26,21 @@ public class Professor {
 	private List<Subject> subjects;
 	//SimpleDateFormat df;
 	
+	/**
+	 * Konstruktor sa svim parametrima
+	 * @param idNumber
+	 * @param firstName
+	 * @param lastName
+	 * @param date
+	 * @param livingAdress
+	 * @param number
+	 * @param email
+	 * @param workAdress
+	 * @param title
+	 * @param rank
+	 * @param subjects
+	 * @throws ParseException
+	 */
 	public Professor(String idNumber, String firstName, String lastName, String date, String livingAdress, String number, String email,
 			String workAdress, String title, String rank, List<Subject> subjects) throws ParseException {
 		super();
@@ -38,6 +58,20 @@ public class Professor {
 	//	this.subjects = new ArrayList<Subject>();
 	}	
 	
+	/**
+	 * Konstruktor sa svim parametrima izuzev predmeta koje drzi profesor
+	 * @param idNumber
+	 * @param firstName
+	 * @param lastName
+	 * @param date
+	 * @param livingAdress
+	 * @param number
+	 * @param email
+	 * @param workAdress
+	 * @param title
+	 * @param rank
+	 * @throws ParseException
+	 */
 	public Professor(String idNumber, String firstName, String lastName, String date, String livingAdress, String number, String email,
 			String workAdress, String title, String rank) throws ParseException {
 		super();
@@ -56,6 +90,9 @@ public class Professor {
 	}	
 	
 	
+	/**
+	 * Prilagodjena toString metoda za upis u fajl
+	 */
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
@@ -68,7 +105,10 @@ public class Professor {
 				+ "; " + title + "; " + rank + str;
 	}
 
-
+	
+	/**
+	 * Konstruktor bez parametara
+	 */
 	public Professor() {
 		super();
 	}
@@ -136,6 +176,9 @@ public class Professor {
 		this.rank = rank;
 	}
 	
+	/**
+	 * Metoda koja proverava da li su 2 profesora jednaka po primarnom kljucu (broju licne karte)
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o == this)
@@ -162,15 +205,27 @@ public class Professor {
 		this.subjects = subjects;
 	}
 	
+	/**
+	 * Dodaje predmet u listu
+	 * @param s - predmet
+	 */
 	public void addSubjectToSubjects(Subject s) {
 		this.subjects.add(s);
 	}
 	
+	/**
+	 * pretrazuje bazu podataka za unetom sifrom predmeta i kad pronadje stalja ga u listu 
+	 * @param s - sifra predmeta
+	 */
 	public void addSubjectToSubjects(String s) {
 		Subject newSubject = MyBase.getInstance().getSubject(s);
 		this.subjects.add(newSubject);
 	}
 	
+	/**
+	 * brise predmet iz liste
+	 * @param sub - predmet
+	 */
 	public void deleteSubjectFromSubjects(Subject sub) {
 		this.subjects.remove(sub);
 	}

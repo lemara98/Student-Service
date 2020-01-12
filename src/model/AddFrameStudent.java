@@ -23,6 +23,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+/**
+ * Klasa za dodavanje studenta u bazu
+ * @author Mile
+ *
+ */
 public class AddFrameStudent extends JDialog {
 
 	
@@ -48,7 +53,9 @@ public class AddFrameStudent extends JDialog {
 	
 	
 	
-	
+	/**
+	 * Prozor sa formularom za dodavanje studenta
+	 */
 	public AddFrameStudent() {
 		super();
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -185,10 +192,8 @@ public class AddFrameStudent extends JDialog {
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-	//	JLabel sta = new JLabel("Status [B,S]");
 		
 		panel.add(budzet, gbc);
-	//	panel.add(sta, gbc);
 		
 		// Prosecna ocena
 		gbc.gridx = 0;
@@ -201,17 +206,6 @@ public class AddFrameStudent extends JDialog {
 		
 		
 		panel.add(pro, gbc);
-		
-//		// spisak predmeta koje student slusa
-//		gbc.gridx = 0;
-//		gbc.gridy = 11;
-//		gbc.gridwidth = 1;
-//		gbc.gridheight = 1;
-//		gbc.anchor = GridBagConstraints.WEST;
-//		
-//		JLabel sps = new JLabel("Spisak predmeta koje slusa   ");
-//		
-//		panel.add(sps, gbc);
 		
 		//// JTextArea ////
 		
@@ -347,16 +341,7 @@ public class AddFrameStudent extends JDialog {
 				
 				panel.add(prot, gbc);
 				
-//				// spisak predmeta koje student slusa
-//				gbc.gridx = 1;
-//				gbc.gridy = 11;
-//				gbc.gridwidth = 1;
-//				gbc.gridheight = 1;
-//				gbc.anchor = GridBagConstraints.WEST;
-//				
-//				spst.setPreferredSize(v);
-//				
-//				panel.add(spst, gbc);
+
 				
 				
 		JPanel panelDugmadi = new JPanel(new FlowLayout(FlowLayout.CENTER));

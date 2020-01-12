@@ -25,6 +25,11 @@ import model.MyBase;
 import model.MyMainFrame;
 import model.Professor;
 
+/**
+ * Klasa JTable koja je podredjena profesorima
+ * @author Aleksandar
+ *
+ */
 public class ProfessorJTable extends JTable {
 
 	private static final long serialVersionUID = -6161298503549205515L;
@@ -55,7 +60,7 @@ public class ProfessorJTable extends JTable {
 		
 		setRowSorter(sorter);
 
-		
+		//  Menjanje izgleda misa na odredjenom polju tabele
 		this.addMouseMotionListener(new MouseMotionListener() {
 			
 			@Override
@@ -76,6 +81,7 @@ public class ProfessorJTable extends JTable {
 			}
 		});
 		
+		// Prozor sa spiskom predmeta koje predaje profesor
 		this.addMouseListener(new MouseAdapter() {
 			  public void mouseClicked(MouseEvent e) {
 			    if (e.getClickCount() == 1) {
@@ -127,7 +133,9 @@ public class ProfessorJTable extends JTable {
 			});
 	}
 	
-	//kada selektujemo polje da bude druge boje
+		/**
+		 * Metoda koja ce selektovano polje u tabeli da oboji sivom a ostala belom bojom
+		 */
 		@Override
 		public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
 			Component c = super.prepareRenderer(renderer, row, column);

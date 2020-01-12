@@ -16,10 +16,18 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-
+/**
+ * Klasa baze podataka
+ * @author Aleksandar, Mile
+ *
+ */
 public class MyBase {
 	private static MyBase instance = null;
 	
+	/**
+	 * Singleton poziv za kreiranje baze
+	 * @return bazu ako ne postoji, ako postoji vraca tu postojecu
+	 */
 	public static MyBase getInstance() {
 		if(instance == null)
 			try {
@@ -46,6 +54,11 @@ public class MyBase {
 	private List<Subject> subjects = new ArrayList<Subject>();
 	private List<String> columnsSubject;
 	
+	/**
+	 * Konstruktor baze
+	 * @throws NumberFormatException
+	 * @throws Exception
+	 */
 	private MyBase() throws NumberFormatException, Exception {
 		initProfessors();		//na Pocetku inicijalizujemo listu profesora
 		initStudents();
@@ -55,6 +68,12 @@ public class MyBase {
 	
 	///////////////////////////////////////////////PROFESSOR////////////////////////////////////////////////
 	
+	
+	/**
+	 * Konstruktor dela baze za profesore
+	 * @throws NumberFormatException
+	 * @throws Exception
+	 */
 	private void initProfessors() throws NumberFormatException, Exception {
 		
 		
@@ -91,7 +110,13 @@ public class MyBase {
 	public Professor getProfessorRow(int rowIndex) {
 		return professors.get(rowIndex);		//returns one of my professors from the list
 	}
-
+	
+	/**
+	 * Vraca tekst iz odredjenog polja u tabeli sa profesorima
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public String getProfessorValueAt(int row, int column) {		//returns the string of one table field
 		DateFormat df = new SimpleDateFormat("dd.MM.yyyy.");
 		Professor prof = this.professors.get(row);
@@ -154,6 +179,12 @@ public class MyBase {
 	}
 	
 	//////////////////////////////////////////////////SUBJECT/////////////////////////////////////////////////
+	
+	/**
+	 * Konstruktor dela baze za predmete
+	 * @throws NumberFormatException
+	 * @throws Exception
+	 */
 	public void initSubjects() throws NumberFormatException, Exception {
 		
 		readFromFile(predmeti);
@@ -207,6 +238,12 @@ public class MyBase {
 		return null;
 	}
 	
+	/**
+	 * Vraca tekst iz odredjenog polja tabele predmet
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public String getSubjectValueAt(int row, int column) {
 		Subject s = subjects.get(row);
 		switch(column) {
@@ -281,14 +318,16 @@ public class MyBase {
 
 	/////////////////	Studenti	/////////////////
 
-	
+	/**
+	 * Konstruktor dela baze za studente
+	 * @throws NumberFormatException
+	 * @throws Exception
+	 */
 	private void initStudents() throws NumberFormatException, Exception {
 		
 		columnsStudent = new ArrayList<String>();
 		
 		readFromFile(studenti);
-	//	Student st1 = new Student("Ljuba", "Alicic", "01-04-1959", "Ilidza", "062431234", "ljuba.alicic@uns.ac.rs", "RA1/3019", "01-10-3019", 1, StatusStudenta.B, 6.34);
-	//	students.add(st1);  Ovo te je zezalo!
 		
 		columnsStudent.add("Broj indeksa");
 		columnsStudent.add("Ime");
@@ -302,8 +341,7 @@ public class MyBase {
 		columnsStudent.add("Status");
 		columnsStudent.add("Prosecna ocena");
 		columnsStudent.add("Spisak predmeta koje student slusa");
-		
-		
+			
 	}
 	
 
@@ -437,6 +475,12 @@ public class MyBase {
 		writeToFile(predmeti);
 	}
 	
+	/**
+	 * metoda koja cita iz fajlau zavisnosti koji je fajl poslat
+	 * @param fajl
+	 * @throws NumberFormatException
+	 * @throws Exception
+	 */
 	private void readFromFile(File fajl) throws NumberFormatException, Exception {
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fajl.getPath()), "UTF-8"))){
 				
@@ -445,6 +489,8 @@ public class MyBase {
 					boolean jedinstven = true;
 					trenutni.trim();
 					String[] podStud = trenutni.split("; ");
+					
+					// STUDENTI
 					if(fajl == studenti) {
 						if (podStud.length > 10) {
 							Student ucitani = new Student(podStud[0], 
@@ -477,7 +523,10 @@ public class MyBase {
 							if (jedinstven)
 							students.add(ucitani);
 						}
-					} else if(fajl == profesori) {
+					} 
+					
+					// PROFESORI
+					else if(fajl == profesori) {
 						if(podStud.length > 9) {
 							
 
@@ -496,7 +545,10 @@ public class MyBase {
 							if (jedinstven)
 							professors.add(ucitani);
 						}
-					}else if(fajl == predmeti){
+					}
+					
+					// PREDMETI
+					else if(fajl == predmeti){
 						if (podStud.length > 4) {
 							Professor pr = null;
 							
@@ -545,11 +597,16 @@ public class MyBase {
 			}
 		}
 	
-	
+	/**
+	 * metoda za pisanje u fajl (cuvanje izmena)
+	 * @param fajl
+	 */
 	private void writeToFile(File fajl) {
 		try (BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fajl.getPath()), "UTF-8"))){
 			
 			StringBuilder trenutni = new StringBuilder();
+			
+			
 			if(fajl == studenti) {
 				for(Student i : students) {
 					trenutni.append(i.toString() + "\n");
@@ -573,16 +630,4 @@ public class MyBase {
 			e.printStackTrace();
 		}
 	}
-	
-	
-
 }
-	
-
-	
-	
-	
-	
-	
-	
-

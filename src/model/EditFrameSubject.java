@@ -24,7 +24,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-
+/**
+ * Prozor za izmenu podataka Predmeta
+ * @author Aleksandar, Mile
+ *
+ */
 public class EditFrameSubject extends JDialog {
 
 	/**
@@ -34,6 +38,11 @@ public class EditFrameSubject extends JDialog {
 	
 	private ArrayList<JCheckBox> listaCekBoxova;
 	
+	
+	/**
+	 * Konstruktor sa parametrom predmet
+	 * @param menjaniPredmet
+	 */
 	public EditFrameSubject(Subject menjaniPredmet) {
 		super();
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -72,6 +81,7 @@ public class EditFrameSubject extends JDialog {
 		this.setLocationRelativeTo(null);
 		setBackground(java.awt.Color.LIGHT_GRAY);
 		
+		
 		GridBagLayout gbl = new GridBagLayout();
 		setLayout(new BorderLayout());
 		
@@ -87,6 +97,8 @@ public class EditFrameSubject extends JDialog {
 		this.add(downPanel, BorderLayout.SOUTH);	//dole ce biti submit i cancel button
 		this.add(rightPanel,BorderLayout.CENTER); //desno ce biti lista studenata koji slusaju predmet
 		
+		// Smestanje na dijalog krece sad
+		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.gridx = 0;
@@ -100,6 +112,8 @@ public class EditFrameSubject extends JDialog {
 		JLabel codeLabel = new JLabel("Code*");
 		leftPanel.add(codeLabel,gbc);
 		
+		////////////////
+		
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		
@@ -111,6 +125,8 @@ public class EditFrameSubject extends JDialog {
 		JTextField codeTextField = new JTextField(menjaniPredmet.getCode());
 		codeTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(codeTextField,gbc);
+		
+		////////////////
 		
 		gbc = new GridBagConstraints();
 		
@@ -124,6 +140,8 @@ public class EditFrameSubject extends JDialog {
 		
 		JLabel nameLabel = new JLabel("Name*");
 		leftPanel.add(nameLabel,gbc);
+		
+		////////////////
 		
 		GridBagConstraints gbc2 = new GridBagConstraints();
 		
@@ -139,6 +157,8 @@ public class EditFrameSubject extends JDialog {
 		nameTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(nameTextField,gbc2);
 		
+		////////////////
+		
 		GridBagConstraints gbc3 = new GridBagConstraints();
 		
 		gbc3.gridx = 0;
@@ -151,6 +171,8 @@ public class EditFrameSubject extends JDialog {
 		
 		JLabel semesterLabel = new JLabel("Semester* [1-8]");
 		leftPanel.add(semesterLabel,gbc3);
+		
+		////////////////
 		
 		GridBagConstraints gbc4 = new GridBagConstraints();
 		
@@ -167,6 +189,8 @@ public class EditFrameSubject extends JDialog {
 		semesterTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(semesterTextField,gbc4);
 		
+		////////////////
+		
 		GridBagConstraints gbc5 = new GridBagConstraints();
 		
 		gbc5.gridx = 0;
@@ -179,6 +203,8 @@ public class EditFrameSubject extends JDialog {
 		
 		JLabel yearLabel = new JLabel("Year of study* [1-4]");
 		leftPanel.add(yearLabel,gbc5);
+		
+		////////////////
 		
 		GridBagConstraints gbc6 = new GridBagConstraints();
 		
@@ -195,6 +221,8 @@ public class EditFrameSubject extends JDialog {
 		yearTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(yearTextField,gbc6);
 		
+		////////////////
+		
 		GridBagConstraints gbc7 = new GridBagConstraints();
 		
 		gbc7.gridx = 0;
@@ -207,6 +235,8 @@ public class EditFrameSubject extends JDialog {
 		
 		JLabel professorLabel = new JLabel("Professor");
 		leftPanel.add(professorLabel,gbc7);
+		
+		////////////////
 		
 		GridBagConstraints gbc8 = new GridBagConstraints();
 		
@@ -238,6 +268,8 @@ public class EditFrameSubject extends JDialog {
 		professorComboBox.setSize(new Dimension(150,20));
 		professorComboBox.setSelectedIndex(idx);
 		leftPanel.add(professorComboBox,gbc8);
+		
+		////////////////
 		
 		JButton submitBtn = new JButton("Submit");
 		submitBtn.setPreferredSize(new Dimension(100,20));
@@ -314,6 +346,8 @@ public class EditFrameSubject extends JDialog {
 		//Na donji panel dodajem dugmad submit i cancel
 		downPanel.add(submitBtn,gbc7);
 		
+		////////////////
+		
 		JButton cancelBtn = new JButton("Cancel");
 		cancelBtn.setPreferredSize(new Dimension(100,20));
 		cancelBtn.addActionListener(new ActionListener() {
@@ -330,7 +364,7 @@ public class EditFrameSubject extends JDialog {
 		
 		downPanel.add(cancelBtn);
 		
-		
+		////////////////
 		
 		//Na desni panel dodajemo listu studenata koji slusaju predmet
 		int br = 0;
@@ -345,6 +379,12 @@ public class EditFrameSubject extends JDialog {
 		
 	}
 	
+	/**
+	 * dodavanje studenata na panel
+	 * @param panel
+	 * @param box
+	 * @param rbr
+	 */
 	private void addStudentToList(JPanel panel, JCheckBox box, int rbr) {
 		
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -359,6 +399,12 @@ public class EditFrameSubject extends JDialog {
 	}
 	
 	//This method returns a list of selected checkboxes(Students that should listen the subject)
+	/**
+	 * metoda koja vraca listu selektovanih cek boksova
+	 * @param c
+	 * @param menjaniPredmet
+	 * @return
+	 */
 	public static ArrayList<Student> manageCheckedCheckboxes(final Container c, Subject menjaniPredmet) {
 	    Component[] comps = c.getComponents();
 	    ArrayList<Student> checkedStudents = new ArrayList<Student>();
@@ -381,6 +427,9 @@ public class EditFrameSubject extends JDialog {
 
 	}
 	
+	/**
+	 * metoda za uncekiranje cek boksova. Ne
+	 */
 	public void uncheckCheckBoxes() {
 		for (JCheckBox box : listaCekBoxova) {
 			box.setSelected(false);

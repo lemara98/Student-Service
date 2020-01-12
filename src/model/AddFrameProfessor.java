@@ -23,6 +23,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+/**
+ * Klasa za dodavanje profesora
+ * @author Aleksandar, Mile
+ *
+ */
 public class AddFrameProfessor extends JDialog {
 
 	/**
@@ -30,7 +35,9 @@ public class AddFrameProfessor extends JDialog {
 	 */
 	private static final long serialVersionUID = 8383577535696823396L;
 	
-	
+	/**
+	 * Konstruktor bez parametara koji otvara formular za dodavanje profesora
+	 */
 	public AddFrameProfessor() {
 		super();
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -61,6 +68,8 @@ public class AddFrameProfessor extends JDialog {
 		this.add(downPanel, BorderLayout.SOUTH);	//dole ce biti submit i cancel button
 		this.add(rightPanel,BorderLayout.CENTER); //desno ce biti lista studenata koji slusaju predmet
 		
+		//////////////////////////
+		
 		GridBagConstraints gbc0 = new GridBagConstraints();
 				
 		gbc0.gridx = 0;
@@ -73,6 +82,8 @@ public class AddFrameProfessor extends JDialog {
 		
 		JLabel IDNumberLabel = new JLabel("ID broj*");
 		leftPanel.add(IDNumberLabel,gbc0);
+		
+		//////////////////////////
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -88,6 +99,8 @@ public class AddFrameProfessor extends JDialog {
 		IDNumberTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(IDNumberTextField,gbc);
 		
+		//////////////////////////
+		
 		GridBagConstraints gbc1 = new GridBagConstraints();
 		
 		gbc1.gridx = 0;
@@ -100,6 +113,8 @@ public class AddFrameProfessor extends JDialog {
 		
 		JLabel firstNameLabel = new JLabel("Ime*");
 		leftPanel.add(firstNameLabel,gbc1);
+		
+		//////////////////////////
 		
 		GridBagConstraints gbc2 = new GridBagConstraints();
 		
@@ -115,6 +130,8 @@ public class AddFrameProfessor extends JDialog {
 		firstnameTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(firstnameTextField,gbc2);
 		
+		//////////////////////////
+		
 		GridBagConstraints gbc3 = new GridBagConstraints();
 		
 		gbc3.gridx = 0;
@@ -128,6 +145,8 @@ public class AddFrameProfessor extends JDialog {
 		JLabel lastNameLabel = new JLabel("Prezime*");
 		leftPanel.add(lastNameLabel,gbc3);
 		
+		//////////////////////////
+
 		GridBagConstraints gbc4 = new GridBagConstraints();
 		
 		gbc4.gridx = 1;
@@ -142,6 +161,8 @@ public class AddFrameProfessor extends JDialog {
 		lastNameTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(lastNameTextField,gbc4);
 		
+		//////////////////////////
+		
 		GridBagConstraints gbc5 = new GridBagConstraints();
 		
 		gbc5.gridx = 0;
@@ -154,6 +175,8 @@ public class AddFrameProfessor extends JDialog {
 		
 		JLabel yearLabel = new JLabel("Datum rodjenja* [dd.MM.yyyy.]");
 		leftPanel.add(yearLabel,gbc5);
+		
+		//////////////////////////
 		
 		GridBagConstraints gbc6 = new GridBagConstraints();
 		
@@ -169,6 +192,8 @@ public class AddFrameProfessor extends JDialog {
 		yearTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(yearTextField,gbc6);
 		
+		//////////////////////////
+		
 		GridBagConstraints gbc7 = new GridBagConstraints();
 		
 		gbc7.gridx = 0;
@@ -181,6 +206,8 @@ public class AddFrameProfessor extends JDialog {
 		
 		JLabel livingAdressLabel = new JLabel("Adresa stanovanja*");
 		leftPanel.add(livingAdressLabel,gbc7);
+		
+		//////////////////////////
 		
 		GridBagConstraints gbc8 = new GridBagConstraints();
 		
@@ -196,6 +223,8 @@ public class AddFrameProfessor extends JDialog {
 		livingAdressTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(livingAdressTextField,gbc8);
 		
+		//////////////////////////
+		
 		GridBagConstraints gbc9 = new GridBagConstraints();
 		
 		gbc9.gridx = 0;
@@ -208,6 +237,8 @@ public class AddFrameProfessor extends JDialog {
 		
 		JLabel contactNumberLabel = new JLabel("Kontakt telefon*");
 		leftPanel.add(contactNumberLabel,gbc9);
+		
+		//////////////////////////
 		
 		GridBagConstraints gbc10 = new GridBagConstraints();
 		
@@ -223,6 +254,8 @@ public class AddFrameProfessor extends JDialog {
 		contactNumberTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(contactNumberTextField,gbc10);
 		
+		//////////////////////////
+		
 		GridBagConstraints gbc11 = new GridBagConstraints();
 		
 		gbc11.gridx = 0;
@@ -235,6 +268,8 @@ public class AddFrameProfessor extends JDialog {
 		
 		JLabel emailLabel = new JLabel("Email adresa*");
 		leftPanel.add(emailLabel,gbc11);
+		
+		//////////////////////////
 		
 		GridBagConstraints gbc12 = new GridBagConstraints();
 		
@@ -250,6 +285,8 @@ public class AddFrameProfessor extends JDialog {
 		emailTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(emailTextField,gbc12);
 		
+		//////////////////////////
+		
 		GridBagConstraints gbc13 = new GridBagConstraints();
 		
 		gbc13.gridx = 0;
@@ -262,6 +299,8 @@ public class AddFrameProfessor extends JDialog {
 		
 		JLabel workAdressLabel = new JLabel("Adresa radnog mesta*");
 		leftPanel.add(workAdressLabel,gbc13);
+		
+		//////////////////////////
 		
 		GridBagConstraints gbc14 = new GridBagConstraints();
 		
@@ -277,6 +316,8 @@ public class AddFrameProfessor extends JDialog {
 		workAdressTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(workAdressTextField,gbc14);
 		
+		//////////////////////////
+		
 		GridBagConstraints gbc15 = new GridBagConstraints();
 		
 		gbc15.gridx = 0;
@@ -289,6 +330,8 @@ public class AddFrameProfessor extends JDialog {
 		
 		JLabel titleLabel = new JLabel("Zvanje*");
 		leftPanel.add(titleLabel,gbc15);
+		
+		//////////////////////////
 		
 		GridBagConstraints gbc16 = new GridBagConstraints();
 		
@@ -304,6 +347,8 @@ public class AddFrameProfessor extends JDialog {
 		titleTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(titleTextField,gbc16);
 		
+		//////////////////////////
+		
 		GridBagConstraints gbc17 = new GridBagConstraints();
 		
 		gbc17.gridx = 0;
@@ -316,6 +361,8 @@ public class AddFrameProfessor extends JDialog {
 		
 		JLabel rankLabel = new JLabel("Rang*");
 		leftPanel.add(rankLabel,gbc17);
+		
+		//////////////////////////
 		
 		GridBagConstraints gbc18 = new GridBagConstraints();
 		
@@ -331,6 +378,8 @@ public class AddFrameProfessor extends JDialog {
 		rankTextField.setPreferredSize(new Dimension(150,20));
 		leftPanel.add(rankTextField,gbc18);
 		
+		//////////////////////////
+		
 		//Na desni panel dodajemo listu studenata koji slusaju predmet
 		int br = 0;
 		for(Subject sub : MyBase.getInstance().getSubjects()) {
@@ -341,6 +390,8 @@ public class AddFrameProfessor extends JDialog {
 		JScrollPane rightPane = new JScrollPane(rightPanel);
 		rightPane.setPreferredSize(new Dimension(250,250));
 		add(rightPane,BorderLayout.CENTER);
+		
+		//////////////////////////
 
 	
 		JButton submitBtn = new JButton("Submit");
@@ -410,6 +461,8 @@ public class AddFrameProfessor extends JDialog {
 		
 		downPanel.add(submitBtn);	// dodajemo submit button
 		
+		//////////////////////////
+		
 		JButton cancelBtn = new JButton("Cancel");
 		cancelBtn.setPreferredSize(new Dimension(100,20));
 		cancelBtn.addActionListener(new ActionListener() {
@@ -425,6 +478,12 @@ public class AddFrameProfessor extends JDialog {
 		
 	}
 	
+	/**
+	 * dodavvanje predmeta na desni panel
+	 * @param panel
+	 * @param subject
+	 * @param rbr
+	 */
 	private void addSubjectToList(JPanel panel, Subject subject, int rbr) {
 		JCheckBox cekBox = new JCheckBox(subject.getCode() + " | " + subject.getName());
 		
@@ -439,6 +498,12 @@ public class AddFrameProfessor extends JDialog {
 		panel.add(cekBox, gbc);
 	}
 	
+	/**
+	 * citanje selektovanih cek boksova sa predmetima
+	 * @param c
+	 * @param dodavaniProfa
+	 * @return
+	 */
 	public static List<Subject> manageCheckedCheckboxes(final Container c, Professor dodavaniProfa) {
 	    Component[] comps = c.getComponents();
 	    List<Subject> checkedSubjects = new ArrayList<Subject>();

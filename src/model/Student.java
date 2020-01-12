@@ -8,6 +8,11 @@ import java.util.Date;
 
 enum StatusStudenta {B, S}
 
+/**
+ * Klasa Student
+ * @author Mile, Aleksandar
+ *
+ */
 public class Student {
 	
 
@@ -27,7 +32,21 @@ public class Student {
 	
 	
 
-	
+	/**
+	 * Konstruktor sa svim parametrima osim spiska predmeta koje student pohadja
+	 * @param ime
+	 * @param prezime
+	 * @param datumRodjenja
+	 * @param adresaStanovanje
+	 * @param kontaktTelefon
+	 * @param emailAdresa
+	 * @param brojIndeksa
+	 * @param datumUpisa
+	 * @param trenutnaGodinaStudija
+	 * @param status
+	 * @param prosecnaOcena
+	 * @throws Exception
+	 */
 	public Student(String ime, String prezime, String datumRodjenja, String adresaStanovanje, String kontaktTelefon,
 			String emailAdresa, String brojIndeksa, String datumUpisa, Integer trenutnaGodinaStudija,
 			StatusStudenta status, Double prosecnaOcena) throws Exception {
@@ -48,9 +67,16 @@ public class Student {
 		
 		if (this.datumRodjenja.compareTo(this.datumUpisa) > 0) throw new Exception();
 	}
-
+	
+	/**
+	 * Prazan kontruktor
+	 */
 	public Student() {}	//Dodao sam prazan konstruktor Sale.
 	
+	/**
+	 * Konstruktor kopije studenta
+	 * @param s
+	 */
 	public Student(Student s) {
 		this.ime = s.ime;
 		this.prezime = s.prezime;
@@ -63,7 +89,7 @@ public class Student {
 		this.trenutnaGodinaStudija = s.trenutnaGodinaStudija;
 		this.status = s.status;
 		this.prosecnaOcena = s.prosecnaOcena;
-		this.spisakPredmetaKojeStudentSlusa = new ArrayList<Subject>();
+		this.spisakPredmetaKojeStudentSlusa = new ArrayList<Subject>(s.getSpisakPredmetaKojeStudentSlusa());
 	}
 
 	public String getIme() {
@@ -174,7 +200,9 @@ public class Student {
 		this.prosecnaOcena = prosecnaOcena;
 	}
 
-
+	/**
+	 * toString metoda prilagodjena upisu u fajl
+	 */
 	@Override
 	public String toString() {
 		DateFormat df = new SimpleDateFormat("dd.MM.yyyy.");
@@ -198,6 +226,9 @@ public class Student {
 			
 	}
 	
+	/**
+	 * equals metoda koje proverava da li je u pitanju isti student po primarnom kljucu (broju indeksa)
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o == this)
@@ -222,20 +253,39 @@ public class Student {
 		this.spisakPredmetaKojeStudentSlusa = spisakPredmetaKojeStudentSlusa;
 	}
 	
+	/**
+	 * metoda koja dodaje u predmet u spisak predmeta koje student slusa
+	 * @param predmet
+	 */
 	public void dodajPredmetUSpisak(Subject predmet) {
 		spisakPredmetaKojeStudentSlusa.add(predmet);
 	}
 	
+	/**
+	 * metoda koja uklanja predmet po indeksu u listi na kojoj se nalazi
+	 * @param ind
+	 */
 	public void skiniPredmetSaSpiska(int ind) {
 		spisakPredmetaKojeStudentSlusa.remove(ind);
 	}
 	
+	/**
+	 * metoda koja brise predmet koji se nalazi u spisku predmeta
+	 * @param s
+	 */
 	public void removeSubjectFromStudents(Subject s) {
 		for(Subject sub: this.spisakPredmetaKojeStudentSlusa)
-			if(s.equals(sub))
+			if(s.equals(sub)) {
 				this.spisakPredmetaKojeStudentSlusa.remove(sub);
+				break;
+			}
+				
 	}
-
+	
+	/** !!!!!!!!!
+	 * metoda koja
+	 * @param menjaniPredmet
+	 */
 	public void ukloniStudentaSaPredmeta(Subject menjaniPredmet) {
 		this.spisakPredmetaKojeStudentSlusa.remove(menjaniPredmet);
 		

@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -15,6 +16,11 @@ import javax.swing.SwingUtilities;
 
 import controller.MyController;
 
+/**
+ * Klasa opadajuceg menija
+ * @author Mile
+ *
+ */
 public class MyPopupMenu extends JPopupMenu {
 	/**
 	 * 
@@ -43,9 +49,8 @@ public class MyPopupMenu extends JPopupMenu {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
-				if(selectedPane == 0) {
+				if(selectedPane == MyToolBar.KARTICA_PROFESORI) {
 					//professors // Ovde se mora dodati!
 					int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
 					if (idx != -1) {
@@ -53,7 +58,7 @@ public class MyPopupMenu extends JPopupMenu {
 					}
 					else
 						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
-				}else if(selectedPane == 1) {
+				}else if(selectedPane == MyToolBar.KARTICA_PREDMETI) {
 					//subjects // Ovde se mora ispraviti!
 					int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
 					if (idx != -1) {
@@ -85,7 +90,7 @@ public class MyPopupMenu extends JPopupMenu {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			
-					if(MyMainFrame.getInstance().getSelectedTabbedPane() == 0) {
+					if(MyMainFrame.getInstance().getSelectedTabbedPane() == MyToolBar.KARTICA_PROFESORI) {
 						//index of selected row --> this gives us a professor
 						{
 							int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
@@ -100,7 +105,7 @@ public class MyPopupMenu extends JPopupMenu {
 							}
 						}
 					}
-					else if (MyMainFrame.getInstance().getSelectedTabbedPane() == 1) {
+					else if (MyMainFrame.getInstance().getSelectedTabbedPane() == MyToolBar.KARTICA_PREDMETI) {
 						
 							int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
 							if(idx != -1) {
@@ -134,6 +139,11 @@ public class MyPopupMenu extends JPopupMenu {
 		
 	}
 	
+	/**
+	 * Klasa koja sluzi kao listener
+	 * @author Mile
+	 *
+	 */
 	static public class PopClickListener extends MouseAdapter {
 		
 	    public void mousePressed(MouseEvent e) {

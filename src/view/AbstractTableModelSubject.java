@@ -4,6 +4,11 @@ import javax.swing.table.AbstractTableModel;
 
 import model.MyBase;
 
+/**
+ * Klasa Koja ce da napravi operacije za Jtable svih Predmeta 
+ * @author Aleksandar
+ *
+ */
 public class AbstractTableModelSubject extends AbstractTableModel {
 
 	private static final long serialVersionUID = 4210673852788354694L;

@@ -16,6 +16,11 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+/**
+ * Klasa StatusBar
+ * @author Mile
+ *
+ */
 public class MyStatusBar extends JPanel { // Milan Knezevic
 	
 	
@@ -80,6 +85,9 @@ public class MyStatusBar extends JPanel { // Milan Knezevic
 	
 	private static MyStatusBar instance = null;
 	
+	/**
+	 * Privatni konstruktor bez parametara
+	 */
 	private MyStatusBar() {
 		super();
 		this.setLayout(new BorderLayout());
@@ -103,13 +111,6 @@ public class MyStatusBar extends JPanel { // Milan Knezevic
 				
 			}
 		});
-		
-		
-		
-		
-		
-	//	System.out.println(vreme.getText());
-	//	JLabel separator = new JLabel("|");
 		
 		JPanel ss = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		ss.setBackground(Color.GRAY);

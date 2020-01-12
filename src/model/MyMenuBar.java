@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -39,7 +38,12 @@ import javax.swing.KeyStroke;
 
 import controller.MyController;
 
-public class MyMenuBar extends JMenuBar { // Milan Knezevic
+/**
+ * Klasa Menu
+ * @author Mile
+ *
+ */
+public class MyMenuBar extends JMenuBar { 
 	
 	/**
 	 * 
@@ -52,7 +56,6 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 	public static JMenu help;
 	
 	private MyMenuBar() {
-		// JMenuBar osnova
 		super();
 		
 		// JMenu dugmici u vrsti
@@ -88,10 +91,10 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
-						if(selectedPane == 0) {
+						if(selectedPane == MyToolBar.KARTICA_PROFESORI) {
 							//professors
 							MyController.getInstance().addProfessor();
-						}else if(selectedPane == 1) {
+						}else if(selectedPane == MyToolBar.KARTICA_PREDMETI) {
 							//subjects
 							MyController.getInstance().addSubject();
 						}
@@ -136,9 +139,8 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
 						int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
-						if(selectedPane == 0) {
+						if(selectedPane == MyToolBar.KARTICA_PROFESORI) {
 							//professors // Ovde se mora dodati!
 							int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
 							if (idx != -1) {
@@ -146,7 +148,7 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 							}
 							else
 								JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
-						}else if(selectedPane == 1) {
+						}else if(selectedPane == MyToolBar.KARTICA_PREDMETI) {
 							//subjects // Ovde se mora ispraviti!
 							int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
 							if (idx != -1) {
@@ -178,7 +180,7 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 					@Override
 					public void actionPerformed(ActionEvent e) {
 					
-							if(MyMainFrame.getInstance().getSelectedTabbedPane() == 0) {
+							if(MyMainFrame.getInstance().getSelectedTabbedPane() == MyToolBar.KARTICA_PROFESORI) {
 								//index of selected row --> this gives us a professor
 								{
 									int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
@@ -193,7 +195,7 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 									}
 								}
 							}
-							else if (MyMainFrame.getInstance().getSelectedTabbedPane() == 1) {
+							else if (MyMainFrame.getInstance().getSelectedTabbedPane() == MyToolBar.KARTICA_PREDMETI) {
 								
 									int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
 									if(idx != -1) {
@@ -269,50 +271,6 @@ public class MyMenuBar extends JMenuBar { // Milan Knezevic
 		
 	}
 	
-	
-		/**
-		 * Necu nikad prezaliti sto nece da mi se pojavi opadajuci meni
-		 * NE RADI ALI BITNO JE POKUSATI!
-		 */
-	public static void showMenus(Component c) {
-			
-		//	System.out.println(edit == c);
-		//	System.out.println(help == c);
-			if (file == c) {
-				file.getPopupMenu().setVisible(true);
-				file.setSelected(true);
-			}
-			if (edit == c) {
-				edit.getPopupMenu().setVisible(true);
-				edit.setSelected(true);
-			}
-			if (help == c) {
-				help.getPopupMenu().setVisible(true);
-				help.setSelected(true);
-			}
-	}
-
-		/**
-		 * Necu nikad prezaliti sto nece da mi se skloni opadajuci meni
-		 * NE RADI ALI BITNO JE POKUSATI!
-		 */
-	public static void hideMenus(Component c) {
-		
-		if (!(file.isFocusOwner() || file.getPopupMenu().isFocusOwner())) {
-			file.getPopupMenu().setVisible(false);
-			file.setSelected(false);
-		}
-		if (!(edit.isFocusOwner() || edit.getPopupMenu().isFocusOwner())) {
-			edit.getPopupMenu().setVisible(false);
-			edit.setSelected(false);
-		}
-		if (!(help.isFocusOwner() || help.getPopupMenu().isFocusOwner())) {
-			help.getPopupMenu().setVisible(false);
-			help.setSelected(false);
-		}
-		
-	}
-	
 	/**
 	 * Function for making only one MyMenuBarInstance
 	 * @return MyMenuBar
@@ -368,7 +326,10 @@ class Prozor extends JFrame {
 	private static Prozor instance = null;
 	
 	
-
+	/**
+	 * Konstruktor sa parametrom ikonice
+	 * @param ai - ikonica
+	 */
 	private Prozor(ImageIcon ai) {
 		super();
 		
@@ -535,6 +496,7 @@ class Prozor extends JFrame {
 	
 	/**
 	 * A Deroka mladog kapetana mucki ubi ceta partizana
+	 * Inace singleton poziv about prozora
 	 * @param ai - ImageIcon (AboutIcon)
 	 * @return singleton JFrame
 	 */
@@ -549,7 +511,11 @@ class Prozor extends JFrame {
 }
 
 	
-	
+/**
+ * Klasa Help prozora koji se otvara nakon klika na help dugme u MenuBar-u
+ * @author Mile
+ *
+ */
 class HelpProzor extends JFrame {
 	/**
 	 * 
@@ -558,6 +524,10 @@ class HelpProzor extends JFrame {
 	
 	private static HelpProzor instance = null;
 
+	/**
+	 * Konstruktor sa parametrom ikonice
+	 * @param ai - ikonica
+	 */
 	private HelpProzor(ImageIcon ai) {
 		// osnove novog prozora
 		super();
@@ -582,6 +552,11 @@ class HelpProzor extends JFrame {
 		
 	}
 	
+	/**
+	 * Singleton poziv Help prozora
+	 * @param ai
+	 * @return
+	 */
 	public static HelpProzor getInstance(ImageIcon ai) {
 		if (instance == null)
 			instance = new HelpProzor(ai);

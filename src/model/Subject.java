@@ -3,7 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Klasa predmet
+ * @authors Aleksandar, Mile
+ *
+ */
 public class Subject {
 
 	private String code;
@@ -15,6 +19,15 @@ public class Subject {
 	
 	public Subject() {}
 	
+	/**
+	 * Konstruktor koji prima sve parametre
+	 * @param code
+	 * @param name
+	 * @param semester
+	 * @param yearOfStuding
+	 * @param professor
+	 * @param students
+	 */
 	public Subject(String code, String name, int semester, int yearOfStuding, Professor professor,
 			ArrayList<Student> students) {
 		super();
@@ -26,18 +39,14 @@ public class Subject {
 		this.students = students;
 	}
 	
-//	public Subject(String name, int semester, int yearOfStuding, Professor professor,
-//			ArrayList<Student> students) {
-//		super();
-//		++codeCnt;
-//		this.code = Integer.toString(codeCnt);
-//		this.name = name;
-//		this.semester = semester;
-//		this.yearOfStuding = yearOfStuding;
-//		this.professor = professor;
-//		this.students = students;
-//	}
-	
+	/**
+	 * Konstruktor koji prima sve parametre sem spiska Studenata
+	 * @param code
+	 * @param name
+	 * @param semester
+	 * @param yearOfStuding
+	 * @param professor
+	 */
 	public Subject(String code, String name, int semester, int yearOfStuding, Professor professor) {
 		super();
 		this.code = code;
@@ -92,7 +101,10 @@ public class Subject {
 	public void setStudents(ArrayList<Student> students) {
 		this.students = students;
 	}
-
+	
+	/**
+	 * toString metoda za Predmet prilagodjena formatu cuvanja u fajl
+	 */
 	@Override
 	public String toString() {
 		StringBuilder stud = new StringBuilder();
@@ -107,7 +119,10 @@ public class Subject {
 			return  code + "; " + name + "; " + semester + "; "
 			+ yearOfStuding + "; " + stud;
 	}
-
+	
+	/**
+	 * equals metoda koja proverava da li su dva predmea jednaka po njihovom primarnom kljucu (sifri predmeta)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this)

@@ -31,30 +31,24 @@ import view.AbstractTableModelStudent;
 import view.AbstractTableModelSubject;
 
 
-
+/**
+ * Klasa ToolBar
+ * @author Mile, Aleksandar
+ *
+ */
 public class MyToolBar extends JToolBar{
-
+	
+	public static final int KARTICA_PROFESORI = 0;
+	public static final int KARTICA_PREDMETI = 1;
+	public static final int KARTICA_STUDENTI = 2;
 	
 	private static final long serialVersionUID = 2933819767532950350L;
-
-//	private JButton btnAddProfessor;
-//	private JButton btnAddStudent;
-	
-//	public JButton getBtnAddProfessor() {
-//		return btnAddProfessor;
-//	}
-//	
-//	public JButton getBtnAddStudent() {
-//		return btnAddStudent;
-//	}
 	
 	public MyToolBar() {
 		super(SwingConstants.HORIZONTAL);
 		
-		setBackground(Color.DARK_GRAY);
-		//setPreferredSize(new Dimension(tbWidth,tbHeight));
-
-		// Dodao sam svoje ikonice(20x20) posto tvoje nisu stavljene u repozitorijum i podesio velicinu dugmeta na 30x30
+		setBackground(Color.DARK_GRAY);	
+		
 		// Unosi novi podatak bez obzira na karticu
 		ImageIcon icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\inbox_plus [#1554].png");
 		JButton btnAdd = new JButton(icon);
@@ -65,10 +59,10 @@ public class MyToolBar extends JToolBar{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
-				if(selectedPane == 0) {
+				if(selectedPane == KARTICA_PROFESORI) {
 					//professors
 					MyController.getInstance().addProfessor();
-				}else if(selectedPane == 1) {
+				}else if(selectedPane == KARTICA_PREDMETI) {
 					//subjects
 					MyController.getInstance().addSubject();
 				}
@@ -91,7 +85,7 @@ public class MyToolBar extends JToolBar{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				int selectedPane = MyMainFrame.getInstance().getSelectedTabbedPane();
-				if(selectedPane == 0) {
+				if(selectedPane == KARTICA_PROFESORI) {
 					//professors // Ovde se mora dodati!
 					int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
 					
@@ -100,7 +94,7 @@ public class MyToolBar extends JToolBar{
 					}
 					else
 						JOptionPane.showMessageDialog(MyMainFrame.getInstance(), "You must first select something to edit", "WARNING", JOptionPane.WARNING_MESSAGE);
-				}else if(selectedPane == 1) {
+				}else if(selectedPane == KARTICA_PREDMETI) {
 					//subjects // Ovde se mora ispraviti!
 					int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
 					if (idx != -1) {
@@ -132,7 +126,7 @@ public class MyToolBar extends JToolBar{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 					
-							if(MyMainFrame.getInstance().getSelectedTabbedPane() == 0) {
+							if(MyMainFrame.getInstance().getSelectedTabbedPane() == KARTICA_PROFESORI) {
 								//index of selected row --> this gives us a professor
 								{
 									int idx = MyMainFrame.getInstance().getProfessorJTable().getSelectedRow();
@@ -147,7 +141,7 @@ public class MyToolBar extends JToolBar{
 									}
 								}
 							}
-							else if (MyMainFrame.getInstance().getSelectedTabbedPane() == 1) {
+							else if (MyMainFrame.getInstance().getSelectedTabbedPane() == KARTICA_PREDMETI) {
 								
 									int idx = MyMainFrame.getInstance().getSubjectJTable().getSelectedRow();
 									if(idx != -1) {
@@ -187,7 +181,7 @@ public class MyToolBar extends JToolBar{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String searchString = textField.getText();
-				if(MyMainFrame.getInstance().getSelectedTabbedPane() == 0) {
+				if(MyMainFrame.getInstance().getSelectedTabbedPane() == KARTICA_PROFESORI) {
 					List<RowFilter<AbstractTableModelProfessor, Integer>> list = new ArrayList<RowFilter<AbstractTableModelProfessor, Integer>>();
 					@SuppressWarnings("unchecked")
 					TableRowSorter<AbstractTableModelProfessor> sorter = (TableRowSorter<AbstractTableModelProfessor>)MyMainFrame.getInstance().getProfessorJTable().getRowSorter();
@@ -210,7 +204,7 @@ public class MyToolBar extends JToolBar{
 					}else {
 						sorter.setRowFilter(null);
 					}
-				}else if(MyMainFrame.getInstance().getSelectedTabbedPane() == 1) {
+				}else if(MyMainFrame.getInstance().getSelectedTabbedPane() == KARTICA_PREDMETI) {
 					List<RowFilter<AbstractTableModelSubject, Integer>> list = new ArrayList<RowFilter<AbstractTableModelSubject, Integer>>();
 					@SuppressWarnings("unchecked")
 					TableRowSorter<AbstractTableModelSubject> sorter = (TableRowSorter<AbstractTableModelSubject>)MyMainFrame.getInstance().getSubjectJTable().getRowSorter();
@@ -263,55 +257,12 @@ public class MyToolBar extends JToolBar{
 			}
 		});
 		
-//		// Button addStudent treba da doda studente na predmet!
-//		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_plus [#1357].png");
-//		btnAddStudent = new JButton(icon);
-//		btnAddStudent.setPreferredSize(new Dimension(30,30));
-//		btnAddStudent.setToolTipText("Add Student to subject");
-//		btnAddStudent.setEnabled(false);
-//		
-//		// Button proffesor treba da doda predmetnog profesora predmetu
-//		icon = new ImageIcon("slike\\ikonice\\1800_Icon_Pack_20x20\\PNG1_black_icons\\profile_image_favorite_round [#1331].png");
-//		btnAddProfessor = new JButton(icon);
-//		btnAddProfessor.setPreferredSize(new Dimension(30,30));
-//		btnAddProfessor.setToolTipText("Add Professor to subject");
-		
-		
+		// Podesavanje searchTextField polja
 		Font f1 = textField.getFont();
 		Font f = new Font("Verdana", Font.ITALIC, 12);
 		textField.setFont(f);
 		textField.setPreferredSize(new Dimension(450,20));
-//		textField.addKeyListener(new KeyListener() {
-//			
-//			@Override
-//			public void keyTyped(KeyEvent e) {
-//				if(textField.getText().isEmpty()) {
-//					//textField.setText("Type here to search");
-//					textField.setToolTipText("BlaBla");
-//					Font f = new Font("Verdana", Font.ITALIC, 12);
-//					textField.setFont(f);
-//				}else if(textField.getText().equals("Type here to search")){
-//					textField.setText("");
-//				}else {
-//					
-//					textField.setCaretColor(Color.BLACK);
-//					textField.setFont(f1);
-//				}
-//				
-//			}
-//			
-//			@Override
-//			public void keyReleased(KeyEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});
+		
 		textField.addFocusListener(new FocusListener() {
 			
 			@Override
@@ -326,7 +277,6 @@ public class MyToolBar extends JToolBar{
 			
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
 				if(textField.getText().equals("Type here to search")) {
 					textField.setText("");
 				}
@@ -335,10 +285,7 @@ public class MyToolBar extends JToolBar{
 			}
 		});
 		
-	//	setLayout(new FlowLayout(FlowLayout.LEFT)); // Saletova verzija
-		setLayout(new BorderLayout());  // Miletova verzija -- Dodao sam samo dugmice na panele da bi moglo lepse da izgleda.
-										// Ako ti nije jasno zasto, pozovi me nocas u 3. Insomnia. Broj: 0631623155
-										//:'D Kidajj Milee
+		setLayout(new BorderLayout());  
 		JPanel leviDeo = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		leviDeo.setBackground(Color.DARK_GRAY);
 		
@@ -348,15 +295,13 @@ public class MyToolBar extends JToolBar{
 		leviDeo.add(btnAdd);
 		leviDeo.add(btnEdit);
 		leviDeo.add(btnDelete);
-//		leviDeo.add(btnAddStudent);
-//		leviDeo.add(btnAddProfessor);
 		desniDeo.add(textField);
 		desniDeo.add(btnSearch);
 		
 		add(leviDeo, BorderLayout.WEST);
 		add(desniDeo, BorderLayout.EAST);
 		
-		this.setFloatable(false);	// Mile promenio!
+		this.setFloatable(false);	
 		
 	}
 	
@@ -372,7 +317,12 @@ public class MyToolBar extends JToolBar{
 		g.drawImage(slika, 0, 0, 20, 20, null);
 		return new ImageIcon(bi);
 	}
-
+	
+	/**
+	 * metoda koja sluzi za pretragu unutar kartice Student
+	 * @param userInput
+	 * @return
+	 */
 	public List<Integer> getStudentColumnForSearch(String userInput) {
 		userInput.trim();
 		String[] kolone = userInput.split(";");
@@ -422,6 +372,11 @@ public class MyToolBar extends JToolBar{
 		return columns;
 	}
 	
+	/**
+	 * metoda koja sluzi za pretragu kartice sa profesorima
+	 * @param userInput
+	 * @return
+	 */
 	public List<Integer> getProfessorColumnForSearch(String userInput) {
 		userInput.trim();
 		String[] kolone = userInput.split(";");
@@ -468,6 +423,11 @@ public class MyToolBar extends JToolBar{
 		return columns;
 	}
 	
+	/**
+	 * metoda koja sluzi za pretragu po kolonama kartice sa predmetima
+	 * @param userInput
+	 * @return
+	 */
 	public List<Integer> getSubjectColumnForSearch(String userInput) {
 		userInput.trim();
 		String[] kolone = userInput.split(";");

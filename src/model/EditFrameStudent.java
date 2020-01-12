@@ -26,6 +26,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+/**
+ * Klasa koja izbacuje prozor za menjanje studenta
+ * @author Mile
+ *
+ */
 public class EditFrameStudent extends JDialog {
 	
 	/**
@@ -52,6 +57,10 @@ public class EditFrameStudent extends JDialog {
 	private Student menjaniStudent;
 	
 	
+	/**
+	 * Konstruktor sa parametrom studenta
+	 * @param temp
+	 */
 	public EditFrameStudent(Student temp) {
 		super();
 		
@@ -561,7 +570,12 @@ public class EditFrameStudent extends JDialog {
 		
 	}
 	
-	
+	/**
+	 * metoda za dodavanje predmeta na panel
+	 * @param panel
+	 * @param predmet
+	 * @param rbr
+	 */
 	private void addPredmetToList(JPanel panel, Subject predmet, int rbr) {
 
 		

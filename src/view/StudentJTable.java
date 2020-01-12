@@ -25,6 +25,11 @@ import model.MyBase;
 import model.MyMainFrame;
 import model.Student;
 
+/**
+ * Klasa koja je podredjena JTable sa podacima o studentima
+ * @author Mile
+ *
+ */
 public class StudentJTable extends JTable{
 	
 	/**
@@ -60,7 +65,7 @@ public class StudentJTable extends JTable{
 		
 		setRowSorter(sorter);
 		
-		// Podesavanje misa
+		// Podesavanje izgleda misa na odredjenom polju tabele
 		this.addMouseMotionListener(new MouseMotionListener() {
 			
 			@Override
@@ -134,7 +139,9 @@ public class StudentJTable extends JTable{
 	}
 	
 	
-	
+	/**
+	 * Metoda koja ce selektovano polje u tabeli da oboji sivom a ostala belom bojom
+	 */
 	@Override
 	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
 		Component c = super.prepareRenderer(renderer, row, column);
@@ -146,7 +153,11 @@ public class StudentJTable extends JTable{
 		return c;
 	}
 	
-	
+	/**
+	 * Ova staticka klasa indeksnog komparatora se nalazi samo u Studentu jer se
+	 * @author Mile
+	 *
+	 */
 	public static class IndexComparator implements Comparator<String>{
 
 		@Override

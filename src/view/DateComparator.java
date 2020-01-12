@@ -5,6 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * Klasa komparator datuma jer se datum pojavljuje kod profesora i kod studenata
+ * @author Mile
+ *
+ */
 public class DateComparator implements Comparator<String> {
 
 	@Override
