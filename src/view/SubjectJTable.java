@@ -79,7 +79,9 @@ public class SubjectJTable extends JTable {
 			    	  JPanel panel = new JPanel(new GridBagLayout());
 			    	  panel.setPreferredSize(new Dimension(300,300));
 			    	  
-			    	  Subject stud = MyBase.getInstance().getSubjectRow(row);
+			    	  String code = (String) MyMainFrame.getInstance().getSubjectJTable().getValueAt(row,0);
+			    	  
+			    	  Subject stud = MyBase.getInstance().getSubjectByCode(code);
 			    	  prozor.setTitle("Spisak studenata koji pohadjaju predmet: " + stud.getCode() + " " + stud.getName());
 			    	  
 			    	  GridBagConstraints gbc = new GridBagConstraints();

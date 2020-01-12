@@ -98,7 +98,9 @@ public class ProfessorJTable extends JTable {
 			    	  JPanel panel = new JPanel(new GridBagLayout());
 			    	  panel.setPreferredSize(new Dimension(300,300));
 			    	  
-			    	  Professor pr = MyBase.getInstance().getProfessorRow(row);
+			    	  String idNumber = (String) MyMainFrame.getInstance().getProfessorJTable().getValueAt(row,0);
+			    	  
+			    	  Professor pr = MyBase.getInstance().getProfessorById(idNumber);
 			    	  prozor.setTitle("Spisak predmeta koje predaje profesor: " + pr.getIdNumber() + " " + pr.getFirstName() + " " + pr.getLastName());
 			    	  
 			    	  GridBagConstraints gbc = new GridBagConstraints();

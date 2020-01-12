@@ -424,7 +424,7 @@ public class AddFrameSubject extends JDialog {
 	            if (box.isSelected()) {
 	                String text = box.getText();
 	                String[] temp = text.split(" \\| ");
-	                Student st = MyBase.getInstance().getStudentIndex(temp[0]);//uzimam studenta i ubacujem u listu
+	                Student st = MyBase.getInstance().getStudentByIndex(temp[0]);//uzimam studenta i ubacujem u listu
 	                System.out.println(st.toString());
 	                checkedStudents.add(st);
 	                st.dodajPredmetUSpisak(dodavaniPredmet);

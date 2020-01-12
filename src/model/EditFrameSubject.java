@@ -367,7 +367,7 @@ public class EditFrameSubject extends JDialog {
 					zaBrisanje.removeAll(studentsOnSubject);
 					
 					for(Student stud : zaBrisanje)
-						MyBase.getInstance().getStudentIndex(stud.getBrojIndeksa()).ukloniStudentaSaPredmeta(menjaniPredmet);
+						MyBase.getInstance().getStudentByIndex(stud.getBrojIndeksa()).ukloniStudentaSaPredmeta(menjaniPredmet);
 					
 					
 						setVisible(false);
@@ -461,7 +461,7 @@ public class EditFrameSubject extends JDialog {
 	            if (box.isSelected()) {
 	                String text = box.getText();
 	                String[] temp = text.split(" \\| ");
-	                Student st = MyBase.getInstance().getStudentIndex(temp[0].trim());//uzimam studenta i ubacujem u listu
+	                Student st = MyBase.getInstance().getStudentByIndex(temp[0].trim());//uzimam studenta i ubacujem u listu
 	                checkedStudents.add(st);
 	                st.dodajPredmetUSpisak(menjaniPredmet);
 	            }
