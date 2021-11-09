@@ -46,7 +46,7 @@ Instructions looks like the following image
 About looks like the following image
 ![](https://github.com/lemara98/Project-GUI/blob/master/images/about.png)
 <br/>
-https://github.com/lemara98/Project-GUI/blob/master/images/about.mkv
+https://github.com/lemara98/Project-GUI/blob/master/images/about.mp4
 <br/>
 
 ### New Subject section
